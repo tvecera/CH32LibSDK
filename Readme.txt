@@ -25,6 +25,9 @@ How to compile on Windows, using command line:
 - Flash compiled sample using e.bat.
 - Clear compilation using d.bat.
 
+
+Pidipad
+-------
 Programs compiled for PidiPad contain a boot loader. Writing to flash
 memory using a programmer writes both the program and the boot loader.
 Pressing the Y button (or resetting with an SD card inserted) launches
