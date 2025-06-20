@@ -1,0 +1,4 @@
+
+CSRC += ${CH32LIBSDK_DEVICES_DIR}/ch32base/ch32base.c
+
+DEFINE += -D USE_CH32BASE=1

@@ -1,0 +1,7 @@
+After conversion, change row:
+
+#include "include.h"
+
+to row:
+
+#include "../global.h"

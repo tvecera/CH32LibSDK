@@ -1,0 +1,4 @@
+
+// Initialize device
+void DevInit() {}
+

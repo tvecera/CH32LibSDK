@@ -1,0 +1,45 @@
+
+ifeq ($(MCUSERIE),CH32V203)
+ASRC += ${CH32LIBSDK_SDK_DIR}/ch32v2/crt0_ch32v203.S
+else
+ifeq ($(MCUSERIE),CH32V208)
+ASRC += ${CH32LIBSDK_SDK_DIR}/ch32v2/crt0_ch32v208.S
+else
+ifeq ($(MCUSERIE),CH32V303)
+ASRC += ${CH32LIBSDK_SDK_DIR}/ch32v2/crt0_ch32v303.S
+else
+ifeq ($(MCUSERIE),CH32V305)
+ASRC += ${CH32LIBSDK_SDK_DIR}/ch32v2/crt0_ch32v303.S
+else
+ifeq ($(MCUSERIE),CH32V307)
+ASRC += ${CH32LIBSDK_SDK_DIR}/ch32v2/crt0_ch32v307.S
+else
+ifeq ($(MCUSERIE),CH32V317)
+ASRC += ${CH32LIBSDK_SDK_DIR}/ch32v2/crt0_ch32v307.S
+else
+ASRC += ${CH32LIBSDK_SDK_DIR}/${SDK_SUBDIR}/crt0.S
+endif
+endif
+endif
+endif
+endif
+endif
+
+
+ifeq (${OS},Windows_NT)
+CSRC += ${CH32LIBSDK_SDK_DIR}/sdk.c
+else
+#CSRC += ${CH32LIBSDK_SDK_DIR}/${SDK_SUBDIR}/sdk_adc.c
+CSRC += ${CH32LIBSDK_SDK_DIR}/${SDK_SUBDIR}/sdk_cpu.c
+CSRC += ${CH32LIBSDK_SDK_DIR}/${SDK_SUBDIR}/sdk_dma.c
+CSRC += ${CH32LIBSDK_SDK_DIR}/${SDK_SUBDIR}/sdk_flash.c
+CSRC += ${CH32LIBSDK_SDK_DIR}/${SDK_SUBDIR}/sdk_gpio.c
+CSRC += ${CH32LIBSDK_SDK_DIR}/${SDK_SUBDIR}/sdk_irq.c
+CSRC += ${CH32LIBSDK_SDK_DIR}/${SDK_SUBDIR}/sdk_pwr.c
+CSRC += ${CH32LIBSDK_SDK_DIR}/${SDK_SUBDIR}/sdk_rcc.c
+CSRC += ${CH32LIBSDK_SDK_DIR}/${SDK_SUBDIR}/sdk_runtime.c
+CSRC += ${CH32LIBSDK_SDK_DIR}/${SDK_SUBDIR}/sdk_spi.c
+CSRC += ${CH32LIBSDK_SDK_DIR}/${SDK_SUBDIR}/sdk_systick.c
+CSRC += ${CH32LIBSDK_SDK_DIR}/${SDK_SUBDIR}/sdk_tim.c
+CSRC += ${CH32LIBSDK_SDK_DIR}/${SDK_SUBDIR}/sdk_usart.c
+endif
