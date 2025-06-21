@@ -31,7 +31,16 @@ extern "C" {
 #define COL_YELLOW	(B1|B3)
 #define COL_WHITE	(B0|B1|B3)
 
+#ifndef FONT
+#define FONT		FontBold8x8	// default system font
+#endif
+
+#ifndef FONTCOND
+#define FONTCOND	FontCond6x8	// default condensed font
+#endif
+
 extern const u8* DrawFont;	// current draw font (characters 8x8)
+extern const u8* DrawFontCond;	// current draw condensed font (characters 6x8)
 extern int PrintPos;		// current print position
 extern int PrintRow;		// current print row
 extern u8 PrintCol;		// current print color
@@ -102,6 +111,9 @@ void DrawCharW(char ch, int x, int y, u8 col);
 void DrawCharH(char ch, int x, int y, u8 col);
 void DrawChar2(char ch, int x, int y, u8 col);
 
+// Draw character condensed size 6x8 (black background, graphics coordinates)
+void DrawCharCond(char ch, int x, int y, u8 col);
+
 // Clear character normal/width/height/sized (color background, graphics coordinates)
 void DrawCharClr(char ch, int x, int y, u8 col);
 void DrawCharWClr(char ch, int x, int y, u8 col);
@@ -119,6 +131,9 @@ void DrawText(const char* text, int x, int y, u8 col);
 void DrawTextW(const char* text, int x, int y, u8 col);
 void DrawTextH(const char* text, int x, int y, u8 col);
 void DrawText2(const char* text, int x, int y, u8 col);
+
+// Draw text condensed size 6x8 (black background, graphics coordinates)
+void DrawTextCond(const char* text, int x, int y, u8 col);
 
 // Clear ASCIIZ text normal/width/height/sized (color background, graphics coordinates)
 void DrawTextClr(const char* text, int x, int y, u8 col);

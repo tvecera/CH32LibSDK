@@ -12,3 +12,4 @@
 #include "font_ibm_8x8.c"
 #include "font_italic_8x8.c"
 #include "font_thin_8x8.c"
+#include "font_cond_6x8.c"

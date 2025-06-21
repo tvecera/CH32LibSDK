@@ -30,6 +30,7 @@
 
 // default font
 #define FONT		FontBold8x8	// default system font
+#define FONTCOND	FontCond6x8	// default condensed font
 
 // Videomodes (9 colors: 1 black background + 8 foreground colors):
 //	1 ... graphics mode 160x120 pixels mono with color attributes 8x8 pixels, required memory 2400+150 = 2550 B (driver size 548 B in RAM)

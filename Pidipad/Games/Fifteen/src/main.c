@@ -549,13 +549,14 @@ PRE_AGAIN:
 int main(void)
 {
 	int i;
-	u8 key;
 
 	// display splash screen
+	u8 key;
 	KeyWaitNoPressed();
 	memcpy(FrameBuf, ImgIntro, sizeof(ImgIntro));
 	memcpy(AttrBuf, ImgIntro_Attr, sizeof(ImgIntro_Attr));
-	while (KeyGet() == NOKEY) {}
+	while ((key = KeyGet()) == NOKEY) {}
+	if (key == KEY_Y) ResetToBootLoader();
 	DrawClear();
 
 	while (True)

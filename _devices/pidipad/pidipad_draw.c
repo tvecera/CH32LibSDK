@@ -10,6 +10,7 @@
 #if USE_DRAW || USE_PRINT || USE_DISP
 
 const u8* DrawFont = FONT;		// current draw font (characters 8x8)
+const u8* DrawFontCond = FONTCOND;	// current draw condensed font (characters 6x8)
 int PrintPos = 0;			// current print position
 int PrintRow = 0;			// current print row
 u8 PrintCol = COL_WHITE;		// current print color
@@ -1096,6 +1097,30 @@ void DrawChar(char ch, int x, int y, u8 col)
 	}
 }
 
+// Draw character condensed size 6x8 (black background, graphics coordinates)
+void DrawCharCond(char ch, int x, int y, u8 col)
+{
+	const u8* src = &DrawFontCond[(u8)ch];
+	int i, j;
+	u8 m;
+	for (i = 8; i > 0; i--)
+	{
+		m = *src;
+		for (j = 6; j > 0; j--)
+		{
+			if ((m & B7) != 0) 
+				DrawPoint(x, y, col);
+			else
+				DrawPointClr(x, y);
+			m <<= 1;
+			x++;
+		}
+		x -= 6;
+		y++;
+		src += 256;
+	}
+}
+
 // Draw character double-width (black background, graphics coordinates)
 void DrawCharW(char ch, int x, int y, u8 col)
 {
@@ -1414,6 +1439,17 @@ void DrawText(const char* text, int x, int y, u8 col)
 	{
 		DrawChar(ch, x, y, col);
 		x += 8;
+	}
+}
+
+// Draw text condensed size 6x8 (black background, graphics coordinates)
+void DrawTextCond(const char* text, int x, int y, u8 col)
+{
+	char ch;
+	while ((ch = *text++) != 0)
+	{
+		DrawCharCond(ch, x, y, col);
+		x += 6;
 	}
 }
 

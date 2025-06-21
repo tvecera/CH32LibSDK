@@ -77,6 +77,9 @@ int main(void)
 	if (key == KEY_Y) ResetToBootLoader();
 	DrawClear();
 
+	// randomize
+	RandSeed += Time() + DispFrame + DispLine;
+
 	// select scene (returns True = OK, False = Esc)
 	while (LevSelect())
 	{
