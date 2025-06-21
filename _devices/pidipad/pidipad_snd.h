@@ -185,6 +185,9 @@ extern volatile const sMelodyNote* SoundMelodyNext;
 // remaining length of current tone (0 = no melody, -1 = start next melody)
 extern volatile s16 SoundMelodyLen;
 
+// check if sound of channel 0 is playing
+INLINE Bool PlayingSound() { return SoundMelodyLen != 0; }
+
 /*
 // Game sound samples
 extern const sMelodyNote SoundSamp1[];
