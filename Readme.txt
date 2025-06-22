@@ -22,7 +22,7 @@ How to compile on Windows, using command line:
   It may sometimes be necessary to erase the flash memory using power-off,
   because OpenOcd cannot do this.
 - Compile sample using c.bat.
-- Flash compiled sample using e.bat.
+- Flash compiled sample using e.bat with WCH-LinkE programmer.
 - Clear compilation using d.bat.
 
 
