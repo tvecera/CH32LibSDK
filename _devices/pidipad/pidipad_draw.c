@@ -96,6 +96,60 @@ void DrawPoint(int x, int y, u8 col)
 	if ((x >= 0) && (x < WIDTH) && (y >= 0) && (y < HEIGHT)) DrawPointFast(x, y, col);
 }
 
+// get pixel color
+u8 DrawGetPoint(int x, int y)
+{
+	if ((x < 0) || (x >= WIDTH) || (y < 0) || (y >= HEIGHT)) return COL_BLACK;
+
+#if VMODE == 5
+
+	u8* a = &FrameBuf[y*WIDTHBYTE + x/2];
+	if ((x & 1) == 0)
+		return *a & 0x0f;
+	else
+		return *a >> 4;
+
+#else // VMODE == 5
+
+	// check pixel
+	u8* d = &FrameBuf[(x>>3) + y*WIDTHBYTE];
+	int x2 = 7 - (x & 7);
+	if ((*d & (1<<x2)) == 0) return COL_BLACK;
+
+	// get color
+// Videomode 1: graphics mode 160x120 pixels mono with color attributes 8x8 pixels, required memory 2400+150 = 2550 B
+// Videomode 4: graphics mode 256x192 pixels mono with color attributes 8x8 pixels, required memory 6144+384 = 6528 B
+#if (VMODE == 1) | (VMODE == 4)
+	x2 = x >> 3;
+	u8* a = &AttrBuf[(y/8)*(ATTRWIDTHBYTE) + x2/2];
+	if ((x2 & 1) == 0)
+		return *a & 0x0f;
+	else
+		return *a >> 4;
+
+// Videomode 2: graphics mode 160x120 pixels mono with color attributes 4x4 pixels, required memory 2400+600 = 3000 B
+#elif VMODE == 2
+	x2 = x >> 2;
+	u8* a = &AttrBuf[(y/4)*(ATTRWIDTHBYTE) + x2/2];
+	if ((x2 & 1) == 0)
+		return *a & 0x0f;
+	else
+		return *a >> 4;
+
+// Videomode 3: graphics mode 160x120 pixels mono with color attributes 2x2 pixels, required memory 2400+2400 = 4800 B
+#elif VMODE == 3
+	x2 = x >> 1;
+	u8* a = &AttrBuf[(y/2)*(ATTRWIDTHBYTE) + x2/2];
+	if ((x2 & 1) == 0)
+		return *a & 0x0f;
+	else
+		return *a >> 4;
+#endif
+
+#endif // VMODE == 5
+
+}
+
 // clear pixel fast without limits
 void DrawPointClrFast(int x, int y)
 {
@@ -121,6 +175,33 @@ void DrawPointClrFast(int x, int y)
 void DrawPointClr(int x, int y)
 {
 	if ((x >= 0) && (x < WIDTH) && (y >= 0) && (y < HEIGHT)) DrawPointClrFast(x, y);
+}
+
+// set pixel fast without limits
+void DrawPointSetFast(int x, int y)
+{
+#if VMODE == 5
+
+	u8* a = &FrameBuf[y*WIDTHBYTE + x/2];
+	if ((x & 1) == 0)
+		*a |= 0x0f;
+	else
+		*a |= 0xf0;
+
+#else
+
+	// set pixel
+	u8* d = &FrameBuf[(x>>3) + y*WIDTHBYTE];
+	x = 7 - (x & 7);
+	*d |= (1<<x);
+
+#endif
+}
+
+// set pixel
+void DrawPointSet(int x, int y)
+{
+	if ((x >= 0) && (x < WIDTH) && (y >= 0) && (y < HEIGHT)) DrawPointSetFast(x, y);
 }
 
 // invert pixel fast without limits
@@ -1646,7 +1727,7 @@ void DrawImgBg(const u8* img, int x, int y, int w, int h, int wsb, u8 col)
 // clear mono image
 void DrawImgClr(const u8* img, int x, int y, int w, int h, int wsb)
 {
-	int xd = x;
+	int xd;
 	int yd = y;
 	int ys;
 	int xs;
@@ -1656,7 +1737,7 @@ void DrawImgClr(const u8* img, int x, int y, int w, int h, int wsb)
 	for (ys = 0; ys < h; ys++)
 	{
 		s = &img[ys*wsb];
-		x = xd;
+		xd = x;
 		m = B7;
 		b = *s++;
 		for (xs = 0; xs < w; xs++)
@@ -1674,10 +1755,10 @@ void DrawImgClr(const u8* img, int x, int y, int w, int h, int wsb)
 	}
 }
 
-// invert mono image
-void DrawImgInv(const u8* img, int x, int y, int w, int h, int wsb)
+// set mono image
+void DrawImgSet(const u8* img, int x, int y, int w, int h, int wsb)
 {
-	int xd = x;
+	int xd;
 	int yd = y;
 	int ys;
 	int xs;
@@ -1687,7 +1768,38 @@ void DrawImgInv(const u8* img, int x, int y, int w, int h, int wsb)
 	for (ys = 0; ys < h; ys++)
 	{
 		s = &img[ys*wsb];
-		x = xd;
+		xd = x;
+		m = B7;
+		b = *s++;
+		for (xs = 0; xs < w; xs++)
+		{
+			if ((b & m) == 0) DrawPointSet(xd, yd);
+			m >>= 1;
+			if (m == 0)
+			{
+				m = B7;
+				b = *s++;
+			}
+			xd++;
+		}
+		yd++;
+	}
+}
+
+// invert mono image
+void DrawImgInv(const u8* img, int x, int y, int w, int h, int wsb)
+{
+	int xd;
+	int yd = y;
+	int ys;
+	int xs;
+	int m;
+	const u8* s;
+	u8 b;
+	for (ys = 0; ys < h; ys++)
+	{
+		s = &img[ys*wsb];
+		xd = x;
 		m = B7;
 		b = *s++;
 		for (xs = 0; xs < w; xs++)

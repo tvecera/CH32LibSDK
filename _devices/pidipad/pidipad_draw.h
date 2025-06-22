@@ -55,10 +55,14 @@ void DrawClear();
 
 #if VMODE <= 5	// only graphics modes
 
-// draw/clear/invert pixel
+// draw/clear/set/invert pixel
 void DrawPoint(int x, int y, u8 col);
 void DrawPointClr(int x, int y);
+void DrawPointSet(int x, int y);
 void DrawPointInv(int x, int y);
+
+// get pixel color
+u8 DrawGetPoint(int x, int y);
 
 // draw/clear/invert rectangle
 void DrawRect(int x, int y, int w, int h, u8 col);
@@ -155,6 +159,9 @@ void DrawImgBg(const u8* img, int x, int y, int w, int h, int wsb, u8 col);
 
 // clear mono image
 void DrawImgClr(const u8* img, int x, int y, int w, int h, int wsb);
+
+// set mono image
+void DrawImgSet(const u8* img, int x, int y, int w, int h, int wsb);
 
 // invert mono image
 void DrawImgInv(const u8* img, int x, int y, int w, int h, int wsb);
