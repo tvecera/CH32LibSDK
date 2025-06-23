@@ -221,7 +221,6 @@ int main(void)
 	memcpy(AttrBuf, ImgIntro_Attr, sizeof(ImgIntro_Attr));
 	while ((key = KeyGet()) == NOKEY) {}
 	if (key == KEY_Y) ResetToBootLoader();
-	DrawClear();
 
 	// randomize
 	RandSeed += Time() + DispFrame + DispLine;
