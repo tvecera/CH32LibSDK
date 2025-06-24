@@ -1163,6 +1163,7 @@ void DrawChar(char ch, int x, int y, u8 col)
 	for (i = 8; i > 0; i--)
 	{
 		m = *src;
+		if ((col & COL_INV) != 0) m = ~m;
 		for (j = 8; j > 0; j--)
 		{
 			if ((m & B7) != 0) 
@@ -1187,6 +1188,32 @@ void DrawCharCond(char ch, int x, int y, u8 col)
 	for (i = 8; i > 0; i--)
 	{
 		m = *src;
+		if ((col & COL_INV) != 0) m = ~m;
+		for (j = 6; j > 0; j--)
+		{
+			if ((m & B7) != 0) 
+				DrawPoint(x, y, col);
+			else
+				DrawPointClr(x, y);
+			m <<= 1;
+			x++;
+		}
+		x -= 6;
+		y++;
+		src += 256;
+	}
+}
+
+// Draw character condensed size 6x6 (black background, graphics coordinates)
+void DrawCharCond6(char ch, int x, int y, u8 col)
+{
+	const u8* src = &DrawFontCond[(u8)ch];
+	int i, j;
+	u8 m;
+	for (i = 6; i > 0; i--)
+	{
+		m = *src;
+		if ((col & COL_INV) != 0) m = ~m;
 		for (j = 6; j > 0; j--)
 		{
 			if ((m & B7) != 0) 
@@ -1211,6 +1238,7 @@ void DrawCharW(char ch, int x, int y, u8 col)
 	for (i = 8; i > 0; i--)
 	{
 		m = *src;
+		if ((col & COL_INV) != 0) m = ~m;
 		for (j = 8; j > 0; j--)
 		{
 			if ((m & B7) != 0) 
@@ -1241,6 +1269,7 @@ void DrawCharH(char ch, int x, int y, u8 col)
 	for (i = 8; i > 0; i--)
 	{
 		m = *src;
+		if ((col & COL_INV) != 0) m = ~m;
 		for (j = 8; j > 0; j--)
 		{
 			if ((m & B7) != 0) 
@@ -1271,6 +1300,7 @@ void DrawChar2(char ch, int x, int y, u8 col)
 	for (i = 8; i > 0; i--)
 	{
 		m = *src;
+		if ((col & COL_INV) != 0) m = ~m;
 		for (j = 8; j > 0; j--)
 		{
 			if ((m & B7) != 0) 
@@ -1530,6 +1560,17 @@ void DrawTextCond(const char* text, int x, int y, u8 col)
 	while ((ch = *text++) != 0)
 	{
 		DrawCharCond(ch, x, y, col);
+		x += 6;
+	}
+}
+
+// Draw text condensed size 6x6 (black background, graphics coordinates)
+void DrawTextCond6(const char* text, int x, int y, u8 col)
+{
+	char ch;
+	while ((ch = *text++) != 0)
+	{
+		DrawCharCond6(ch, x, y, col);
 		x += 6;
 	}
 }

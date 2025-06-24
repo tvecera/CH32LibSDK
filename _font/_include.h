@@ -9,5 +9,6 @@ extern const ALIGNED u8 FontIbmTiny8x8[2048];
 extern const ALIGNED u8 FontItalic8x8[2048];
 extern const ALIGNED u8 FontThin8x8[2048];
 extern const ALIGNED u8 FontCond6x8[2048];
+extern const ALIGNED u8 FontCond6x6[1536];
 
 #endif // _FONT_INCLUDE_H
