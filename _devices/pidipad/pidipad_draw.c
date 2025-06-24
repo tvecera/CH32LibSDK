@@ -1700,6 +1700,128 @@ void DrawText2Inv(const char* text, int x, int y)
 //                               Draw image
 // ----------------------------------------------------------------------------
 
+// draw image fast - all coordinates and dimensions must be multiply of bytes and must be valid
+void DrawImgFast(const u8* img, const u8* attr, int x, int y, int xs, int ys, int w, int h, int wsb, int wsab)
+{
+//	1 ... graphics mode 160x120 pixels mono with color attributes 8x8 pixels, required memory 2400+150 = 2550 B (driver size 548 B in RAM)
+#if VMODE == 1
+
+	int i, j;
+	const u8* s = &img[(xs >> 3) + ys*wsb];		// source pixels
+	u8* d = &FrameBuf[(x >> 3) + y*WIDTHBYTE];	// destination pixels
+	w >>= 3;
+	wsb -= w;
+	int wdb = WIDTHBYTE - w;
+	for (i = h; i > 0; i--)
+	{
+		for (j = w; j > 0; j--)
+		{
+			*d++ = *s++;
+		}
+		s += wsb;
+		d += wdb;
+	}
+
+	s = &attr[(xs >> 4) + (ys >> 3)*wsab];		// source attributes
+	d = &AttrBuf[(x >> 4) + (y >> 3)*ATTRWIDTHBYTE]; // destination attributes
+	w >>= 1;
+	h >>= 3;
+	wsab -= w;
+	wdb = ATTRWIDTHBYTE - w;
+	for (; h > 0; h--)
+	{
+		for (j = w; j > 0; j--)
+		{
+			*d++ = *s++;
+		}
+		s += wsb;
+		d += wdb;
+	}
+
+//	2 ... graphics mode 160x120 pixels mono with color attributes 4x4 pixels, required memory 2400+600 = 3000 B (driver size 540 B in RAM)
+#elif VMODE == 2
+
+	int i, j;
+	xs >>= 3;
+	x >>= 3;
+	const u8* s = &img[xs + ys*wsb];	// source pixels
+	u8* d = &FrameBuf[x + y*WIDTHBYTE];	// destination pixels
+	w >>= 3;
+	wsb -= w;
+	int wdb = WIDTHBYTE - w;
+	for (i = h; i > 0; i--)
+	{
+		for (j = w; j > 0; j--)
+		{
+			*d++ = *s++;
+		}
+		s += wsb;
+		d += wdb;
+	}
+
+	s = &attr[xs + (ys >> 2)*wsab];		// source attributes
+	d = &AttrBuf[x + (y >> 2)*ATTRWIDTHBYTE]; // destination attributes
+	h >>= 2;
+	wsab -= w;
+	wdb = ATTRWIDTHBYTE - w;
+	for (; h > 0; h--)
+	{
+		for (j = w; j > 0; j--)
+		{
+			*d++ = *s++;
+		}
+		s += wsb;
+		d += wdb;
+	}
+
+//	3 ... graphics mode 160x120 pixels mono with color attributes 2x2 pixels, required memory 2400+2400 = 4800 B (driver size 532 B in RAM)
+#elif VMODE == 3
+
+	int i, j;
+	xs >>= 3;
+	x >>= 3;
+	const u8* s = &img[xs + ys*wsb];	// source pixels
+	u8* d = &FrameBuf[x + y*WIDTHBYTE];	// destination pixels
+	w >>= 3;
+	wsb -= w;
+	int wdb = WIDTHBYTE - w;
+	for (i = h; i > 0; i--)
+	{
+		for (j = w; j > 0; j--)
+		{
+			*d++ = *s++;
+		}
+		s += wsb;
+		d += wdb;
+	}
+
+	s = &attr[(xs << 1) + (ys >> 1)*wsab];		// source attributes
+	d = &AttrBuf[(x << 1) + (y >> 1)*ATTRWIDTHBYTE]; // destination attributes
+	h >>= 1;
+	wsab -= (w << 1);
+	wdb = ATTRWIDTHBYTE - (w << 1);
+	for (; h > 0; h--)
+	{
+		for (j = w; j > 0; j--)
+		{
+			*d++ = *s++;
+			*d++ = *s++;
+		}
+		s += wsab;
+		d += wdb;
+	}
+
+#endif
+
+// Videomodes (9 colors: 1 black background + 8 foreground colors):
+//	4 ... graphics mode 256x192 pixels mono with color attributes 8x8 pixels, required memory 6144+384 = 6528 B (driver size 516 B in RAM)
+//	5 ... graphics mode 144x96 pixels with 8 colors, required memory 6912 B (driver size 508 B in RAM ... Cannot be used with an SD card due to insufficient RAM)
+//	6 ... text mode 40x30 characters of 8x8 pixels (resolution 320x240 pixels, pseudographics 80x60 pixels) with color attributes, font 2048 B in Flash, required memory 1200+600=1800 B
+//	7 ... text mode 40x30 characters of 8x8 pixels (resolution 320x240 pixels, pseudographics 80x60 pixels) with color attributes, font 2048 B in RAM FontBuf, required memory 1200+600+2048=3848 B
+//	8 ... text mode 80x30 characters of 8x8 pixels (resolution 640x240 pixels, pseudographics 160x60 pixels) with color attributes, font 2048 B in RAM FontBuf, required memory 2400+1200+2048=5648 B (driver size 504 B in RAM)
+
+}
+
 // draw mono image
 void DrawImg(const u8* img, int x, int y, int w, int h, int wsb, u8 col)
 {

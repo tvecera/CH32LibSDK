@@ -159,6 +159,9 @@ void DrawTextWInv(const char* text, int x, int y);
 void DrawTextHInv(const char* text, int x, int y);
 void DrawText2Inv(const char* text, int x, int y);
 
+// draw image fast - all coordinates and dimensions must be multiply of bytes and must be valid
+void DrawImgFast(const u8* img, const u8* attr, int x, int y, int xs, int ys, int w, int h, int wsb, int wsab);
+
 // draw mono image
 void DrawImg(const u8* img, int x, int y, int w, int h, int wsb, u8 col);
 
