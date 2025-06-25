@@ -109,6 +109,9 @@ void DispInit()
 	//		Image starts 8 pixels later = add 64 clock cycles.
 	//		In vertical direction, 384 scanlines is active area, add 48 scanlines to front and back porch.
 	//  320x240: 4 clock cycles per pixel, 32 clock cycles per character
+	//  128x80: 8 clock cycles per pixel 64 clock cycles per character
+	//		Image starts 16 pixels later = add 128 clock cycles.
+	//		In vertical direction, 320 scanlines is active area, add 80 scanlines to front and back porch.
 
 // Do not change this compare value! If you change it, you must correct "time synchronization" in vga_asm.S.
 #if VMODE == 1
@@ -127,6 +130,8 @@ void DispInit()
 	TIM2_Comp1(288 - 101);		// set compare value
 #elif VMODE == 8
 	TIM2_Comp1(288 - 85);		// set compare value
+#elif VMODE == 9
+	TIM2_Comp1(288+128 - 125);	// set compare value
 #endif
 
 	TIM2_OC1Mode(TIM_COMP_FREEZE);	// set compare mode

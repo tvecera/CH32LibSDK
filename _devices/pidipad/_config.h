@@ -14,6 +14,7 @@
 //	6 ... text mode 40x30 characters of 8x8 pixels (resolution 320x240 pixels, pseudographics 80x60 pixels) with color attributes, font 2048 B in Flash, required memory 1200+600=1800 B
 //	7 ... text mode 40x30 characters of 8x8 pixels (resolution 320x240 pixels, pseudographics 80x60 pixels) with color attributes, font 2048 B in RAM FontBuf, required memory 1200+600+2048=3848 B
 //	8 ... text mode 80x30 characters of 8x8 pixels (resolution 640x240 pixels, pseudographics 160x60 pixels) with color attributes, font 2048 B in RAM FontBuf, required memory 2400+1200+2048=5648 B (driver size 504 B in RAM)
+//	9 ... graphics mode 128x80 pixels mono with color attributes 1x1 pixel, required memory 1280+5120 = 6400 B
 #ifndef VMODE
 #define VMODE	1
 #endif

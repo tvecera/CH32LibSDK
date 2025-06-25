@@ -11,11 +11,12 @@ Syntax: input.bmp output.cpp name format
   'name' name of data array
   'format' specifies required output format:
 	0 ... mono color format (requires 1-bit input image)\n");
-	1 ... videomode 1, 160x120, attribute format
-	2 ... videomode 2, 160x120, attribute format
-	3 ... videomode 3, 160x120, attribute format
-	4 ... videomode 4, 256x192, attribute format
+	1 ... videomode 1, 160x120, attribute format, cell 8x8 pixels
+	2 ... videomode 2, 160x120, attribute format, cell 4x4 pixels
+	3 ... videomode 3, 160x120, attribute format, cell 2x2 pixels
+	4 ... videomode 4, 256x192, attribute format, cell 8x8 pixels
 	5 ... videomode 5, 144x96, full graphics 8 colors
 	6 ... videomode 6, 80x60, text pseudographics, cell 2x2 pixels
 	7 ... videomode 7, 80x60, text pseudographics, cell 2x2 pixels
 	8 ... videomode 8, 160x60, text pseudographics, cell 2x2 pixels
+	9 ... videomode 9, 128x80, attribute format, cell 1x1 pixels

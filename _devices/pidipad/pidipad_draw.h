@@ -55,7 +55,7 @@ void DrawClear();
 
 #if USE_DRAW	// 1=use graphics drawing functions
 
-#if VMODE <= 5	// only graphics modes
+#if (VMODE <= 5) || (VMODE == 9) // only graphics modes
 
 // draw/clear/set/invert pixel
 void DrawPoint(int x, int y, u8 col);
@@ -177,7 +177,7 @@ void DrawImgSet(const u8* img, int x, int y, int w, int h, int wsb);
 // invert mono image
 void DrawImgInv(const u8* img, int x, int y, int w, int h, int wsb);
 
-#endif // VMODE <= 5	// only graphics modes
+#endif // (VMODE <= 5) || (VMODE == 9)	// only graphics modes
 
 #endif // USE_DRAW
 

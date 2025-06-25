@@ -33,7 +33,7 @@ void DrawClear()
 
 #if USE_DRAW	// 1=use graphics drawing functions
 
-#if VMODE <= 5	// only graphics modes
+#if (VMODE <= 5) || (VMODE == 9) // only graphics modes
 
 // ----------------------------------------------------------------------------
 //                               Draw point
@@ -77,6 +77,14 @@ void DrawPointFast(int x, int y, u8 col)
 	int x2 = x >> 1;
 	u8* a = &AttrBuf[(y/2)*(ATTRWIDTHBYTE) + x2/2];
 	if ((x2 & 1) == 0)
+		*a = (*a & 0xf0) | col;
+	else
+		*a = (*a & 0x0f) | (col << 4);
+
+// Videomode 9: graphics mode 128x80 pixels mono with color attributes 1x1 pixel, required memory 1280+5120 = 6400 B
+#elif VMODE == 9
+	u8* a = &AttrBuf[y*(ATTRWIDTHBYTE) + x/2];
+	if ((x & 1) == 0)
 		*a = (*a & 0xf0) | col;
 	else
 		*a = (*a & 0x0f) | (col << 4);
@@ -141,6 +149,14 @@ u8 DrawGetPoint(int x, int y)
 	x2 = x >> 1;
 	u8* a = &AttrBuf[(y/2)*(ATTRWIDTHBYTE) + x2/2];
 	if ((x2 & 1) == 0)
+		return *a & 0x0f;
+	else
+		return *a >> 4;
+
+// Videomode 9: graphics mode 128x80 pixels mono with color attributes 1x1 pixel, required memory 1280+5120 = 6400 B
+#elif VMODE == 9
+	u8* a = &AttrBuf[y*(ATTRWIDTHBYTE) + x/2];
+	if ((x & 1) == 0)
 		return *a & 0x0f;
 	else
 		return *a >> 4;
@@ -1980,7 +1996,7 @@ void DrawImgInv(const u8* img, int x, int y, int w, int h, int wsb)
 	}
 }
 
-#endif // VMODE <= 5	// only graphics modes
+#endif // (VMODE <= 5) || (VMODE == 9) // only graphics modes
 
 #endif // USE_DRAW
 
@@ -2032,6 +2048,10 @@ void PrintScroll()
 #elif VMODE == 3
 	memmove(&AttrBuf[0], &AttrBuf[4*ATTRWIDTHBYTE], ATTRSIZE-4*ATTRWIDTHBYTE);
 	memset(&AttrBuf[ATTRSIZE-4*ATTRWIDTHBYTE], COL_WHITE|(COL_WHITE<<4), 4*ATTRWIDTHBYTE);
+// Videomode 9: graphics mode 128x80 pixels mono with color attributes 1x1 pixel, required memory 1280+5120 = 6400 B
+#elif VMODE == 9
+	memmove(&AttrBuf[0], &AttrBuf[8*ATTRWIDTHBYTE], ATTRSIZE-8*ATTRWIDTHBYTE);
+	memset(&AttrBuf[ATTRSIZE-8*ATTRWIDTHBYTE], COL_WHITE|(COL_WHITE<<4), 8*ATTRWIDTHBYTE);
 #endif
 
 #endif // VMODE >= 6

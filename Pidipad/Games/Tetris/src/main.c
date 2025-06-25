@@ -52,45 +52,45 @@ Bool Demo;	// demo mode
 
 // brick sound
 const sMelodyNote BrickSound[] = {
-	{ 1, NOTE_C1 },
+	{ 1, NOTE_C3 },
 	{ 0, 0 },
 };
 
 // line sound
 const sMelodyNote LineSound[] = {
-	{ 1, NOTE_C1 },
-	{ 1, NOTE_D1 },
-	{ 1, NOTE_E1 },
-	{ 1, NOTE_F1 },
-	{ 1, NOTE_G1 },
-	{ 1, NOTE_A1 },
+	{ 1, NOTE_C3 },
+	{ 1, NOTE_D3 },
+	{ 1, NOTE_E3 },
+	{ 1, NOTE_F3 },
+	{ 1, NOTE_G3 },
+	{ 1, NOTE_A3 },
 	{ 0, 0 },
 };
 
 // game over sound
 const sMelodyNote GameOverSound[] = {
-	{ NOTE_LEN8, NOTE_A2 },
-	{ NOTE_LEN8, NOTE_E2 },
-	{ NOTE_LEN8, NOTE_C2 },
-	{ NOTE_LEN4, NOTE_A1 },
+	{ NOTE_LEN8, NOTE_A4 },
+	{ NOTE_LEN8, NOTE_E4 },
+	{ NOTE_LEN8, NOTE_C4 },
+	{ NOTE_LEN4, NOTE_A3 },
 	{ 0, 0 },
 };
 
 // Level up sound
 const sMelodyNote LevelUpSound[] = {
-	{ 4, NOTE_C2 },
-	{ 4, NOTE_B2 },
-	{ 4, NOTE_CS2 },
-	{ 4, NOTE_AS2 },
-	{ 4, NOTE_D2 },
-	{ 4, NOTE_A2 },
-	{ 4, NOTE_DS2 },
-	{ 4, NOTE_GS2 },
-	{ 4, NOTE_E2 },
-	{ 4, NOTE_G2 },
-	{ 4, NOTE_F2 },
-	{ 4, NOTE_FS2 },
-	{ 8, NOTE_F2 },
+	{ 4, NOTE_C4 },
+	{ 4, NOTE_B4 },
+	{ 4, NOTE_CS4 },
+	{ 4, NOTE_AS4 },
+	{ 4, NOTE_D4 },
+	{ 4, NOTE_A4 },
+	{ 4, NOTE_DS4 },
+	{ 4, NOTE_GS4 },
+	{ 4, NOTE_E4 },
+	{ 4, NOTE_G4 },
+	{ 4, NOTE_F4 },
+	{ 4, NOTE_FS4 },
+	{ 8, NOTE_F4 },
 	{ 0, 0 },
 };
 

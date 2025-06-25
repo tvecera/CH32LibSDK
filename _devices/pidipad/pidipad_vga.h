@@ -127,6 +127,18 @@ extern "C" {
 #define TEXTWIDTH	WIDTH		// text width in characters (= 80)
 #define TEXTHEIGHT	HEIGHT		// text height in rows (= 30; 1 character = 8x8 pixels)
 
+// Videomode 9: graphics mode 128x80 pixels mono with color attributes 1x1 pixel, required memory 1280+5120 = 6400 B
+#elif VMODE == 9
+#define WIDTH		128		// width in pixels
+#define HEIGHT		80		// height in graphics lines
+#define WIDTHBYTE	(WIDTH/8)	// width in bytes (= 16)
+#define FRAMESIZE	(WIDTHBYTE*HEIGHT) // size of frame buffer in bytes (= 16*80 = 1280 bytes)
+#define ATTRWIDTHBYTE	(WIDTH/2)	// width of attribute buffer in bytes (= 64)
+#define ATTRHEIGHT	HEIGHT		// height of attribute buffer (= 80)
+#define ATTRSIZE	(ATTRWIDTHBYTE*ATTRHEIGHT) // size of attribute buffer in bytes (= 64x80 = 5120 bytes)
+#define TEXTWIDTH	(WIDTH/8)	// text width in characters (= 16)
+#define TEXTHEIGHT	(HEIGHT/8)	// text height in rows (= 10; 1 character = 8x8 pixels)
+
 #endif // VMODE=...
 
 extern u8 FrameBuf[FRAMESIZE];		// display graphics buffer
@@ -141,7 +153,9 @@ extern volatile u32 DispFrame;		// current frame
 extern volatile u32 DispTimTest;	// test - get TIM-CNT value at start of image (should be 144-19=125)
 
 // check VSYNC
-#if (VMODE == 4) || (VMODE == 5)
+#if VMODE == 9
+INLINE Bool DispIsVSync() { return DispLine >= 320; }
+#elif (VMODE == 4) || (VMODE == 5)
 INLINE Bool DispIsVSync() { return DispLine >= 384; }
 #else
 INLINE Bool DispIsVSync() { return DispLine >= 480; }

@@ -58,37 +58,37 @@ int OldBallX, OldBallY;
 
 // bound sound
 const sMelodyNote BoundSound[] = {
-	{ 1, NOTE_C6 },
+	{ 1, NOTE_C7 },
 	{ 0, 0 },
 };
 
 // paddle sound
 const sMelodyNote PaddleSound[] = {
-	{ 1, NOTE_C4 },
+	{ 1, NOTE_C6 },
 	{ 0, 0 },
 };
 
 // serve sound
 const sMelodyNote ServeSound[] = {
-	{ 1, NOTE_C2 },
+	{ 1, NOTE_C5 },
 	{ 0, 0 },
 };
 
 // out sound
 const sMelodyNote OutSound[] = {
-	{ 1, NOTE_C3 },
-	{ 1, NOTE_CS3 },
-	{ 1, NOTE_D3 },
-	{ 1, NOTE_DS3 },
-	{ 1, NOTE_E3 },
-	{ 1, NOTE_F3 },
-	{ 1, NOTE_FS3 },
-	{ 1, NOTE_G3 },
-	{ 1, NOTE_GS3 },
-	{ 1, NOTE_A3 },
-	{ 1, NOTE_AS3 },
-	{ 1, NOTE_B3 },
-	{ 1, NOTE_C4 },
+	{ 1, NOTE_C5 },
+	{ 1, NOTE_CS5 },
+	{ 1, NOTE_D5 },
+	{ 1, NOTE_DS5 },
+	{ 1, NOTE_E5 },
+	{ 1, NOTE_F5 },
+	{ 1, NOTE_FS5 },
+	{ 1, NOTE_G5 },
+	{ 1, NOTE_GS5 },
+	{ 1, NOTE_A5 },
+	{ 1, NOTE_AS5 },
+	{ 1, NOTE_B5 },
+	{ 1, NOTE_C6 },
 	{ 0, 0 },
 };
 

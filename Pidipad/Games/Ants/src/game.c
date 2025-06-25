@@ -155,93 +155,93 @@ const u8 FenceChar[13*3] = {
 
 // card sound
 const sMelodyNote CardSound[] = {
-	{ 1, NOTE_C0 },
+	{ 1, NOTE_C2 },
 	{ 0, 0 },
 };
 
 // increase power sound
 const sMelodyNote IncPwrSound[] = {
-	{ NOTE_LEN8, NOTE_C2 },
-	{ NOTE_LEN8, NOTE_E2 },
-	{ NOTE_LEN8, NOTE_G2 },
-	{ NOTE_LEN8, NOTE_C3 },
+	{ NOTE_LEN8, NOTE_C4 },
+	{ NOTE_LEN8, NOTE_E4 },
+	{ NOTE_LEN8, NOTE_G4 },
+	{ NOTE_LEN8, NOTE_C5 },
 	{ 0, 0 },
 };
 
 // increase stock sound
 const sMelodyNote IncStockSound[] = {
-	{ NOTE_LEN16, NOTE_E2 },
-	{ NOTE_LEN16, NOTE_G2 },
-	{ NOTE_LEN8, NOTE_E2 },
+	{ NOTE_LEN16, NOTE_E4 },
+	{ NOTE_LEN16, NOTE_G4 },
+	{ NOTE_LEN8, NOTE_E4 },
 	{ 0, 0 },
 };
 
 // decrease stock sound
 const sMelodyNote DecStockSound[] = {
-	{ NOTE_LEN16, NOTE_D1 },
-	{ NOTE_LEN16, NOTE_C1 },
-	{ NOTE_LEN8, NOTE_D1 },
+	{ NOTE_LEN16, NOTE_D3 },
+	{ NOTE_LEN16, NOTE_C3 },
+	{ NOTE_LEN8, NOTE_D3 },
 	{ 0, 0 },
 };
 
 // increase building
 const sMelodyNote IncBuildSound[] = {
-	{ 1, NOTE_C1 },
-	{ 1, NOTE_D1 },
-	{ 1, NOTE_E1 },
-	{ 1, NOTE_F1 },
-	{ 1, NOTE_G1 },
-	{ 1, NOTE_A1 },
-	{ 1, NOTE_B1 },
-	{ 1, NOTE_C2 },
+	{ 1, NOTE_C3 },
+	{ 1, NOTE_D3 },
+	{ 1, NOTE_E3 },
+	{ 1, NOTE_F3 },
+	{ 1, NOTE_G3 },
+	{ 1, NOTE_A3 },
+	{ 1, NOTE_B3 },
+	{ 1, NOTE_C4 },
 	{ 0, 0 },
 };
 
 // increase building
 const sMelodyNote DecBuildSound[] = {
-	{ 1, NOTE_C1 },
-	{ 1, NOTE_B0 },
-	{ 1, NOTE_AS0 },
-	{ 1, NOTE_A0 },
-	{ 1, NOTE_GS0 },
-	{ 1, NOTE_G0 },
-	{ 1, NOTE_FS0 },
-	{ 1, NOTE_F0 },
-	{ 1, NOTE_E0 },
-	{ 1, NOTE_DS0 },
-	{ 1, NOTE_D0 },
-	{ 1, NOTE_CS0 },
-	{ 1, NOTE_C0 },
+	{ 1, NOTE_C3 },
+	{ 1, NOTE_B2 },
+	{ 1, NOTE_AS2 },
+	{ 1, NOTE_A2 },
+	{ 1, NOTE_GS2 },
+	{ 1, NOTE_G2 },
+	{ 1, NOTE_FS2 },
+	{ 1, NOTE_F2 },
+	{ 1, NOTE_E2 },
+	{ 1, NOTE_DS2 },
+	{ 1, NOTE_D2 },
+	{ 1, NOTE_CS2 },
+	{ 1, NOTE_C2 },
 	{ 0, 0 },
 };
 
 // curse sound
 const sMelodyNote CurseSound[] = {
-	{ 1, NOTE_C2 },
-	{ 1, NOTE_B2 },
-	{ 1, NOTE_CS2 },
-	{ 1, NOTE_AS2 },
-	{ 1, NOTE_D2 },
-	{ 1, NOTE_A2 },
-	{ 1, NOTE_DS2 },
-	{ 1, NOTE_GS2 },
-	{ 1, NOTE_E2 },
-	{ 1, NOTE_G2 },
-	{ 1, NOTE_F2 },
-	{ 1, NOTE_FS2 },
-	{ 1, NOTE_F2 },
+	{ 1, NOTE_C4 },
+	{ 1, NOTE_B4 },
+	{ 1, NOTE_CS4 },
+	{ 1, NOTE_AS4 },
+	{ 1, NOTE_D4 },
+	{ 1, NOTE_A4 },
+	{ 1, NOTE_DS4 },
+	{ 1, NOTE_GS4 },
+	{ 1, NOTE_E4 },
+	{ 1, NOTE_G4 },
+	{ 1, NOTE_F4 },
+	{ 1, NOTE_FS4 },
+	{ 1, NOTE_F4 },
 	{ 0, 0 },
 };
 
 // fanfare sound
 const sMelodyNote FanfareSound[] = {
-	{ NOTE_LEN8, NOTE_C2 },
-	{ NOTE_LEN8, NOTE_E2 },
-	{ NOTE_LEN8, NOTE_G2 },
-	{ NOTE_LEN8, NOTE_C3 },
+	{ NOTE_LEN8, NOTE_C4 },
+	{ NOTE_LEN8, NOTE_E4 },
+	{ NOTE_LEN8, NOTE_G4 },
+	{ NOTE_LEN8, NOTE_C5 },
 	{ NOTE_LEN8, NOTE_R },
-	{ NOTE_LEN8, NOTE_G2 },
-	{ NOTE_LEN4, NOTE_C3 },
+	{ NOTE_LEN8, NOTE_G4 },
+	{ NOTE_LEN4, NOTE_C5 },
 	{ 0, 0 },
 };
 

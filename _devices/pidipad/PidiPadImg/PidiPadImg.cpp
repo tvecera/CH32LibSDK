@@ -38,20 +38,22 @@ enum {
 	FORMAT_6,		// '6': videomode 6, 80x60, text pseudographics, cell 2x2 pixels
 	FORMAT_7,		// '7': videomode 7, 80x60, text pseudographics, cell 2x2 pixels
 	FORMAT_8,		// '8': videomode 8, 160x60, text pseudographics, cell 2x2 pixels
+	FORMAT_9,		// '9': videomode 9, 128x80, attribute format, cell 1x1 pixels
 
 	FORMAT_NUM
 };
 
 const char* SwitchTxt[] = {
 	"0",	// FORMAT_0: mono color format, requires 1-bit input image
-	"1",	// FORMAT_1: videomode 1: attribute format, cell 8x8 pixels
-	"2",	// FORMAT_2: videomode 2: attribute format, cell 4x4 pixels
-	"3",	// FORMAT_3: videomode 3: attribute format, cell 2x2 pixels
-	"4",	// FORMAT_4: videomode 4: attribute format, cell 8x8 pixels
-	"5",	// FORMAT_5: videomode 5: full graphics 8 colors
+	"1",	// FORMAT_1: videomode 1: 160x120, attribute format, cell 8x8 pixels
+	"2",	// FORMAT_2: videomode 2: 160x120, attribute format, cell 4x4 pixels
+	"3",	// FORMAT_3: videomode 3: 160x120, attribute format, cell 2x2 pixels
+	"4",	// FORMAT_4: videomode 4: 256x192, attribute format, cell 8x8 pixels
+	"5",	// FORMAT_5: videomode 5: 144x96, full graphics 8 colors
 	"6",	// FORMAT_6: videomode 6, 80x60, text pseudographics, cell 2x2 pixels
 	"7",	// FORMAT_7: videomode 7, 80x60, text pseudographics, cell 2x2 pixels
 	"8",	// FORMAT_8: videomode 8, 160x60, text pseudographics, cell 2x2 pixels
+	"9",	// FORMAT_9: videomode 9, 128x80, attribute format, cell 1x1 pixels
 };
 
 #pragma pack(push,1)
@@ -175,6 +177,7 @@ void Help()
 		printf("       6 ... videomode 6, 80x60, text pseudographics, cell 2x2 pixels\n");
 		printf("       7 ... videomode 7, 80x60, text pseudographics, cell 2x2 pixels\n");
 		printf("       8 ... videomode 8, 160x60, text pseudographics, cell 2x2 pixels\n");
+		printf("       9 ... videomode 9, 128x80, attribute format, cell 1x1 pixels\n");
 }
 
 // unpack 4-bit image
@@ -298,7 +301,7 @@ int main(int argc, char* argv[])
 	{
 		if (B != 4)
 		{
-			printf("Output formats '1' to '5' require 4-bit input image %s\n", argv[1]);
+			printf("Output formats require 4-bit input image %s\n", argv[1]);
 			return 1;
 		}
 	}
@@ -343,6 +346,11 @@ int main(int argc, char* argv[])
 			D += WBS;
 		}
 		break;
+
+	case FORMAT_9:	// "9": videomode 9: attribute format, cell 1x1 pixels
+		AttrCW = 1;
+		AttrCH = 1;
+		goto Attrib;
 
 	case FORMAT_1:	// "1": videomode 1: attribute format, cell 8x8 pixels
 	case FORMAT_4:	// "4": videomode 4: attribute format, cell 8x8 pixels (same as format '1')

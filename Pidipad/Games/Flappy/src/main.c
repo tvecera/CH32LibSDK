@@ -7,22 +7,22 @@
 
 #include "../include.h"
 
-#define F_	NOTE_F2
-#define G_	NOTE_G2
-#define A_	NOTE_A2
-#define H_	NOTE_B2
-#define C	NOTE_C3
-#define D	NOTE_D3
-#define E	NOTE_E3
-#define F	NOTE_F3
-#define FIS	NOTE_FS3
-#define G	NOTE_G3
-#define A	NOTE_A3
-#define H	NOTE_B3
-#define _C	NOTE_C4
-#define _D	NOTE_D4
-#define _E	NOTE_E4
-#define _G	NOTE_G4
+#define F_	NOTE_F4
+#define G_	NOTE_G4
+#define A_	NOTE_A4
+#define H_	NOTE_B4
+#define C	NOTE_C5
+#define D	NOTE_D5
+#define E	NOTE_E5
+#define F	NOTE_F5
+#define FIS	NOTE_FS5
+#define G	NOTE_G5
+#define A	NOTE_A5
+#define H	NOTE_B5
+#define _C	NOTE_C6
+#define _D	NOTE_D6
+#define _E	NOTE_E6
+#define _G	NOTE_G6
 
 #define R	NOTE_R
 

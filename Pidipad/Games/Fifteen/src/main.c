@@ -43,22 +43,22 @@ int BestDist;	// distance of best moves
 
 // move sound
 const sMelodyNote MoveSound[] = {
-	{ 1, NOTE_C4 },
+	{ 1, NOTE_C6 },
 	{ 0, 0 },
 };
 
 // bump sound
 const sMelodyNote BumpSound[] = {
-	{ 4, NOTE_C1 },
+	{ 4, NOTE_C3 },
 	{ 0, 0 },
 };
 
 // win sound
 const sMelodyNote WinSound[] = {
-	{ NOTE_LEN4, NOTE_C3 },
-	{ NOTE_LEN4, NOTE_E3 },
-	{ NOTE_LEN4, NOTE_G3 },
-	{ NOTE_LEN2, NOTE_C4 },
+	{ NOTE_LEN4, NOTE_C5 },
+	{ NOTE_LEN4, NOTE_E5 },
+	{ NOTE_LEN4, NOTE_G5 },
+	{ NOTE_LEN2, NOTE_C6 },
 	{ 0, 0 },
 };
 

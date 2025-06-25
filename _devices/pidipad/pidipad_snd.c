@@ -137,8 +137,8 @@ void SoundInit()
 	// select input from internal clock CK_INT
 	TIM1_InMode(TIM_INMODE_INT);
 
-	// set divider
-	TIM1_Div(8);
+	// set divider (to get 1 MHz)
+	TIM1_Div(SND_TIM_DIV);
 
 	// set timer reload value
 	TIM1_Load(1000);

@@ -15,8 +15,8 @@
 extern "C" {
 #endif
 
-// Timer divider, frequency 25000000/25 = 1000000
-#define SND_TIM_DIV	25				// timer divider
+// Timer divider, frequency of time base is 50000000/50 = 1000000 = 1 MHz
+#define SND_TIM_DIV	HCLK_PER_US	// timer divider
 
 // note length in 1/60 sec
 #define NOTE_LEN1DOT	96		// 1.
@@ -35,10 +35,10 @@ extern "C" {
 
 #define NOTE_STOP	0		// stop mark of the melody
 
-// get divider of the tone in 0.01 Hz (minimum 16 Hz)
-#define SND_GET_DIV(hz01) (((u32)HSI_VALUE*100 + SND_TIM_DIV*(hz01)/2)/(SND_TIM_DIV*(hz01)) - 1)
+// get divider of the tone in 0.01 Hz (minimum 16 Hz), time base is 1 MHz
+#define SND_GET_DIV(hz01) ((100*1000000 + (hz01)/2)/(hz01) - 1)
 
-#define NOTE_C0		SND_GET_DIV(1635)	// note=C0 (16.3516Hz) ... divider 61162
+#define NOTE_C0		SND_GET_DIV(1635)	// note=C0 (16.3516Hz)
 #define NOTE_CS0	SND_GET_DIV(1732)	// note=C#0 (17.3239Hz)
 #define NOTE_D0		SND_GET_DIV(1835)	// note=D0 (18.354Hz)
 #define NOTE_DS0	SND_GET_DIV(1945)	// note=D#0 (19.4454Hz)
@@ -166,7 +166,7 @@ extern "C" {
 #define NOTE_GS9	SND_GET_DIV(1328980)	// note=G#9 (13289.8Hz)
 #define NOTE_A9		SND_GET_DIV(1408000)	// note=A9 (14080Hz)
 #define NOTE_AS9	SND_GET_DIV(1491720)	// note=A#9 (14917.2Hz)
-#define NOTE_B9		SND_GET_DIV(1580430)	// note=B9 (15804.3Hz) ... divider 63
+#define NOTE_B9		SND_GET_DIV(1580430)	// note=B9 (15804.3Hz)
 
 #define NOTE_R		0			// pause
 

@@ -55,25 +55,25 @@
 
 // beep sound
 const sMelodyNote BeepSound[] = {
-	{ 1, NOTE_C5 },
+	{ 1, NOTE_C7 },
 	{ 0, 0 },
 };
 
 // beep sound 2
 const sMelodyNote BeepSound2[] = {
-	{ 1, NOTE_G4 },
+	{ 1, NOTE_G6 },
 	{ 0, 0 },
 };
 
 // fanfare sound
 const sMelodyNote FanfareSound[] = {
-	{ NOTE_LEN8, NOTE_C2 },
-	{ NOTE_LEN8, NOTE_E2 },
-	{ NOTE_LEN8, NOTE_G2 },
-	{ NOTE_LEN8, NOTE_C3 },
+	{ NOTE_LEN8, NOTE_C4 },
+	{ NOTE_LEN8, NOTE_E4 },
+	{ NOTE_LEN8, NOTE_G4 },
+	{ NOTE_LEN8, NOTE_C5 },
 	{ NOTE_LEN8, NOTE_R },
-	{ NOTE_LEN8, NOTE_G2 },
-	{ NOTE_LEN4, NOTE_C3 },
+	{ NOTE_LEN8, NOTE_G4 },
+	{ NOTE_LEN4, NOTE_C5 },
 	{ 0, 0 },
 };
 

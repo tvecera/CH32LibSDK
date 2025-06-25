@@ -164,71 +164,71 @@ int ShootX, ShootY; // shoot coordinate
 Bool ShootOn; // shoot is ON
 
 // tones
-const sMelodyNote Tone1Snd[] = { { 3, NOTE_G0 }, { 0, 0 }, };
-const sMelodyNote Tone2Snd[] = { { 3, NOTE_F0 }, { 0, 0 }, };
-const sMelodyNote Tone3Snd[] = { { 3, NOTE_E0 }, { 0, 0 }, };
-const sMelodyNote Tone4Snd[] = { { 3, NOTE_D0 }, { 0, 0 }, };
+const sMelodyNote Tone1Snd[] = { { 3, NOTE_G2 }, { 0, 0 }, };
+const sMelodyNote Tone2Snd[] = { { 3, NOTE_F2 }, { 0, 0 }, };
+const sMelodyNote Tone3Snd[] = { { 3, NOTE_E2 }, { 0, 0 }, };
+const sMelodyNote Tone4Snd[] = { { 3, NOTE_D2 }, { 0, 0 }, };
 const sMelodyNote* const Tones[4] = { Tone1Snd, Tone2Snd, Tone3Snd, Tone4Snd, };
 
 // shoot sound
 const sMelodyNote ShootSnd[] = {
-	{ 1, NOTE_F4 },
-	{ 1, NOTE_D4 },
-	{ 1, NOTE_CS4 },
-	{ 1, NOTE_E4 },
-	{ 1, NOTE_DS4 },
-	{ 1, NOTE_C4 },
+	{ 1, NOTE_F6 },
+	{ 1, NOTE_D6 },
+	{ 1, NOTE_CS6 },
+	{ 1, NOTE_E6 },
+	{ 1, NOTE_DS6 },
+	{ 1, NOTE_C6 },
 	{ 0, 0 },
 };
 
 // mother sound
 const sMelodyNote MotherSnd[] = {
-	{ 1, NOTE_D3 },
-	{ 1, NOTE_DS3 },
-	{ 1, NOTE_E3 },
-	{ 1, NOTE_F3 },
-	{ 1, NOTE_E3 },
-	{ 1, NOTE_DS3 },
-	{ 1, NOTE_D3 },
-	{ 1, NOTE_DS3 },
-	{ 1, NOTE_E3 },
-	{ 1, NOTE_F3 },
-	{ 1, NOTE_E3 },
-	{ 1, NOTE_DS3 },
-	{ 1, NOTE_D3 },
-	{ 1, NOTE_DS3 },
-	{ 1, NOTE_E3 },
-	{ 1, NOTE_F3 },
-	{ 1, NOTE_E3 },
-	{ 1, NOTE_DS3 },
+	{ 1, NOTE_D5 },
+	{ 1, NOTE_DS5 },
+	{ 1, NOTE_E5 },
+	{ 1, NOTE_F5 },
+	{ 1, NOTE_E5 },
+	{ 1, NOTE_DS5 },
+	{ 1, NOTE_D5 },
+	{ 1, NOTE_DS5 },
+	{ 1, NOTE_E5 },
+	{ 1, NOTE_F5 },
+	{ 1, NOTE_E5 },
+	{ 1, NOTE_DS5 },
+	{ 1, NOTE_D5 },
+	{ 1, NOTE_DS5 },
+	{ 1, NOTE_E5 },
+	{ 1, NOTE_F5 },
+	{ 1, NOTE_E5 },
+	{ 1, NOTE_DS5 },
 	{ 0, 0 },
 };
 
 // hit sound
 const sMelodyNote HitSnd[] = {
-	{ 1, NOTE_A1 },
-	{ 1, NOTE_F1 },
-	{ 1, NOTE_E1 },
-	{ 1, NOTE_F1 },
-	{ 1, NOTE_E1 },
-	{ 1, NOTE_G1 },
-	{ 1, NOTE_E1 },
-	{ 1, NOTE_D1 },
-	{ 1, NOTE_C1 },
+	{ 1, NOTE_A3 },
+	{ 1, NOTE_F3 },
+	{ 1, NOTE_E3 },
+	{ 1, NOTE_F3 },
+	{ 1, NOTE_E3 },
+	{ 1, NOTE_G3 },
+	{ 1, NOTE_E3 },
+	{ 1, NOTE_D3 },
+	{ 1, NOTE_C3 },
 	{ 0, 0 },
 };
 
 // crash sound
 const sMelodyNote CrashSnd[] = {
-	{ 3, NOTE_GS0 },
-	{ 3, NOTE_G0 },
-	{ 3, NOTE_FS0 },
-	{ 3, NOTE_F0 },
-	{ 3, NOTE_E0 },
-	{ 3, NOTE_DS0 },
-	{ 3, NOTE_D0 },
-	{ 3, NOTE_CS0 },
-	{ 3, NOTE_C0 },
+	{ 3, NOTE_GS2 },
+	{ 3, NOTE_G2 },
+	{ 3, NOTE_FS2 },
+	{ 3, NOTE_F2 },
+	{ 3, NOTE_E2 },
+	{ 3, NOTE_DS2 },
+	{ 3, NOTE_D2 },
+	{ 3, NOTE_CS2 },
+	{ 3, NOTE_C2 },
 	{ 0, 0 },
 };
 

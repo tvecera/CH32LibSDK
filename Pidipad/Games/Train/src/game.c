@@ -41,53 +41,53 @@ const char ScoreHlp[] = "SCORE";
 
 // step sound
 const sMelodyNote StepSound[] = {
-	{ 1, NOTE_C1 },
+	{ 1, NOTE_C3 },
 	{ 0, 0 },
 };
 
 // collect sound
 const sMelodyNote CollectSound[] = {
-	{ 1, NOTE_G1 },
-	{ 1, NOTE_A1 },
+	{ 1, NOTE_G3 },
+	{ 1, NOTE_A3 },
 	{ 0, 0 },
 };
 
 // crash sound
 const sMelodyNote CrashSound[] = {
+	{ 2, NOTE_C4 },
+	{ 2, NOTE_B3 },
+	{ 2, NOTE_AS3 },
+	{ 2, NOTE_A3 },
+	{ 2, NOTE_GS3 },
+	{ 2, NOTE_G3 },
+	{ 2, NOTE_FS3 },
+	{ 2, NOTE_F3 },
+	{ 2, NOTE_E3 },
+	{ 2, NOTE_DS3 },
+	{ 2, NOTE_D3 },
+	{ 2, NOTE_CS3 },
+	{ 2, NOTE_C3 },
+	{ 2, NOTE_B2 },
+	{ 2, NOTE_AS2 },
+	{ 2, NOTE_A2 },
+	{ 2, NOTE_GS2 },
+	{ 2, NOTE_G2 },
+	{ 2, NOTE_FS2 },
+	{ 2, NOTE_F2 },
+	{ 2, NOTE_E2 },
+	{ 2, NOTE_DS2 },
+	{ 2, NOTE_D2 },
+	{ 2, NOTE_CS2 },
 	{ 2, NOTE_C2 },
-	{ 2, NOTE_B1 },
-	{ 2, NOTE_AS1 },
-	{ 2, NOTE_A1 },
-	{ 2, NOTE_GS1 },
-	{ 2, NOTE_G1 },
-	{ 2, NOTE_FS1 },
-	{ 2, NOTE_F1 },
-	{ 2, NOTE_E1 },
-	{ 2, NOTE_DS1 },
-	{ 2, NOTE_D1 },
-	{ 2, NOTE_CS1 },
-	{ 2, NOTE_C1 },
-	{ 2, NOTE_B0 },
-	{ 2, NOTE_AS0 },
-	{ 2, NOTE_A0 },
-	{ 2, NOTE_GS0 },
-	{ 2, NOTE_G0 },
-	{ 2, NOTE_FS0 },
-	{ 2, NOTE_F0 },
-	{ 2, NOTE_E0 },
-	{ 2, NOTE_DS0 },
-	{ 2, NOTE_D0 },
-	{ 2, NOTE_CS0 },
-	{ 2, NOTE_C0 },
 	{ 0, 0 },
 };
 
 // success sound
 const sMelodyNote SuccessSound[] = {
-	{ NOTE_LEN8, NOTE_E2 },
+	{ NOTE_LEN8, NOTE_E4 },
 	{ NOTE_LEN8, NOTE_R },
-	{ NOTE_LEN8, NOTE_E2 },
-	{ NOTE_LEN2, NOTE_A2 },
+	{ NOTE_LEN8, NOTE_E4 },
+	{ NOTE_LEN2, NOTE_A4 },
 	{ 0, 0 },
 };
 

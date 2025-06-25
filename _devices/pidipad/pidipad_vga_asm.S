@@ -32,7 +32,7 @@
 #define TIM_CCER_OFF		0x20		// timer compare register
 #define TIM_CNT_OFF		0x24		// timer counter register offset
 #define TIM_ATRLR_OFF		0x2C		// ATRLR timer auto-reload value register
-#define TIM_CH2CVR_OFF		0x38		// CH2CVR timer compare/capture register 2
+#define TIM_CH1CVR_OFF		0x34		// CH1CVR timer compare/capture register 1
 
 .global FrameBuf			// (u8[]) display graphics buffer
 #if VMODE != 5
@@ -963,6 +963,160 @@
 #endif // VMODE == 8
 
 // ============================================================================
+//     9: Graphics mode 128x80 pixels mono with color attributes 1x1 pixels
+// ============================================================================
+
+#if VMODE == 9
+
+// ---- draw code
+// Registers:
+//  A0 = temporary with sample
+//  A1 = loop counter
+//  A2 = pointer to graphics buffer
+//  A3 = pointer to attribute buffer
+//  A4 = SPI
+//  A5 = PORTB
+//  T0 = current line, temporary
+//  T1 = return address
+//  T2 = TIM, temporary
+
+.macro vga_draw
+
+	// test - get TIM-CNT value at start of image (should be 416-67=349)
+//	lw	a0,TIM_CNT_OFF(t2)	// load timer counter
+//	la	a1,DispTimTest
+//	sw	a0,0(a1)		// save value
+
+	.align 2,,			// -67: [1]
+	// [2] send gap to SPI, to start SPI data synchronization
+	sw	x0,SPI_DATAR_OFF(a4)	// -66: [2] send gap to SPI
+
+	// [52] delay
+	li	a1,13			// -64: [1]
+
+	.align 2,,			// -63: [1]
+
+	// [12*4+2=50] loop		// -62: [50]
+1:	addi	a1,a1,-1		// ... [1]
+	bnez	a1,1b			// ... [1 pass, 3 loop] loop ... 4 clock cycles per loop
+
+	// save T0
+	addi	sp,sp,-4		// -12: [1]
+	sw	t0,0(sp)		// -11: [2]
+
+	// [6] send sample to SPI
+1:	lbu	t0,0(a2)		// -9: [2] T0 <- load sample
+
+	// [1] load first sample
+	lbu	t2,0(a3)		// -7: [2] T2 <- load 2 colors
+
+	// [1] prepare number of samples -> A1
+	li	a1,16			// -5: [1] 
+
+	.align 2,,			// -4: [1]
+
+// [64 loop] ... This address must be aligned
+
+// T0 = sample
+// T2 = color
+
+	// [3] send sample
+2:	addi	a2,a2,1			// -3: [1] increase sample address
+	sw	t0,SPI_DATAR_OFF(a4)	// -2: [2] send sample to SPI
+
+	// [2] send 1st pixel
+	sw	t2,GPIO_OUTDR_OFF(a5)	// 0: [2] send color
+
+	// [4] delay
+	j	1f			// +2: [3]
+1:	nop				// +5: [1]
+	
+	// [4] send 2nd pixel
+	srli	t2,t2,4			// +6: [1] T2 <- load 2nd attribute
+	addi	a3,a3,1			// +7: [1] increase attribute address
+	sw	t2,GPIO_OUTDR_OFF(a5)	// +8: [2] send color
+
+	// [3] delay
+	j	1f			// +10: [3]
+
+	// [6] send 3rd pixel
+1:	lbu	a0,0(a3)		// +13: [2] A0 <- load 2 colors
+	addi	a3,a3,1			// +15: [1] increase attribute address
+	sw	a0,GPIO_OUTDR_OFF(a5)	// +16: [2] send color
+
+	// [5] delay
+	j	1f			// +18: [3]
+1:	nop_rep	2			// +21: [2]
+
+	// send 4th pixel
+	srli	a0,a0,4			// +23: [1] A0 <- load 2nd attribute
+	sw	a0,GPIO_OUTDR_OFF(a5)	// +24: [2] send color
+
+	// [3] delay
+	j	1f			// +26: [3]
+
+	// [6] send 5th pixel
+1:	lbu	a0,0(a3)		// +29: [2] A0 <- load 2 colors
+	addi	a3,a3,1			// +31: [1] increase attribute address
+	sw	a0,GPIO_OUTDR_OFF(a5)	// +32: [2] send color
+
+	// [5] delay
+	j	1f			// +34: [3]
+1:	lbu	t0,0(a2)		// +37: [2] T0 <- load sample
+
+	// send 6th pixel
+	srli	a0,a0,4			// +39: [1] A0 <- load 2nd attribute
+	sw	a0,GPIO_OUTDR_OFF(a5)	// +40: [2] send color
+
+	// [3] send sample to SPI
+	j	1f			// +42: [3]
+
+	// [6] send 7th pixel
+1:	lbu	a0,0(a3)		// +45: [2] A0 <- load 2 colors
+	addi	a3,a3,1			// +47: [1] increase attribute address
+	sw	a0,GPIO_OUTDR_OFF(a5)	// +48: [2] send color
+
+	// [5] delay
+	nop_rep	2			// +50: [2]
+	lbu	t2,0(a3)		// +52: [2] T2 <- load 2 colors
+	addi	a1,a1,-1		// +54: [1] loop counter
+
+	// send 8th pixel
+	srli	a0,a0,4			// +55: [1] A1 <- load 2nd attribute
+	sw	a0,GPIO_OUTDR_OFF(a5)	// +56: [2] send color
+
+	// [4,2] loop counter
+	bnez	a1,2b			// +58: [1,3]
+					// +59 (pass), +61 (loop):
+	// send black color
+	sw	x0,SPI_DATAR_OFF(a4)	// +59: [2] send black sample to SPI
+	nop_rep	2			// +61: [2]
+	sw	x0,GPIO_OUTDR_OFF(a5)	// +63: [2] send black color
+
+// Registers:
+//  A2 = pointer to graphics buffer
+//  T0 = current line
+//  T1 = return address
+
+	// restore T0
+	lw	t0,0(sp)		// [2]
+	addi	sp,sp,4			// [1]
+
+	// save new sample pointer only every 4th scanline (divide line by 4)
+	li	a1,3			// to compare
+	and	a0,t0,a1		// get lowest 2 bits
+	bne	a0,a1,1f		// skip if not correct scanline
+	la	a4,FrameBufAddr
+	sw	a2,0(a4)		// save new pointer
+	la	a4,AttrBufAddr
+	sw	a3,0(a4)		// save new pointer
+1:	j	TIM2_IRQHandler4	// increase scanline
+
+.endm
+
+#endif // VMODE == 9
+
+// ============================================================================
 //                   Timer handler - draw VGA graphics line
 // ============================================================================
 
@@ -1012,6 +1166,8 @@ TIM2_IRQHandler:
 	addi	a0,a0,5			// [1] time correction: select 0 to 7
 #elif VMODE == 8
 	addi	a0,a0,5			// [1] time correction: select 0 to 7
+#elif VMODE == 9
+	addi	a0,a0,5			// [1] time correction: select 0 to 7
 #endif
 
 // ==========
@@ -1038,7 +1194,9 @@ TIM2_IRQHandler_sync:
 //  T2 = TIM
 
 	// check active image
-#if (VMODE == 4) || (VMODE == 5)
+#if VMODE == 9
+	li	a1,320
+#elif (VMODE == 4) || (VMODE == 5)
 	li	a1,384
 #else
 	li	a1,480
@@ -1084,7 +1242,9 @@ TIM2_IRQHandler_sync:
 TIM2_IRQHandler2:
 
 	// check front porch
-#if (VMODE == 4) || (VMODE == 5)
+#if VMODE == 9
+	li	a1,320+64+10
+#elif (VMODE == 4) || (VMODE == 5)
 	li	a1,384+48+10
 #else
 	li	a1,480+10
@@ -1094,7 +1254,9 @@ TIM2_IRQHandler2:
 	// VSYNC
 	li	a5,GPIOC_BASE		// A5 <- port C
 	li	a0,1<<1			// pin 1 of port C
-#if (VMODE == 4) || (VMODE == 5)
+#if VMODE == 9
+	li	a1,320+64+10+2 - 1
+#elif (VMODE == 4) || (VMODE == 5)
 	li	a1,384+48+10+2 - 1
 #else
 	li	a1,480+10+2 - 1
@@ -1267,7 +1429,7 @@ TIM2_IRQHandler5:
 	// set timer load
 	sw	a3,TIM_ATRLR_OFF(a4)	// save auto-reload register
 	srli	a3,a3,1			// divider / 2
-	sw	a3,TIM_CH2CVR_OFF(a4)	// save compare register
+	sw	a3,TIM_CH1CVR_OFF(a4)	// save compare register
 
 	// enable melody
 	lw	a0,TIM_CCER_OFF(a4)	// load compare register
@@ -1277,7 +1439,7 @@ TIM2_IRQHandler5:
 
 	// stop melody
 8:	lw	a0,TIM_CCER_OFF(a4)	// load compare register
-	andi	a0,a0,~(1<<0)		// disable channel 2
+	andi	a0,a0,~(1<<0)		// disable channel 1
 	sw	a0,TIM_CCER_OFF(a4)	// save compare register
 
 #endif // USE_SOUND
