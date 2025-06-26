@@ -28,6 +28,14 @@ How to compile on Windows, using command line:
 
 Pidipad
 -------
+Pidipad is mini game console with 8 buttons, CH32V006E8R6 processor,
+25 MHz crystal, microSD card, audio output, and VGA output to monitor.
+The crystal and associated capacitors do not need to be used - if the
+software detects that the crystal is not present, it will use the
+internal HSI oscillator, tuned to a frequency close to 25 MHz. In this
+case, the image will be slightly noisy, but still usable - it depends
+on the monitor used how well it handles image stabilization.
+
 Programs compiled for PidiPad contain a boot loader. Writing to flash
 memory using a programmer writes both the program and the boot loader.
 Pressing the Y button (or resetting with an SD card inserted) launches
