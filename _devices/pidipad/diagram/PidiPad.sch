@@ -6,7 +6,7 @@
 <setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="100" unitdist="mil" unit="mil" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
+<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="no" active="no"/>
 <layer number="16" name="Bottom" color="1" fill="1" visible="no" active="no"/>
@@ -12551,6 +12551,11 @@ MICRO SD CARD CONNECTOR&lt;BR&gt;HINGE&lt;BR&gt;8PINS</description>
 <text x="-86.36" y="2.54" size="1.778" layer="91">3.3V</text>
 <text x="-86.36" y="0" size="1.778" layer="91">GND</text>
 <text x="-86.36" y="-2.54" size="1.778" layer="91">SWIO</text>
+<wire x1="17.78" y1="-27.94" x2="40.64" y2="-27.94" width="0.1524" layer="97"/>
+<wire x1="40.64" y1="-27.94" x2="40.64" y2="2.54" width="0.1524" layer="97"/>
+<wire x1="40.64" y1="2.54" x2="17.78" y2="2.54" width="0.1524" layer="97"/>
+<wire x1="17.78" y1="2.54" x2="17.78" y2="-27.94" width="0.1524" layer="97"/>
+<text x="20.32" y="2.54" size="1.778" layer="97">Optional Crystal</text>
 </plain>
 <instances>
 <instance part="X2" gate="-1" x="38.1" y="25.4">
@@ -12637,17 +12642,17 @@ MICRO SD CARD CONNECTOR&lt;BR&gt;HINGE&lt;BR&gt;8PINS</description>
 <attribute name="NAME" x="-35.56" y="-22.86" size="1.778" layer="95"/>
 <attribute name="VALUE" x="-33.02" y="12.7" size="1.778" layer="96"/>
 </instance>
-<instance part="Q1" gate="G$1" x="27.94" y="-7.62" rot="R180">
-<attribute name="NAME" x="29.21" y="0.254" size="1.778" layer="95" rot="R180"/>
-<attribute name="VALUE" x="31.75" y="-3.81" size="1.778" layer="96" rot="R180"/>
+<instance part="Q1" gate="G$1" x="30.48" y="-7.62" rot="R180">
+<attribute name="NAME" x="31.75" y="0.254" size="1.778" layer="95" rot="R180"/>
+<attribute name="VALUE" x="34.29" y="-3.81" size="1.778" layer="96" rot="R180"/>
 </instance>
-<instance part="C1" gate="G$1" x="22.86" y="-15.24" rot="R180">
-<attribute name="NAME" x="21.336" y="-15.621" size="1.778" layer="95" rot="R180"/>
-<attribute name="VALUE" x="21.336" y="-10.541" size="1.778" layer="96" rot="R180"/>
+<instance part="C1" gate="G$1" x="25.4" y="-15.24" rot="R180">
+<attribute name="NAME" x="23.876" y="-15.621" size="1.778" layer="95" rot="R180"/>
+<attribute name="VALUE" x="23.876" y="-10.541" size="1.778" layer="96" rot="R180"/>
 </instance>
-<instance part="C2" gate="G$1" x="33.02" y="-15.24" rot="R180">
-<attribute name="NAME" x="31.496" y="-15.621" size="1.778" layer="95" rot="R180"/>
-<attribute name="VALUE" x="31.496" y="-10.541" size="1.778" layer="96" rot="R180"/>
+<instance part="C2" gate="G$1" x="35.56" y="-15.24" rot="R180">
+<attribute name="NAME" x="34.036" y="-15.621" size="1.778" layer="95" rot="R180"/>
+<attribute name="VALUE" x="34.036" y="-10.541" size="1.778" layer="96" rot="R180"/>
 </instance>
 <instance part="K2" gate="G$1" x="-76.2" y="-33.02">
 <attribute name="NAME" x="-81.28" y="-50.8" size="1.778" layer="95"/>
@@ -12661,8 +12666,8 @@ MICRO SD CARD CONNECTOR&lt;BR&gt;HINGE&lt;BR&gt;8PINS</description>
 <attribute name="NAME" x="-36.576" y="30.861" size="1.778" layer="95"/>
 <attribute name="VALUE" x="-36.576" y="25.781" size="1.778" layer="96"/>
 </instance>
-<instance part="GND4" gate="1" x="22.86" y="-25.4">
-<attribute name="VALUE" x="20.32" y="-27.94" size="1.778" layer="96"/>
+<instance part="GND4" gate="1" x="25.4" y="-25.4">
+<attribute name="VALUE" x="22.86" y="-27.94" size="1.778" layer="96"/>
 </instance>
 <instance part="GND7" gate="1" x="-60.96" y="-12.7">
 <attribute name="VALUE" x="-63.5" y="-15.24" size="1.778" layer="96"/>
@@ -12739,13 +12744,13 @@ MICRO SD CARD CONNECTOR&lt;BR&gt;HINGE&lt;BR&gt;8PINS</description>
 </segment>
 <segment>
 <pinref part="C1" gate="G$1" pin="1"/>
-<wire x1="22.86" y1="-17.78" x2="22.86" y2="-20.32" width="0.1524" layer="91"/>
+<wire x1="25.4" y1="-17.78" x2="25.4" y2="-20.32" width="0.1524" layer="91"/>
 <pinref part="C2" gate="G$1" pin="1"/>
-<wire x1="33.02" y1="-17.78" x2="33.02" y2="-20.32" width="0.1524" layer="91"/>
-<wire x1="33.02" y1="-20.32" x2="22.86" y2="-20.32" width="0.1524" layer="91"/>
+<wire x1="35.56" y1="-17.78" x2="35.56" y2="-20.32" width="0.1524" layer="91"/>
+<wire x1="35.56" y1="-20.32" x2="25.4" y2="-20.32" width="0.1524" layer="91"/>
 <pinref part="GND4" gate="1" pin="GND"/>
-<wire x1="22.86" y1="-22.86" x2="22.86" y2="-20.32" width="0.1524" layer="91"/>
-<junction x="22.86" y="-20.32"/>
+<wire x1="25.4" y1="-22.86" x2="25.4" y2="-20.32" width="0.1524" layer="91"/>
+<junction x="25.4" y="-20.32"/>
 </segment>
 <segment>
 <pinref part="X4" gate="J$1" pin="2"/>
@@ -13015,24 +13020,24 @@ MICRO SD CARD CONNECTOR&lt;BR&gt;HINGE&lt;BR&gt;8PINS</description>
 <segment>
 <pinref part="IC1" gate="G$1" pin="PA1/PA6/A1/XI"/>
 <pinref part="Q1" gate="G$1" pin="2"/>
-<wire x1="2.54" y1="-7.62" x2="22.86" y2="-7.62" width="0.1524" layer="91"/>
+<wire x1="2.54" y1="-7.62" x2="25.4" y2="-7.62" width="0.1524" layer="91"/>
 <pinref part="C1" gate="G$1" pin="2"/>
-<wire x1="22.86" y1="-7.62" x2="25.4" y2="-7.62" width="0.1524" layer="91"/>
-<wire x1="22.86" y1="-10.16" x2="22.86" y2="-7.62" width="0.1524" layer="91"/>
-<junction x="22.86" y="-7.62"/>
+<wire x1="25.4" y1="-7.62" x2="27.94" y2="-7.62" width="0.1524" layer="91"/>
+<wire x1="25.4" y1="-10.16" x2="25.4" y2="-7.62" width="0.1524" layer="91"/>
+<junction x="25.4" y="-7.62"/>
 <label x="5.08" y="-7.62" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="XO" class="0">
 <segment>
 <pinref part="C2" gate="G$1" pin="2"/>
-<wire x1="33.02" y1="-10.16" x2="33.02" y2="-7.62" width="0.1524" layer="91"/>
+<wire x1="35.56" y1="-10.16" x2="35.56" y2="-7.62" width="0.1524" layer="91"/>
 <pinref part="Q1" gate="G$1" pin="1"/>
-<wire x1="33.02" y1="-7.62" x2="30.48" y2="-7.62" width="0.1524" layer="91"/>
+<wire x1="35.56" y1="-7.62" x2="33.02" y2="-7.62" width="0.1524" layer="91"/>
 <pinref part="IC1" gate="G$1" pin="PA2/A0/XO"/>
-<wire x1="2.54" y1="-2.54" x2="33.02" y2="-2.54" width="0.1524" layer="91"/>
-<wire x1="33.02" y1="-2.54" x2="33.02" y2="-7.62" width="0.1524" layer="91"/>
-<junction x="33.02" y="-7.62"/>
+<wire x1="2.54" y1="-2.54" x2="35.56" y2="-2.54" width="0.1524" layer="91"/>
+<wire x1="35.56" y1="-2.54" x2="35.56" y2="-7.62" width="0.1524" layer="91"/>
+<junction x="35.56" y="-7.62"/>
 <label x="5.08" y="-2.54" size="1.778" layer="95"/>
 </segment>
 </net>
