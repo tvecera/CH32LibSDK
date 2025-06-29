@@ -37,6 +37,7 @@ extern const u8* DrawFont;	// current draw font (characters 8x8)
 extern const u8* DrawFontCond;	// current draw condensed font (characters 6x8)
 extern int PrintPos;		// current print position
 extern int PrintRow;		// current print row
+extern u8 PrintCol;		// current print color
 extern u8 PrintInv;		// print inversion - offset added to characters (128 = inversion)
 
 #if USE_DRAW || USE_PRINT
