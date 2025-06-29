@@ -22,19 +22,46 @@ How to compile on Windows, using command line:
   It may sometimes be necessary to erase the flash memory using power-off,
   because OpenOcd cannot do this.
 - Compile sample using c.bat.
-- Flash compiled sample using e.bat with WCH-LinkE programmer.
+- Flash compiled sample using e.bat with WCH-LinkE programmer (available here,
+  for example: https://pajenicko.cz/usb-programator-a-debug-adapter-wch-link ).
+  For the SD card version of the console, simply upload the program to the
+  SD card and load it into the processor using the boot loader.
 - Clear compilation using d.bat.
+
+
+BabyPad
+-------
+BabyPad is a mini game console with 7 buttons, CH32V002A4M6 processor,
+25 MHz crystal (optional), audio output, and VGA mono B&W output to a
+monitor. The crystal and associated capacitors are not required - if
+the software detects that the crystal is not available, it will use the
+internal HSI oscillator, tuned to a frequency close to 25 MHz. In this
+case, the image will be slightly noisy, but still usable - it depends
+on the monitor used how well it handles image stabilization. BabyPad
+uses a processor in an SOP16 package with a pin pitch of 1.27 mm, which
+makes soldering easy even for beginners. Together with its simple design
+(and the option of not installing a crystal), it is primarily intended
+for beginners as a kit for their first introduction to electronics.
+
+BabyPad does not include an SD card. Programs must be uploaded to the
+processor using the WCH-LinkE programmer (available here, for example:
+https://pajenicko.cz/usb-programator-a-debug-adapter-wch-link).
+
+In the _devices\babypad\diagram\ folder, you will find diagram of the
+BabyPad console. In the !Babypad folder, you will find a ready-made
+sample programs for the BabyPad. The Babypad folder contains source
+codes of sample applications for BabyPad.
 
 
 Pidipad
 -------
 Pidipad is mini game console with 8 buttons, CH32V006E8R6 processor,
-25 MHz crystal, microSD card, audio output, and VGA output to monitor.
-The crystal and associated capacitors do not need to be used - if the
-software detects that the crystal is not present, it will use the
-internal HSI oscillator, tuned to a frequency close to 25 MHz. In this
-case, the image will be slightly noisy, but still usable - it depends
-on the monitor used how well it handles image stabilization.
+25 MHz crystal (optional), microSD card, audio output, and VGA output
+to monitor. The crystal and associated capacitors do not need to be
+used - if the software detects that the crystal is not present, it will
+use the internal HSI oscillator, tuned to a frequency close to 25 MHz.
+In this case, the image will be slightly noisy, but still usable - it
+depends on the monitor used how well it handles image stabilization.
 
 Programs compiled for PidiPad contain a boot loader. Writing to flash
 memory using a programmer writes both the program and the boot loader.
@@ -52,3 +79,8 @@ the LoaderCrc program. This is used by the boot loader to check the
 application in flash memory. If you want to load the application into
 flash memory using WCH-LinkUtility, you must use a BIN file and not a HEX
 file, because the generated HEX file does not have a checksum.
+
+In the _devices\pidipad\diagram\ folder, you will find diagram of the
+PidiPad console. In the !Pidipad folder, you will find a ready-made SD
+card image. The Pidipad folder contains source codes of sample
+applications for PidiPad.
