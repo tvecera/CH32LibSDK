@@ -25,3 +25,7 @@
 #if USE_PIDIPAD
 #include "_devices/pidipad/_include.h"
 #endif
+
+#if USE_BABYPAD
+#include "_devices/babypad/_include.h"
+#endif

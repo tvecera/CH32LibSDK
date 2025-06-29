@@ -98,7 +98,7 @@ void DispInit()
 //   reload ... reload value 0..65535 (timer period = reload+1)
 //   comp ... compare value 0..reload
 //   high ... direction HIGH->LOW (or LOW->HIGH otherwise)
-	TIM2_InitPWM(2, 1, 1600, 192, False);
+	TIM2_InitPWM(2, 1, 1600-1, 192, False);
 
 	// Setup interrupt on Timer 2 channel 1 to display image
 	//  160x120: 8 clock cycles per pixel, 64 clock cycles per character

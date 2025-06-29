@@ -181,7 +181,7 @@ void DispPaddles()
 }
 
 // display ball
-#define OVERDRAW2	5
+#define OVERDRAW2	6
 void DispBall()
 {
 	if (BallState == BALL_IN)

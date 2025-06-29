@@ -1,8 +1,4 @@
 
-// Using system clock 25MHz with HSE external crystal 25MHz and without PLL.
-// Do not use 50MHz with PLL - flash access requires high latency 2 clock cycles
-// and it would be difficult to do the correct timing for VGA rendering.
-
 #define BOOTLOADER_SIZE	0x5000	// size of boot loader (20 KB; must be multiply of sector size 512 B)
 
 // Videomodes (9 colors: 1 black background + 8 foreground colors):
@@ -76,6 +72,11 @@
 #define SYSCLK_SRC	5
 #endif
 
+// PLL multiplier
+#ifndef PLLCLK_MUL
+#define PLLCLK_MUL	2		// only *2 supported; 24 MHz * 2 = 48 MHz
+#endif
+
 // System clock divider: 1, 2, 3, 4, 5, 6, 7, 8, 16, 32, 64, 128, 256 (default 1)
 #ifndef SYSCLK_DIV
 #define SYSCLK_DIV	1
@@ -83,7 +84,7 @@
 
 // ADC clock divider: (1,) 2, 4, 6, 8, 12, 16, 24, 32, 48, 64, 96, 128 (default 1 or 2)
 #ifndef ADCCLK_DIV
-#define ADCCLK_DIV	1		// CH32V0: max. 24 MHz (48 / 2 = 24 MHz)
+#define ADCCLK_DIV	2		// CH32V0: max. 24 MHz (48 / 2 = 24 MHz)
 #endif
 
 // number of HCLK clock cycles per 1 us (used with Wait functions)

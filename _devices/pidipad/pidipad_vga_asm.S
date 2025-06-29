@@ -25,7 +25,7 @@
 
 #define SPI_DATAR_OFF		0x0C		// data register offset
 #define GPIO_INDR_OFF		0x08		// GPIO input register offset
-#define GPIO_OUTDR_OFF		0x0C		// GPIO output regsiter offset
+#define GPIO_OUTDR_OFF		0x0C		// GPIO output register offset
 #define GPIO_BSHR_OFF		0x10		// GPIO bit set output data register
 #define GPIO_BCR_OFF		0x14		// GPIO bit clear output data register
 #define TIM_INTFR_OFF		0x10		// timer interrupt register offset
@@ -717,7 +717,7 @@
 //  A5 = PORTB
 //  T0 = current line
 //  T1 = return address
-//  T2 = (TIM)r pointer to font
+//  T2 = (TIM) pointer to font
 
 .macro vga_draw
 
@@ -866,7 +866,7 @@
 //  A5 = PORTB
 //  T0 = current line
 //  T1 = return address
-//  T2 = (TIM)r pointer to font
+//  T2 = (TIM) pointer to font
 
 .macro vga_draw
 
@@ -1308,7 +1308,7 @@ TIM2_IRQHandler2:
 
 	// already pressed - count repeat counter
 	lbu	a0,KEY_NUM(a3)		// A0 <- get repeat counter
-	addi	a0,a0,-1		// decrement repaat counter
+	addi	a0,a0,-1		// decrement repeat counter
 	sb	a0,KEY_NUM(a3)		// save new repeat counter
 	bnez	a0,3f			// no repeat
 	li	a4,KEYCNT_REPEAT	// A4 <- repeat is 0.1 sec
@@ -1403,7 +1403,7 @@ TIM2_IRQHandler5:
 
 	// request to start new melody
 	la	a3,SoundMelodyNext
-	lw	a3,0(a3)		// A2 <- pointer to next melody
+	lw	a3,0(a3)		// A3 <- pointer to next melody
 	sw	a3,0(a2)		// save new pointer
 	j	5f			// start new note
 
@@ -1423,7 +1423,7 @@ TIM2_IRQHandler5:
 	beqz	a0,8f			// stop melody
 
 	// get note divider
-	lhu	a3,2(a3)		// A0 <- note divider
+	lhu	a3,2(a3)		// A3 <- note divider
 	beqz	a3,8f			// pause
 
 	// set timer load

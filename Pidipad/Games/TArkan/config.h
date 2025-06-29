@@ -55,7 +55,7 @@
 //#define HSE_VALUE	25000000	// CH32V0, CH32L103: 4..25 MHz
 
 // System clock source: 1=HSI, 2=HSE, 3=HSE_Bypass, 4=PLL_HSI, 5=PLL_HSE, 6=PLL_HSE_Bypass, 7=PLL_HSI/2, 8=PLL_HSE/2, 9=PLL_HSE_Bypass/2
-//#define SYSCLK_SRC	6
+//#define SYSCLK_SRC	5
 
 // PLL multiplier
 //#define PLLCLK_MUL	2		// only *2 supported; 24 MHz * 2 = 48 MHz
@@ -64,7 +64,7 @@
 //#define SYSCLK_DIV	1
 
 // ADC clock divider: (1,) 2, 4, 6, 8, 12, 16, 24, 32, 48, 64, 96, 128 (default 1 or 2)
-//#define ADCCLK_DIV	1		// CH32V0: max. 24 MHz (48 / 2 = 24 MHz)
+//#define ADCCLK_DIV	2		// CH32V0: max. 24 MHz (48 / 2 = 24 MHz)
 
 // number of HCLK clock cycles per 1 us (used with Wait functions)
 // - If you want to change frequency of system clock run-time, use a variable instead of constant.
