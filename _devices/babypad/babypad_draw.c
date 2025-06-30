@@ -1606,6 +1606,25 @@ void DrawImgFast(const u8* img, int x, int y, int xs, int ys, int w, int h, int 
 	}
 }
 
+void DrawImgInvFast(const u8* img, int x, int y, int xs, int ys, int w, int h, int wsb)
+{
+	int i, j;
+	const u8* s = &img[(xs >> 3) + ys*wsb];		// source pixels
+	u8* d = &FrameBuf[(x >> 3) + y*WIDTHBYTE];	// destination pixels
+	w >>= 3;
+	wsb -= w;
+	int wdb = WIDTHBYTE - w;
+	for (i = h; i > 0; i--)
+	{
+		for (j = w; j > 0; j--)
+		{
+			*d++ = ~*s++;
+		}
+		s += wsb;
+		d += wdb;
+	}
+}
+
 // draw mono image, transparent background
 void DrawImg(const u8* img, int x, int y, int w, int h, int wsb, u8 col)
 {
