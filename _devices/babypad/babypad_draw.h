@@ -53,6 +53,9 @@ void DrawPoint(int x, int y, u8 col);
 void DrawPointClr(int x, int y);
 void DrawPointSet(int x, int y);
 void DrawPointInv(int x, int y);
+void DrawPointFast(int x, int y, u8 col);
+void DrawPointClrFast(int x, int y);
+void DrawPointSetFast(int x, int y);
 
 // get pixel color
 u8 DrawGetPoint(int x, int y);
