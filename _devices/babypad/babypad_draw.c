@@ -85,6 +85,8 @@ u8 DrawGetPoint(int x, int y)
 	u8* a = &AttrBuf[(y>>1)*ATTRWIDTHBYTE + (x2>>3)];
 	x2 = 7 - (x2 & 7);
 	col |= ((*a >> x2) & 1) << 1;
+#else
+	if (col == 1) col = COL_WHITE;
 #endif
 
 	return col;

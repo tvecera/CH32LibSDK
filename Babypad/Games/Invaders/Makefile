@@ -44,7 +44,7 @@ include ${CH32_ROOT_PATH}/Makefile1.inc
 ##############################################################################
 
 # Target project name
-TARGET=Fifteen
+TARGET=Invaders
 
 # Destination directory
 TARGETDIR=Games
@@ -59,6 +59,7 @@ ASRC +=
 # C source files
 CSRC += src/main.c
 CSRC += img/imgintro.c
+CSRC += img/sprites.c
 
 # C++ source files
 SRC +=

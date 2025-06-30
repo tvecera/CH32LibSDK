@@ -20,7 +20,7 @@
 #define TILEX		2	// first tile X column
 
 #define TILE_COL	COL_WHITE	// tile color
-#define EMPTY_COL	COL_GRAY	// empty color
+#define EMPTY_COL	COL_WHITE	// empty color
 
 // game board
 u8 Board[TILESNUM];	// visible board
@@ -552,8 +552,7 @@ int main(void)
 
 	// display splash screen
 	KeyWaitNoPressed();
-	DrawImgBg(ImgIntroWhite, 0, 0, WIDTH, HEIGHT, WIDTHBYTE, COL_WHITE);
-	DrawImg(ImgIntroGray, 0, 0, WIDTH, HEIGHT, WIDTHBYTE, COL_GRAY);
+	DrawImgBg(ImgIntro, 0, 0, WIDTH, HEIGHT, WIDTHBYTE, COL_WHITE);
 	while (KeyGet() == NOKEY) {}
 	DrawClear();
 

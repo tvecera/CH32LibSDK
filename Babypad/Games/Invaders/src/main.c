@@ -4,55 +4,59 @@
 //                                  Invaders game
 //
 // ****************************************************************************
-// All graphics and movements are multiply of 4 pixels.
 
 #include "../include.h"
 
 // === score
 
-#define LINEY1		11	// line 1 Y coordinate
-#define LINEY2		(HEIGHT-12) // line 2 Y coordinate
+#define LINEY1		6	// line 1 Y coordinate
+#define LINEY2		(HEIGHT-7) // line 2 Y coordinate
 #define SCOREY		0	// score Y coordinate
 #define SCOREX		0	// score X coordinate
-#define MAXSCOREX	(WIDTH-15*8)	// max. score X coordinate
-#define LEVELY		(HEIGHT-8) // level Y coordinate
-#define LEVELX		(WIDTH-9*8) // level X coordinate
+#define MAXSCOREX	(WIDTH-9*6)	// max. score X coordinate
+#define LEVELY		(HEIGHT-5) // level Y coordinate
+#define LEVELX		(WIDTH-8*6) // level X coordinate
 
 // === spaceship
 
 #define SHIPW		12	// ship width
-#define SHIPH		8	// ship height
+#define SHIPH		7	// ship height
 #define SHIPIMGX	(0/8)	// ship image X coordinate in sprites
 #define SHIPIMGY	24	// ship image Y coordinate in sprites
 #define SHIPEXPIMGX	(16/8)	// ship explosion image X coordinate
 #define SHIPEXPIMGY	24	// ship explosion image Y coordinate
-#define SHIPY		(HEIGHT-8-8-SHIPH) // ship Y coordinate (= 160, must be multiply of 4)
-#define SHIPX		(((WIDTH - SHIPW)/2) & ~3) // ship initial X coordinate (= 120, must be multiply of 4)
-#define SHIPDX		16	// delta X of ship lives
+#define SHIPY		(HEIGHT-8-SHIPH) // ship Y coordinate
+#define SHIPX		((WIDTH - SHIPW)/2) // ship initial X coordinate
 
-#define SHIP_COL	COL_YELLOW	// ship color
+#define LIVEIMGX	(24/8)	// live image X coordinate in sprites
+#define LIVEIMGY	40	// live image Y coordinate in sprites
+#define LIVEW		8	// live width
+#define LIVEH		5	// live height
+#define LIVEDX		10	// delta X of ship lives
+
+#define SHIP_COL	COL_WHITE	// ship color
 
 // === house
 
-#define HOUSEW		24	// house width
-#define HOUSEH		16	// house height
+#define HOUSEW		20	// house width
+#define HOUSEH		12	// house height
 #define HOUSEIMGX	(0/8)	// house image X coordinate in sprites
 #define HOUSEIMGY	32	// house image Y coordinate in sprites
-#define HOUSEY		(SHIPY-8-HOUSEH) // house Y coordinate (= 136, must be multiply of 4)
+#define HOUSEY		(SHIPY-1-HOUSEH) // house Y coordinate
 
 #define HOUSENUM	4	// number of houses
-#define HOUSEDX		(3*ALIENDX) // house delta X coordinate (= 48)
-#define HOUSESPACEX	(HOUSEDX - HOUSEW) // space between houses (= 24)
-#define HOUSETOTW	(HOUSENUM*HOUSEDX - HOUSESPACEX) // house total width (= 168)
-#define HOUSEX		(((WIDTH-HOUSETOTW)/2) & ~3) // house X coordinate (= 44, must be multiply of 4)
+#define HOUSEDX		32	// house delta X coordinate
+#define HOUSESPACEX	(HOUSEDX - HOUSEW) // space between houses
+#define HOUSETOTW	(HOUSENUM*HOUSEDX - HOUSESPACEX) // house total width
+#define HOUSEX		((WIDTH-HOUSETOTW)/2) // house X coordinate
 
-#define HOUSE_COL	COL_RED	// house color
+#define HOUSE_COL	COL_WHITE	// house color
 
 // === mothership
 
-#define MOTHERY		16	// alien mothership Y coordinate
+#define MOTHERY		8	// alien mothership Y coordinate
 #define MOTHERW		16	// alien mothership width
-#define MOTHERH		8	// alien mothership height
+#define MOTHERH		7	// alien mothership height
 #define MOTHERIMGX	(0/8)	// alien mothership image X coordinate in sprites
 #define MOTHERIMGY	48	// alien mothership image Y coordinate in sprites
 
@@ -60,14 +64,14 @@
 #define MOTHEREXPIMGY	48	// alien mothership explosion image Y coordinate in sprites
 
 #define NEXTMOTHER	500	// number of steps to generate new mothership
-#define MOTHER_COL	COL_CYAN // mothership color
+#define MOTHER_COL	COL_WHITE // mothership color
 
 // === aliens
 
 #define ALIENW		12	// alien width
 #define ALIENH		8	// alien height
 
-#define ALIENNUMX	11	// number of aliens in X direction
+#define ALIENNUMX	8	// number of aliens in X direction
 #define ALIENNUMY	5	// number of aliens in Y direction
 #define ALIENNUM	(ALIENNUMX*ALIENNUMY) // number of aliens (= 55)
 #define ALIENSPACEX	4	// space between aliens in X direction
@@ -75,17 +79,17 @@
 #define ALIENTOTW	(ALIENNUMX*ALIENDX - ALIENSPACEX) // alien total initial widh (= 172)
 #define ALIENTOTX	(((WIDTH - ALIENTOTW)/2) & ~3) // alien block initial X coordinate, rounded down to 4 pixels (= 40)
 
-#define ALIENSPACEY	8	// space between aliens in Y direction
+#define ALIENSPACEY	2	// space between aliens in Y direction
 #define ALIENDY		(ALIENH+ALIENSPACEY) // alien delta Y coordinate (= 16)
 #define ALIENTOTH	(ALIENNUMY*ALIENDY - ALIENSPACEY) // alien total initial height (= 72)
-#define ALIENTOTY	24	// alien block initial Y coordinate, must be multiply of 4
-#define ALIENMAXY	96	// alien block initial max. Y coordinate, must be multiply of 4
+#define ALIENTOTY	16	// alien block initial Y coordinate
+#define ALIENMAXY	40	// alien block initial max. Y coordinate
 #define ALIENMINX	0	// alien min. X coordinate
 #define ALIENMAXX	WIDTH	// alien max. X coordinate
 
-#define ALIEN1_COL	COL_GREEN	// alien 1 color
-#define ALIEN2_COL	COL_CYAN	// alien 2 color
-#define ALIEN3_COL	COL_MAGENTA	// alien 3 color
+#define ALIEN1_COL	COL_WHITE	// alien 1 color
+#define ALIEN2_COL	COL_WHITE	// alien 2 color
+#define ALIEN3_COL	COL_WHITE	// alien 3 color
 
 // === enemy missiles
 
@@ -263,9 +267,9 @@ void DispLives()
 	for (i = 0; i < 10; i++)
 	{
 		if (i < Lives)
-			DispSprite(SHIPIMGX, SHIPIMGY, i*SHIPDX, HEIGHT-SHIPH, SHIPW, SHIPH, SHIP_COL);
+			DispSprite(LIVEIMGX, LIVEIMGY, i*LIVEDX, HEIGHT-LIVEH, LIVEW, LIVEH, SHIP_COL);
 		else
-			DrawRectClr(i*SHIPDX, HEIGHT-SHIPH, SHIPW, SHIPH);
+			DrawRectClr(i*LIVEDX, HEIGHT-LIVEH, LIVEW, LIVEH);
 	}
 }
 
@@ -297,7 +301,7 @@ void DispScore()
 		n = x;
 	}
 	buf[5] = 0;
-	DrawText(buf, SCOREX+7*8, SCOREY, COL_WHITE);
+	DrawTextCond6(buf, SCOREX+6*6, SCOREY, COL_WHITE);
 
 	// next live
 	if (Score >= NextLive)
@@ -322,7 +326,7 @@ void DispMaxScore()
 		n = x;
 	}
 	buf[5] = 0;
-	DrawText(buf, MAXSCOREX+10*8, SCOREY, ((MaxScore > 0) && (MaxScore == Score)) ? COL_GREEN : COL_WHITE);
+	DrawTextCond6(buf, MAXSCOREX+4*6, SCOREY, COL_WHITE);
 }
 
 // display level
@@ -340,7 +344,7 @@ void DispLevel()
 		n = x;
 	}
 	buf[2] = 0;
-	DrawText(buf, LEVELX+7*8, LEVELY, COL_WHITE);
+	DrawTextCond6(buf, LEVELX+6*6, LEVELY, COL_WHITE);
 }
 
 // mothership move
@@ -362,7 +366,7 @@ void MoveMother()
 		DrawRectClr(MotherX, MOTHERY, MOTHERW, MOTHERH);
 		if (MotherLeft)
 		{
-			MotherX -= 2;
+			MotherX -= 1;
 			if (MotherX < -MOTHERW)
 			{
 				MotherOn = False;
@@ -371,7 +375,7 @@ void MoveMother()
 		}
 		else
 		{
-			MotherX += 2;
+			MotherX += 1;
 			if (MotherX >= WIDTH)
 			{
 				MotherOn = False;
@@ -440,12 +444,12 @@ void DispAlien(int inx)
 		DispSprite(2*2, ys, x, y, ALIENW, ALIENH, col); // explosion
 
 	// end game
-	if (y >= SHIPY)
+	if (y+5 >= SHIPY)
 	{
 		// lost live
 		Lost();
 		ClearAliens();
-		AlienY -= 4*10;
+		AlienY -= 4*7;
 	}
 }
 
@@ -495,10 +499,13 @@ int CheckHouse(int x, int y)
 	int num = 0;
 	for (i = 8; i > 0; i--)
 	{
-		if (DrawGetPoint(x, y) == HOUSE_COL) num++;
-		if (DrawGetPoint(x+1, y) == HOUSE_COL) num++;
-		if (DrawGetPoint(x+2, y) == HOUSE_COL) num++;
-		if (DrawGetPoint(x+3, y) == HOUSE_COL) num++;
+		if ((y >= HOUSEY) && (y < HOUSEY + HOUSEH))
+		{
+			if (DrawGetPoint(x, y) == HOUSE_COL) num++;
+			if (DrawGetPoint(x+1, y) == HOUSE_COL) num++;
+			if (DrawGetPoint(x+2, y) == HOUSE_COL) num++;
+			if (DrawGetPoint(x+3, y) == HOUSE_COL) num++;
+		}
 		y++;
 	}
 	return num;
@@ -512,7 +519,7 @@ void ShootHitHouse()
 		if (CheckHouse(ShootX, ShootY) > 16)
 		{
 			ShootOn = False;
-			DrawRectClr(ShootX+1, ShootY, 2, 8);
+			DrawRectClr(ShootX+1, HOUSEY, 2, HOUSEH);
 		}
 	}
 }
@@ -576,7 +583,7 @@ void MoveMissile()
 	{
 		if (MissileOn[i])
 		{
-			MissileY[i] += 4;
+			MissileY[i] += 2;
 			if (MissileY[i] > SHIPY) MissileOn[i] = False;
 		}
 	}
@@ -662,7 +669,7 @@ void MoveShoot()
 	// move shoot
 	if (ShootOn)
 	{
-		ShootY -= 8;
+		ShootY -= 4;
 		if (ShootY < MOTHERY)
 			ShootOn = False;
 		else
@@ -681,10 +688,10 @@ void MoveShoot()
 void SpaceCtrl()
 {
 	// move ship left
-	if (KeyPressed(KEY_LEFT) && (ShipX >= 4))
+	if (KeyPressed(KEY_LEFT) && (ShipX >= 2))
 	{
 		ClearShip();
-		ShipX -= 4;
+		ShipX -= 2;
 		DispShip();
 	}
 
@@ -692,7 +699,7 @@ void SpaceCtrl()
 	if (KeyPressed(KEY_RIGHT) && (ShipX < WIDTH-ALIENW))
 	{
 		ClearShip();
-		ShipX += 4;
+		ShipX += 2;
 		DispShip();
 	}
 
@@ -701,7 +708,7 @@ void SpaceCtrl()
 	{
 		ShootOn = True;
 		ShootX = ShipX + 4;
-		ShootY = SHIPY - 8;
+		ShootY = SHIPY - 7;
 		PlayMelody(ShootSnd);
 	}
 }
@@ -719,22 +726,22 @@ void AlienMove()
 		// shift aliens
 		if (AlienLeft)
 		{
-			AlienX -= 8;
+			AlienX -= 4;
 			if (AlienX < AlienMinX)
 			{
-				AlienX += 16;
+				AlienX += 8;
 				AlienLeft = False;
-				AlienY += 8;
+				AlienY += 4;
 			}
 		}
 		else
 		{
-			AlienX += 8;
+			AlienX += 4;
 			if (AlienX > AlienMaxX)
 			{
-				AlienX -= 16;
+				AlienX -= 8;
 				AlienLeft = True;
-				AlienY += 8;
+				AlienY += 4;
 			}
 		}
 
@@ -782,16 +789,16 @@ void NewGame(int level)
 	DrawRect(0, LINEY2, WIDTH, 1, COL_WHITE);
 
 	// display score
-	DrawText("SCORE:", SCOREX, SCOREY, COL_WHITE);
+	DrawTextCond6("SCORE:", SCOREX, SCOREY, COL_WHITE);
 	DispScore();
 
 	// display max. score
-	DrawText("HI-SCORE:", MAXSCOREX, SCOREY, COL_WHITE);
+	DrawTextCond6("MAX:", MAXSCOREX, SCOREY, COL_WHITE);
 	DispMaxScore();
 
 	// display level
 	Level = level;	// set current level
-	DrawText("LEVEL:", LEVELX, LEVELY, COL_WHITE);
+	DrawTextCond6("LEVEL:", LEVELX, LEVELY, COL_WHITE);
 	DispLevel();
 
 	// display remaining lives
@@ -819,7 +826,7 @@ void NewGame(int level)
 
 	// aliens
 	AlienX = ALIENTOTX;
-	AlienY = ALIENTOTY + level*8;
+	AlienY = ALIENTOTY + level*4;
 	if (AlienY > ALIENMAXY) AlienY = ALIENMAXY;
 	for (i = 0; i < ALIENNUM; i++) AlienLive[i] = True;
 	AlienNum = ALIENNUM;
@@ -879,19 +886,13 @@ void Game()
 		switch (KeyGet())
 		{
 		// reset to boot loader
-		case KEY_Y: ResetToBootLoader();
-
-#if USE_SCREENSHOT		// use screen shots
-		case KEY_X:
-			ScreenShot();
-			break;
-#endif
+		case KEY_X: return;
 		}
 
 		// new level
 		if (AlienNum == 0)
 		{
-			DrawText(" LEVEL UP ", (WIDTH-10*8)/2, (HEIGHT-16)/2, COL_GREEN);
+			DrawTextCond6(" LEVEL UP ", (WIDTH-10*6)/2, (HEIGHT-6)/2, COL_WHITE);
 			WaitMs(1000);
 			KeyFlush();
 			NewGame(Level+1);
@@ -900,7 +901,7 @@ void Game()
 		// end game
 		if (Lives < 0)
 		{
-			DrawText(" GAME OVER ", (WIDTH-11*8)/2, (HEIGHT-16)/2, COL_RED);
+			DrawTextCond6(" GAME OVER ", (WIDTH-11*6)/2, (HEIGHT-6)/2, COL_WHITE);
 			WaitMs(500);
 			StopSound();
 			KeyFlush();
@@ -926,15 +927,10 @@ void Game()
 
 int main(void)
 {
-	int i;
-
 	// display splash screen
-	u8 key;
 	KeyWaitNoPressed();
-	memcpy(FrameBuf, ImgIntro, sizeof(ImgIntro));
-	memcpy(AttrBuf, ImgIntro_Attr, sizeof(ImgIntro_Attr));
-	while ((key = KeyGet()) == NOKEY) {}
-	if (key == KEY_Y) ResetToBootLoader();
+	DrawImgBg(ImgIntro, 0, 0, WIDTH, HEIGHT, WIDTHBYTE, COL_WHITE);
+	while (KeyGet() == NOKEY) {}
 	DrawClear();
 
 	// randomize

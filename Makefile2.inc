@@ -345,9 +345,12 @@ ALLOBJ = $(addprefix $(TEMP)/, $(addsuffix .o, $(ALLBASE)))
 
 clean:
 	@${CH32LIBSDK_TOOLS_DIR}/rm -rf $(TEMP)
+ifeq (${DEVCLASS},pidipad)
 	@${CH32LIBSDK_TOOLS_DIR}/rm -f ./$(TARGET).hex ./$(TARGET).lst ./$(TARGET).map ./$(TARGET).sym ./$(TARGET).siz
-
-# ./$(TARGET).elf ./$(TARGET).bin 
+else
+	@${CH32LIBSDK_TOOLS_DIR}/rm -f ./$(TARGET).lst ./$(TARGET).map ./$(TARGET).sym ./$(TARGET).siz
+endif
+# ./$(TARGET).elf ./$(TARGET).bin
 
 ##############################################################################
 # Compile all (use "make all")
