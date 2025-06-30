@@ -2,30 +2,23 @@
 #ifndef _GAME_H
 #define _GAME_H
 
-#define FRAC_SHIFT	15		// number of fractional shifts
-#define FRAC_MUL	(1<<FRAC_SHIFT)	// fractional multiplier
-//#define TOFRAC(n) ((n)<<FRAC_SHIFT)	// convert integer number to fractional number
-//#define TOINT(n) ((n)>>FRAC_SHIFT)	// convert fractional number to integer number
-INLINE int TOFRAC(int n) { return n << FRAC_SHIFT; }
-INLINE int TOINT(int n) { return (n < 0) ? ((n + FRAC_MUL - 1) >> FRAC_SHIFT) : (n >> FRAC_SHIFT); }
-
 typedef struct GROUPE {
 	uint8_t ANIMREFLECT;
 	uint8_t launch;
 	uint8_t Px;
 	uint8_t Py;
 	uint8_t BlocsGrid[6][5];
-	int Ballxpos;		// float Ballxpos;
-	int SIMBallxpos;	// float SIMBallxpos;
-	int Ballypos;		// float Ballypos;
-	int SIMBallypos;	// float SIMBallypos;
-	int BallSpeedx;		// float BallSpeedx;
-	int SIMBallSpeedx;	// float SIMBallSpeedx;
-	int BallSpeedy;		// float BallSpeedy;
-	int SIMBallSpeedy;	// float SIMBallSpeedy;
+	float Ballxpos;
+	float SIMBallxpos;
+	float Ballypos;
+	float SIMBallypos;
+	float BallSpeedx;
+	float SIMBallSpeedx;
+	float BallSpeedy;
+	float SIMBallSpeedy;
 	int8_t TrackAngleOut;
-	int Ballxposflip;	// float Ballxposflip;
-	int Ballyposflip;	// float Ballyposflip;
+	float Ballxposflip;
+	float Ballyposflip;
 	uint8_t BALLyDecal;
 	uint8_t Ypos;
 	uint8_t TrackBary;
@@ -56,7 +49,7 @@ void WriteBallMove(GROUPE *VAR);
 void Tiny_Flip(uint8_t render0_picture1,GROUPE *VAR);
 uint8_t PannelLevel(uint8_t X,uint8_t Y,GROUPE *VAR);
 uint8_t Block(uint8_t X,uint8_t Y,GROUPE *VAR);
-uint8_t RecupeDecalageY(int Valeur);
+uint8_t RecupeDecalageY(uint8_t Valeur);
 uint8_t Ball(uint8_t X,uint8_t Y,GROUPE *VAR);
 uint8_t SplitSpriteDecalageY(uint8_t decalage,uint8_t Input,uint8_t UPorDOWN);
 uint8_t TrackBar(uint8_t X,uint8_t Y,GROUPE *VAR);

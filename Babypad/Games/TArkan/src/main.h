@@ -10,7 +10,7 @@ extern "C" {
 // image width: 51 pixels
 // image height: 8 lines
 // image pitch: 7 bytes
-extern const u8 ImgIntro[56];
+//extern const u8 ImgIntro[56];
 
 #define PROGMEM
 INLINE u8 pgm_read_byte(const u8* addr) { return *addr; }

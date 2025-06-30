@@ -60,7 +60,7 @@ ASRC +=
 CSRC += src/main.c
 CSRC += src/FastTinyDriver.c
 CSRC += src/tiny-arkanoid.c
-CSRC += img/imgintro.c
+#CSRC += img/imgintro.c
 
 # C++ source files
 SRC +=

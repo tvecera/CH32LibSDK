@@ -60,12 +60,12 @@ void loop()
 	GROUPE VARIABLE;
 NEWGAME:
 	DrawClear();
-//	DrawImg(ImgIntro, (WIDTH-51)/2, 8, 51, 8, 7, COL_WHITE);
 	Tiny_Flip(1,&VARIABLE);
+	DrawImg(ImgIntro, (WIDTH-51)/2, 8, 51, 8, 7, COL_WHITE);
 	WaitMs(1000);
-	PLAYMUSIC();
 	RsVarNewGame(&VARIABLE);
 	Tiny_Flip(2,&VARIABLE);
+	PLAYMUSIC();
 	LoadLevel(VARIABLE.LEVEL-1,&VARIABLE);
 	goto ONE;
 
@@ -133,7 +133,7 @@ ONE:
 
 			if (VARIABLE.launch==0)
 			{
-				VARIABLE.Ballypos=TOFRAC(((VARIABLE.TrackBary*8)+VARIABLE.TrackBaryDecal)+10);
+				VARIABLE.Ballypos=((VARIABLE.TrackBary*8)+VARIABLE.TrackBaryDecal)+10;
 				VARIABLE.SIMBallypos=VARIABLE.Ballypos;
 			}
 		}
@@ -243,17 +243,17 @@ void SimulMove(uint8_t Sim,GROUPE *VAR)
 		break;
 
 	case (5):
-		VAR->SIMBallxpos=VAR->Ballxpos+TOFRAC(1);
+		VAR->SIMBallxpos=VAR->Ballxpos+1;
 		VAR->SIMBallypos=VAR->Ballypos;
-		VAR->SIMBallSpeedx=TOFRAC(-1);
-		VAR->SIMBallSpeedy=TOFRAC(1);
+		VAR->SIMBallSpeedx=-1;
+		VAR->SIMBallSpeedy=1;
 		break;
 
 	case (6):
-		VAR->SIMBallxpos=VAR->Ballxpos+TOFRAC(1);
+		VAR->SIMBallxpos=VAR->Ballxpos+1;
 		VAR->SIMBallypos=VAR->Ballypos;
-		VAR->SIMBallSpeedx=TOFRAC(-1);
-		VAR->SIMBallSpeedy=TOFRAC(-1);
+		VAR->SIMBallSpeedx=-1;
+		VAR->SIMBallSpeedy=-1;
 		break;
 
 	default:
@@ -263,9 +263,9 @@ void SimulMove(uint8_t Sim,GROUPE *VAR)
 
 uint8_t CheckCollisionBall(GROUPE *VAR)
 {
-	if (VAR->SIMBallxpos>TOFRAC(106)) return 1;
-	if (VAR->SIMBallypos>TOFRAC(59)) return 1;
-	if (VAR->SIMBallypos<TOFRAC(4)) return 1;
+	if (VAR->SIMBallxpos>106) return 1;
+	if (VAR->SIMBallypos>59) return 1;
+	if (VAR->SIMBallypos<4) return 1;
 	if (CheckCollisionWithTRACKBAR(VAR))
 	{
 		Sound(60,10);
@@ -299,46 +299,46 @@ void RecupePositionOnGrid(GROUPE *VAR)
 
 uint8_t RecupeXPositionOnGrid(GROUPE *VAR)
 {
-	if ((VAR->SIMBallxpos>=TOFRAC(66))&&(VAR->SIMBallxpos<TOFRAC(72))) return 0;
-	else if ((VAR->SIMBallxpos>=TOFRAC(72))&&(VAR->SIMBallxpos<TOFRAC(78))) return 1;
-	else if ((VAR->SIMBallxpos>=TOFRAC(78))&&(VAR->SIMBallxpos<TOFRAC(84))) return 2;
-	else if ((VAR->SIMBallxpos>=TOFRAC(84))&&(VAR->SIMBallxpos<TOFRAC(90))) return 3;
-	else if ((VAR->SIMBallxpos>=TOFRAC(90))&&(VAR->SIMBallxpos<TOFRAC(96))) return 4;  
+	if ((VAR->SIMBallxpos>=66)&&(VAR->SIMBallxpos<72)) return 0;
+	else if ((VAR->SIMBallxpos>=72)&&(VAR->SIMBallxpos<78)) return 1;
+	else if ((VAR->SIMBallxpos>=78)&&(VAR->SIMBallxpos<84)) return 2;
+	else if ((VAR->SIMBallxpos>=84)&&(VAR->SIMBallxpos<90)) return 3;
+	else if ((VAR->SIMBallxpos>=90)&&(VAR->SIMBallxpos<96)) return 4;  
 	return 255;
 }
 
 uint8_t RecupeYPositionOnGrid(GROUPE *VAR)
 {
-	if ((VAR->SIMBallypos>=TOFRAC(8))&&(VAR->SIMBallypos<TOFRAC(16))) return 0;
-	else if ((VAR->SIMBallypos>=TOFRAC(16))&&(VAR->SIMBallypos<TOFRAC(23))) return 1;
-	else if ((VAR->SIMBallypos>=TOFRAC(23))&&(VAR->SIMBallypos<TOFRAC(31))) return 2;
-	else if ((VAR->SIMBallypos>=TOFRAC(31))&&(VAR->SIMBallypos<TOFRAC(40))) return 3;
-	else if ((VAR->SIMBallypos>=TOFRAC(40))&&(VAR->SIMBallypos<TOFRAC(48))) return 4; 
-	else if ((VAR->SIMBallypos>=TOFRAC(48))&&(VAR->SIMBallypos<TOFRAC(55))) return 5;   
+	if ((VAR->SIMBallypos>=8)&&(VAR->SIMBallypos<16)) return 0;
+	else if ((VAR->SIMBallypos>=16)&&(VAR->SIMBallypos<23)) return 1;
+	else if ((VAR->SIMBallypos>=23)&&(VAR->SIMBallypos<31)) return 2;
+	else if ((VAR->SIMBallypos>=31)&&(VAR->SIMBallypos<40)) return 3;
+	else if ((VAR->SIMBallypos>=40)&&(VAR->SIMBallypos<48)) return 4; 
+	else if ((VAR->SIMBallypos>=48)&&(VAR->SIMBallypos<55)) return 5;   
 	return 255;
 }
 
 uint8_t CheckCollisionWithTRACKBAR(GROUPE *VAR)
 {
-	int TRACK=TOFRAC((VAR->TrackBary*8)+VAR->TrackBaryDecal);
-	if ((VAR->SIMBallxpos>TOFRAC(6))||(VAR->SIMBallxpos<TOFRAC(5))) return 0;
+	uint8_t TRACK=(VAR->TrackBary*8)+VAR->TrackBaryDecal;
+	if ((VAR->SIMBallxpos>6)||(VAR->SIMBallxpos<5)) return 0;
 	if (TRACK>VAR->SIMBallypos) return 0;
-	if ((TRACK+TOFRAC(16))<VAR->SIMBallypos) return 0;
-	VAR->TrackAngleOut=TOINT(((VAR->SIMBallypos-TRACK)*200)/16)-100;
+	if ((TRACK+16)<VAR->SIMBallypos) return 0;
+	VAR->TrackAngleOut=(((VAR->SIMBallypos-TRACK)*200)/16)-100;
 	return 1;
 }
 
 void WriteBallMove(GROUPE *VAR)
 {
-	int CORECTIONY=(VAR->SIMBallSpeedy)+(TOFRAC(VAR->TrackAngleOut)/100);
-	if (CORECTIONY<TOFRAC(-1)) CORECTIONY=TOFRAC(-1);
-	if (CORECTIONY>TOFRAC(1)) CORECTIONY=TOFRAC(1);
+	float CORECTIONY=(VAR->SIMBallSpeedy)+(VAR->TrackAngleOut/100.00);
+	if (CORECTIONY<-1) CORECTIONY=-1;
+	if (CORECTIONY>1) CORECTIONY=1;
 	VAR->Ballxpos=VAR->SIMBallxpos;
 	VAR->Ballypos=VAR->SIMBallypos;
 	VAR->BallSpeedx=VAR->SIMBallSpeedx;
 	VAR->BallSpeedy=CORECTIONY;
-	VAR->BALLyDecal=RecupeDecalageY(VAR->Ballypos-TOFRAC(1));
-	VAR->Ypos=TOINT((VAR->Ballypos/*-TOFRAC(1)*/)/8);
+	VAR->BALLyDecal=RecupeDecalageY(VAR->Ballypos-1);
+	VAR->Ypos=((VAR->Ballypos-1)/8);
 }
 
 void Tiny_Flip(uint8_t render0_picture1,GROUPE *VAR)
@@ -355,7 +355,7 @@ void Tiny_Flip(uint8_t render0_picture1,GROUPE *VAR)
 			}
 			else if (render0_picture1==1)
 			{
-				i2c_write(pgm_read_byte(&MAIN[x+(y*128)]));
+				i2c_write(background(x,y)); //pgm_read_byte(&MAIN[x+(y*128)]));
 			}
 			else if (render0_picture1==2)
 			{
@@ -400,30 +400,30 @@ uint8_t Block(uint8_t X,uint8_t Y,GROUPE *VAR)
 	return 0x00;
 }
 
-uint8_t RecupeDecalageY(int Valeur)
+uint8_t RecupeDecalageY(uint8_t Valeur)
 {
-	while(Valeur>TOFRAC(7)) Valeur=Valeur-TOFRAC(8);
-	return (u8)TOINT(Valeur);
+	while(Valeur>7) Valeur=Valeur-8;
+	return Valeur;
 }
 
 uint8_t Ball(uint8_t X,uint8_t Y,GROUPE *VAR)
 {
-#define BALLXPOS (VAR->Ballxpos-TOFRAC(1))
-#define BALLYPOS (VAR->Ballypos-TOFRAC(1))
+#define BALLXPOS (VAR->Ballxpos-1)
+#define BALLYPOS (VAR->Ballypos-1)
 	if (Y<VAR->Ypos) return 0x00;
 	if (Y>(VAR->Ypos+1)) return 0x00;
-	if ((X-(uint8_t)TOINT(BALLXPOS))<0) return 0x00;
-	if (TOFRAC(X)<BALLXPOS) return 0x00;
-	if (TOFRAC(X)>BALLXPOS+TOFRAC(2)) return 0x00;
+	if ((X-(uint8_t)(BALLXPOS))<0) return 0x00;
+	if (X<BALLXPOS) return 0x00;
+	if (X>BALLXPOS+2) return 0x00;
 	if (VAR->BALLyDecal==0)
 	{
-		if (Y==VAR->Ypos) return (pgm_read_byte(&BALL[(X-(uint8_t)TOINT(BALLXPOS))]));
+		if (Y==VAR->Ypos) return (pgm_read_byte(&BALL[(X-(uint8_t)(BALLXPOS))]));
 	}
 	else
 	{
 		uint8_t DECAL=RecupeDecalageY(BALLYPOS);
-		if (Y==VAR->Ypos) return SplitSpriteDecalageY(DECAL,pgm_read_byte(&BALL[(X-(uint8_t)TOINT(BALLXPOS))]),1);
-		if (Y==(VAR->Ypos)+1) return SplitSpriteDecalageY(DECAL,pgm_read_byte(&BALL[(X-(uint8_t)TOINT(BALLXPOS))]),0);
+		if (Y==VAR->Ypos) return SplitSpriteDecalageY(DECAL,pgm_read_byte(&BALL[(X-(uint8_t)(BALLXPOS))]),1);
+		if (Y==(VAR->Ypos)+1) return SplitSpriteDecalageY(DECAL,pgm_read_byte(&BALL[(X-(uint8_t)(BALLXPOS))]),0);
 	}
 	return 0x00;
 }
@@ -530,21 +530,21 @@ void ResetBall(GROUPE *VAR)
 	VAR->ANIMREFLECT=0;
 	VAR->TrackBary=2;
 	VAR->TrackBaryDecal=4;
-	VAR->Ballxpos=TOFRAC(8);
-	VAR->SIMBallxpos=TOFRAC(8);
-	VAR->Ballypos=TOFRAC(32);
-	VAR->SIMBallypos=TOFRAC(32);
-	VAR->BallSpeedx=TOFRAC(1);
-	VAR->SIMBallSpeedx=TOFRAC(1);
+	VAR->Ballxpos=8;
+	VAR->SIMBallxpos=8;
+	VAR->Ballypos=32;
+	VAR->SIMBallypos=32;
+	VAR->BallSpeedx=1;
+	VAR->SIMBallSpeedx=1;
 	if (VAR->Frame>32)
 	{
-		VAR->BallSpeedy=TOFRAC(41)/100;
-		VAR->SIMBallSpeedy=TOFRAC(41)/100;
+		VAR->BallSpeedy=.41;
+		VAR->SIMBallSpeedy=.41;
 	}
 	else
 	{
-		VAR->BallSpeedy=TOFRAC(47)/100;
-		VAR->SIMBallSpeedy=TOFRAC(47)/100;  
+		VAR->BallSpeedy=.47;
+		VAR->SIMBallSpeedy=.47;  
 	}
 	VAR->launch=0;
 }
