@@ -33,7 +33,7 @@ void Sound(uint8_t freq, uint8_t dur)
 int main(void)
 {
 	// randomize
-	RandSeed += Time() + DispFrame + DispLine;
+	//RandSeed += Time() + DispFrame + DispLine;
 
 	// Game setup
 	setup();

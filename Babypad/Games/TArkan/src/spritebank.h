@@ -21,7 +21,7 @@
 //Program the chip with an arduino uno in "Arduino as ISP" mode.
 
 // -----------------------------------------
-// Pidipad adaptation: Miroslav Nemecek 2025
+// Babypad adaptation: Miroslav Nemecek 2025
 // -----------------------------------------
 
 //#include <avr/pgmspace.h>

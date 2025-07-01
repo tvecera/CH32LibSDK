@@ -60,10 +60,15 @@ void loop()
 	GROUPE VARIABLE;
 NEWGAME:
 	Tiny_Flip(1,&VARIABLE);
-	while(1) { if (KeyPressed(KEY_A) /*digitalRead(1)==0*/) break; }
+	while(1)
+	{
+		if (KeyGet() == KEY_Y) ResetToBootLoader();
+		if (KeyPressed(KEY_A)) break;
+	}
 	RsVarNewGame(&VARIABLE);
 	Tiny_Flip(2,&VARIABLE);
 	PLAYMUSIC();
+	KeyFlush();
 	LoadLevel(VARIABLE.LEVEL-1,&VARIABLE);
 	goto ONE;
 
@@ -97,7 +102,7 @@ ONE:
 			if (KeyGet() == KEY_Y) ResetToBootLoader();
 
 			// down
-			if (KeyPressed(KEY_DOWN)) //(analogRead(A3)>=750)&&(analogRead(A3)<950))
+			if (KeyPressed(KEY_DOWN))
 			{
 				if (VARIABLE.TrackBaryDecal<7)
 				{
@@ -114,7 +119,7 @@ ONE:
 			}
 
 			// up
-			if (KeyPressed(KEY_UP)) //(analogRead(A3)>500)&&(analogRead(A3)<750))
+			if (KeyPressed(KEY_UP))
 			{
 				if (VARIABLE.TrackBaryDecal>0)
 				{
@@ -130,7 +135,7 @@ ONE:
 				}
 			}
 
-			if ((VARIABLE.launch==0)&&(KeyPressed(KEY_A)/*digitalRead(1)==LOW*/)) VARIABLE.launch=1;
+			if ((VARIABLE.launch==0)&&(KeyPressed(KEY_A))) VARIABLE.launch=1;
 
 			if (VARIABLE.launch==0)
 			{

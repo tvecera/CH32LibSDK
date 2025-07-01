@@ -29,8 +29,8 @@
 // STACKSIZE ... Stack size in bytes
 
 // default font
-#define FONT		NULL //FontBold8x8	// default system font
-#define FONTCOND	NULL //FontCond6x8	// default condensed font
+#define FONT		FontBold8x8	// default system font
+#define FONTCOND	FontCond6x8	// default condensed font
 
 // Videomodes (B&W mono):
 //	1 ... graphics mode 160x120 pixels, required memory 2400 B (driver size 474 B in RAM)
