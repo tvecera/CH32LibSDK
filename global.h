@@ -227,6 +227,10 @@ STATIC_ASSERT(sizeof(u64) == 8, "Incorrect typedef u64!");
 #define USE_FLASH	1	// 1=use Flash programming
 #endif
 
+#ifndef USE_I2C
+#define USE_I2C		1	// 1=use I2C peripheral
+#endif
+
 #ifndef USE_IRQ
 #define USE_IRQ		1	// 1=use IRQ interrupt support
 #endif

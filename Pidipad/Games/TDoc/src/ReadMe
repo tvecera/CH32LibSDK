@@ -1,20 +1,16 @@
-# tiny-arkanoid for Tinyjoypad ATTINY85
-<img src="tiny-arkanoid screen.png" alt="tiny-arkanoid" width="200" />  
+# TINYDOC for Tinyjoypad ATTINY85
+<img src="TinyDoc.png" alt="TINYDOC" width="200" />  
 **Version**: 2025  
 **Contact Email**: electro_l.i.b@tinyjoypad.com  
 **GitHub Repository**: [TinyJoypad GitHub](https://github.com/phoenixbozo/TinyJoypad/tree/main/TinyJoypad)  
 **Website**: [TinyJoypad](https://WWW.TINYJOYPAD.COM)  
 **Documentation**: [Arduino Collection](https://sites.google.com/view/arduino-collection)
 
------------------------------------------
-Pidipad adaptation: Miroslav Nemecek 2025
------------------------------------------
-
 ## Description
 
-**tiny-arkanoid** is a game designed for the **Tinyjoypad** gaming console, which operates on **ATtiny85** microcontrollers. This project includes the `FastTinyDriver.h` file, a graphics driver optimized for OLED displays based on the SSD1306 controller.
+**TINYDOC** is designed for the **Tinyjoypad** gaming console, which operates on **ATtiny85** microcontrollers. This project includes the `FastTinyDriver.h` file, a graphics driver optimized for OLED displays based on the SSD1306 controller.
 
-The game's code uses this driver to render graphics on the OLED screen and is also designed to be reusable in other projects that require OLED displays.
+The tool's code uses this driver to render graphics on the OLED screen and is also designed to be reusable in other projects that require OLED displays.
 
 **Note**: The compiled version in `.hex` format provided with the source code includes code from the standard Arduino IDE libraries as well as code from the **FastTinyDriver** library.
 
@@ -45,7 +41,7 @@ To program the ATtiny85 microcontroller with this project:
 
 2. **Software Setup:**
    - Open the Arduino IDE.
-   - Load the sketch containing the `TINY SQUEST` code.
+   - Load the sketch containing the source code.
    - Select the correct board type (ATtiny85) and the appropriate programmer (Arduino as ISP).
    - Upload the code to the ATtiny85.
 

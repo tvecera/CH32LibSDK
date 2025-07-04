@@ -740,7 +740,7 @@ TIM2_IRQHandler5:
 	beqz	a0,8f			// stop melody
 
 	// get note divider
-	lhu	a3,2(a3)		// A0 <- note divider
+	lhu	a3,2(a3)		// A3 <- note divider
 	beqz	a3,8f			// pause
 
 	// set timer load

@@ -18,13 +18,15 @@
 //#include INCLUDE_SDK_FILE(sdk_adc.h)		// ADC analog-to-digital converter
 #include INCLUDE_SDK_FILE(sdk_addressmap.h)	// Register address offsets
 #include INCLUDE_SDK_FILE(sdk_cpu.h)		// CPU control
+#include INCLUDE_SDK_FILE(sdk_rcc.h)		// Reset and clock control
+
 #include INCLUDE_SDK_FILE(sdk_dma.h)		// DMA
 #include INCLUDE_SDK_FILE(sdk_flash.h)		// Flash memory
 #include INCLUDE_SDK_FILE(sdk_gpio_pins.h)	// GPIO pins indices
 #include INCLUDE_SDK_FILE(sdk_gpio.h)		// GPIO pins
+#include INCLUDE_SDK_FILE(sdk_i2c.h)		// I2C
 #include INCLUDE_SDK_FILE(sdk_irq.h)		// Interrupt
 #include INCLUDE_SDK_FILE(sdk_pwr.h)		// Power control
-#include INCLUDE_SDK_FILE(sdk_rcc.h)		// Reset and clock control
 #include INCLUDE_SDK_FILE(sdk_runtime.h)	// application support
 #include INCLUDE_SDK_FILE(sdk_spi.h)		// SPI
 #include INCLUDE_SDK_FILE(sdk_systick.h)	// SysTick system counter

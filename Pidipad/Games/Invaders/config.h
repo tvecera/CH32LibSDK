@@ -154,6 +154,7 @@
 #define USE_ADC		1	// 1=use ADC peripheral
 #define USE_DMA		1	// 1=use DMA peripheral
 #define USE_FLASH	1	// 1=use Flash programming
+#define USE_I2C		1	// 1=use I2C peripheral
 #define USE_IRQ		1	// 1=use IRQ interrupt support
 #define USE_PWR		1	// 1=use power control
 #define USE_SPI		1	// 1=use SPI peripheral

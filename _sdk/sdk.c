@@ -20,6 +20,7 @@
 #include INCLUDEC_SDK_FILE(sdk_flash.c)		// Flash memory
 #include INCLUDEC_SDK_FILE(sdk_gpio.c)		// GPIO pins
 #include INCLUDEC_SDK_FILE(sdk_irq.c)		// Interrupt
+#include INCLUDEC_SDK_FILE(sdk_i2c.c)		// I2C
 #include INCLUDEC_SDK_FILE(sdk_pwr.c)		// Power control
 #include INCLUDEC_SDK_FILE(sdk_rcc.c)		// Reset and clock control
 #include INCLUDEC_SDK_FILE(sdk_runtime.c)	// application support
