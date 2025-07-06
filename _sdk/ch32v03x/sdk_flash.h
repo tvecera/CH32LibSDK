@@ -115,15 +115,15 @@ INLINE Bool Flash_Busy(void) { return (FLASH->STATR & B0) != 0; }
 
 // Check/Clear write protection error flag (register STATR.WRPRTERR)
 INLINE Bool Flash_WProtErr(void) { return (FLASH->STATR & B4) != 0; }
-INLINE Bool Flash_WProtErrClr(void) { FLASH->STATR = FLASH_GETSTATR | B4; }
+INLINE void Flash_WProtErrClr(void) { FLASH->STATR = FLASH_GETSTATR | B4; }
 
 // Check/Clear end of operation flag (register STATR.EOP)
 INLINE Bool Flash_EndOp(void) { return (FLASH->STATR & B5) != 0; }
-INLINE Bool Flash_EndOpClr(void) { FLASH->STATR = FLASH_GETSTATR | B5; }
+INLINE void Flash_EndOpClr(void) { FLASH->STATR = FLASH_GETSTATR | B5; }
 
 // Check/Clear wakeup flag (register STATR.FWAKE_FLAG)
 INLINE Bool Flash_Wake(void) { return (FLASH->STATR & B6) != 0; }
-INLINE Bool Flash_WakeClr(void) { FLASH->STATR = FLASH_GETSTATR & ~B6; }
+INLINE void Flash_WakeClr(void) { FLASH->STATR = FLASH_GETSTATR & ~B6; }
 
 // Check Turbo enable mode (register STATR.TURBO)
 INLINE Bool Flash_Turbo(void) { return (FLASH->STATR & B7) != 0; }

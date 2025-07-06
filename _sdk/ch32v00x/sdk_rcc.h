@@ -345,8 +345,8 @@ INLINE Bool RCC_CSSInt(void) { return (RCC->INTR & B7) != 0; }
 INLINE void RCC_CSSIntClear(void) { RCC->INTR |= B23; }
 
 // SYSCLK fail interrupt Enable/Disable/Flag
-INLINE Bool RCC_SysClkFailEnable(void) { RCC->INTR |= B9; }
-INLINE Bool RCC_SysClkFailDisable(void) { RCC->INTR &= ~B9; }
+INLINE void RCC_SysClkFailEnable(void) { RCC->INTR |= B9; }
+INLINE void RCC_SysClkFailDisable(void) { RCC->INTR &= ~B9; }
 INLINE Bool RCC_SysClkFailInt(void) { return (RCC->RSTSCKR & B8) != 0; }
 
 // Clear all interrupt flags
