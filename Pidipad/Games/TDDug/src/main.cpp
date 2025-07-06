@@ -902,6 +902,9 @@ void Tiny_Flip_TDDUG(uint8_t Select_,uint8_t Blink_)
 	uint8_t Byte1_;
 	EXT_COUNT_TDDUG=0;
 	EXT_GRID_TDDUG=0;
+
+	if (KeyGet() == KEY_Y) ResetToBootLoader();
+
 	for (y = 0; y < 8; y++)
 	{
 		EXT_COUNT_TDDUG=0;
