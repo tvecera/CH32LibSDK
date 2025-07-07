@@ -197,6 +197,9 @@ RESTARTLEVEL:
 
 	MemMillis = Time();
 
+	// randomize
+	RandSeed += Time() + DispFrame + DispLine;
+
 	//INGAME:
 	while(1)
 	{

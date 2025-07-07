@@ -112,6 +112,10 @@ Bypass:
 	Decompte=0;
 	Tiny_Flip(0,&space);
 	_delay_ms(1000);
+
+	// randomize
+	RandSeed += Time() + DispFrame + DispLine;
+
 	while(1)
 	{
 		if (MONSTERrest==0)

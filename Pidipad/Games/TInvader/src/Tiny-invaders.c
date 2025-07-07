@@ -23,7 +23,7 @@
 //Program the chip with an arduino uno in "Arduino as ISP" mode.
 
 // -----------------------------------------
-// Babypad adaptation: Miroslav Nemecek 2025
+// Pidipad adaptation: Miroslav Nemecek 2025
 // -----------------------------------------
 
 #include "../include.h"
@@ -124,6 +124,9 @@ Bypass:
 	Tiny_Flip(0,&space);
 	_delay_ms(1000);
 	MemMillis = Time();
+
+	// randomize
+	RandSeed += Time() + DispFrame + DispLine;
 
 	while(1)
 	{

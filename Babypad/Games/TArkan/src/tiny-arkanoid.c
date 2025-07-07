@@ -91,6 +91,7 @@ RESTARTLEVEL:
 
 ONE:
 	ResetBall(&VARIABLE);
+
 	while(1)
 	{
 		if (VARIABLE.Frame%8==0)

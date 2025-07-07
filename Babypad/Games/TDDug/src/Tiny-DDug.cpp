@@ -102,6 +102,9 @@ RELOAD_LEVEL:
 
 	MemMillis = Time();
 
+	// randomize
+	RandSeed += Time() + DispFrame + DispLine;
+
 	while(1)
 	{
 		uint8_t DIRECT_SP_TDDUG=0;
