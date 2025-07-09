@@ -22,7 +22,7 @@
 //Program the chip with an arduino uno in "Arduino as ISP" mode.
 
 // -----------------------------------------
-// Babypad adaptation: Miroslav Nemecek 2025
+// Pidipad adaptation: Miroslav Nemecek 2025
 // -----------------------------------------
 
 #ifndef _GAME_H

@@ -50,8 +50,8 @@ void FPS_Control(u32 ms)
 	MemMillis = t;
 }
 
-#define FRAME_CONTROL_TSQUEST FPS_Control(33)
-#define FRAME_CONTROL_2_TSQUEST FPS_Control(26)
+//#define FRAME_CONTROL_TSQUEST FPS_Control(33)
+//#define FRAME_CONTROL_2_TSQUEST FPS_Control(26)
 
 //DEFINE
 #define DIVERDISPLAY 7
@@ -139,7 +139,7 @@ RESTART_LEVEL:;
 		if (J1Flip)
 		{
 			RENDER_TSQUEST();
-			FRAME_CONTROL_TSQUEST;
+//			FRAME_CONTROL_TSQUEST;
 		}
 		J1Flip = 1;
 		if (KeyPressed(KEY_Y)) ResetToBootLoader();
