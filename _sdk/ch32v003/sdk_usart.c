@@ -5,7 +5,7 @@
 //
 // ****************************************************************************
 
-#include "../_include.h"
+#include "../../includes.h"	// globals
 
 #if USE_USART		// 1=use USART peripheral
 

@@ -1,8 +1,6 @@
 @echo off
 
 rem Compilation... Compile one project
-rem Command parameter %1 = target device
-set DEVICE=%1
 
 rem ---------------------------------------------------
 rem Edit this line to setup path to GCC RISC-V compiler

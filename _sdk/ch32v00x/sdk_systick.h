@@ -26,7 +26,7 @@ extern "C" {
 
 // increment of system time in [ms] on SysTick interrupt (0=do not use SysTick interrupt)
 #ifndef SYSTICK_MS
-#define SYSTICK_MS	5
+#define SYSTICK_MS	16
 #endif
 
 // number of HCLK clock cycles per SysTick interrupt

@@ -123,6 +123,19 @@ INLINE void GPIOA_Out(int pin, int val) { GPIOx_Out(GPIOA, pin, val); }
 INLINE void GPIOB_Out(int pin, int val) { GPIOx_Out(GPIOB, pin, val); }
 INLINE void GPIOC_Out(int pin, int val) { GPIOx_Out(GPIOC, pin, val); }
 INLINE void GPIO_Out(int gpio, int val) { GPIOx_Out(GPIO_PORT(gpio), GPIO_PIN(gpio), val); }
+INLINE void GPIOx_OutFast(GPIO_t* port, int pin, int val)
+{
+	if (pin >= 16)
+	{
+		if (val != 0) pin -= 16;
+		port->BSXR = BIT(pin);
+	}
+	else
+	{
+		if (val == 0) pin += 16;
+		port->BSHR = BIT(pin);
+	}
+}
 
 // flip GPIO output pin (port = GPIOA..., pin = 0.., gpio = PA0...)
 void GPIOx_Flip(GPIO_t* port, int pin);

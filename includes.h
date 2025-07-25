@@ -29,3 +29,7 @@
 #if USE_BABYPAD
 #include "_devices/babypad/_include.h"
 #endif
+
+#if USE_PIDIBOY
+#include "_devices/pidiboy/_include.h"
+#endif

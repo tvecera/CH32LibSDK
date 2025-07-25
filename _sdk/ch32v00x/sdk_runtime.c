@@ -179,6 +179,11 @@ void SystemTerm(void)
 // exit application and reset to boot loader (execute software reset)
 void ResetToBootLoader(void)
 {
+#if USE_KEY
+	// wait for no key pressed
+	KeyWaitNoPressed();
+#endif
+
 	// request to return to boot loader
 	LoaderData->flags |= B6;
 	LoaderData_CRC();

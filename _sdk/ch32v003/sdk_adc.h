@@ -45,7 +45,7 @@ typedef struct {
 STATIC_ASSERT(sizeof(ADC_t) == 0x54, "Incorrect ADC_t!");
 #define ADC1	((ADC_t*)ADC1_BASE)	// 0x40012400
 
-// ADC calibration coltage selection
+// ADC calibration voltage selection
 #define ADC_CAL_24	1	// calibration voltage 2/4 AVDD
 #define ADC_CAL_34	2	// calibration voltage 3/4 AVDD
 

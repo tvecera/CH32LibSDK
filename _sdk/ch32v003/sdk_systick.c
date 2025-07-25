@@ -5,7 +5,7 @@
 //
 // ****************************************************************************
 
-#include "../_include.h"
+#include "../../includes.h"	// globals
 
 // system time counter, counts time from system start in [ms]
 // - overflow after 49 days (use difference, not absolute value!)
@@ -68,8 +68,8 @@ void SysTick_Init(void)
 	SysTick_SrcHCLK();	// time base is HCLK
 	SysTick_Unforce();	// not forced
 	SysTick_Set(0);		// clear counter
+	SysTick_SetCmp(HCLK_PER_MS/2-1); // set next compare value
 	SysTick_ClrCmp();	// clear compare interrupt request
-	SysTick_SetCmp(SYSTICK_HCLK-1); // set next compare value
 	SysTick_ResetDisable();	// not reseting to 0
 	SysTick_OldCnt = 0;	// update current counter
 	SysTick_Enable();	// enable counter

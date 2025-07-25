@@ -5,7 +5,7 @@
 //
 // ****************************************************************************
 
-#include "../_include.h"
+#include "../../includes.h"	// globals
 
 #if USE_DMA		// 1=use DMA peripheral
 
@@ -186,3 +186,5 @@ void DMA1_Send8(int ch, volatile u32* dst, const u8* src, int cnt)
 	// wait for transfer to complete
 	while (!DMA1_Comp(ch)) {}
 }
+
+#endif // USE_DMA

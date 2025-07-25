@@ -13,7 +13,7 @@
 //#define SD_MISO_GPIO	PD5	// MISO input from SD card
 //#define SD_MOSI_GPIO	PD6	// MOSI output to SD card
 
-#if USE_SD		// 1=use SD card driver
+#if USE_SD		// 1=use software SD card driver, 2=use hardware SD card driver (0=no driver)
 
 #ifndef _LIB_SD_H
 #define _LIB_SD_H
@@ -22,6 +22,7 @@
 extern "C" {
 #endif
 
+/*
 // defaults - only to not report compilation error
 #ifndef SD_CS_GPIO
 #define SD_CS_GPIO	PA0	// CS output to SD card
@@ -50,6 +51,7 @@ extern "C" {
 #ifndef SD_SPEED_WRITE
 #define SD_SPEED_WRITE	(HCLK_PER_US/2)	// SD speed on read: wait delay "HCLK_PER_US/2" = 1 Mbps
 #endif
+*/
 
 // SD card type
 enum {
@@ -72,11 +74,29 @@ const char* SD_GetName();
 // SD transfer one byte
 u8 SD_Byte(u8 val);
 
+// unselect SD card
+void SD_Unsel(void);
+
+// select SD card
+void SD_Sel(void);
+
+// send command with argument to SD card and return response (0 or 1 is OK, 0xff=timeout, other=error)
+u8 SD_SendCmd(u8 cmd, u32 arg);
+
 // connect to SD card after inserting (returns False on error)
 Bool SD_Connect();
 
 // disconnect SD card
 void SD_Disconnect();
+
+// read data block (returns False on error)
+Bool SD_ReadBlock(u8* buffer, int num);
+
+// open SD card
+void SD_Open();
+
+// close SD card
+void SD_Close();
 
 // read one sector from SD card (returns False on error)
 Bool SD_ReadSect(u32 sector, u8* buffer);

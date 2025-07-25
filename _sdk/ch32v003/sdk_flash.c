@@ -5,7 +5,7 @@
 //
 // ****************************************************************************
 
-#include "../_include.h"
+#include "../../includes.h"	// globals
 
 #if USE_FLASH		// 1=use Flash programming
 

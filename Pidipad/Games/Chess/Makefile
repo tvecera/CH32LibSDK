@@ -3,9 +3,6 @@
 #               Include Makefile 1st stage - prepare MCU type
 ##############################################################################
 
-# Input variable:
-#  DEVICE ... device
-
 # Setup device class
 DEVCLASS=pidipad
 

@@ -1,4 +1,3 @@
 @echo off
 rem Compilation...
-
-..\..\..\_c1.bat ch32base
+..\..\..\_c1.bat

@@ -29,7 +29,7 @@ endif
 ifeq (${OS},Windows_NT)
 CSRC += ${CH32LIBSDK_SDK_DIR}/sdk.c
 else
-#CSRC += ${CH32LIBSDK_SDK_DIR}/${SDK_SUBDIR}/sdk_adc.c
+CSRC += ${CH32LIBSDK_SDK_DIR}/${SDK_SUBDIR}/sdk_adc.c
 CSRC += ${CH32LIBSDK_SDK_DIR}/${SDK_SUBDIR}/sdk_cpu.c
 CSRC += ${CH32LIBSDK_SDK_DIR}/${SDK_SUBDIR}/sdk_dma.c
 CSRC += ${CH32LIBSDK_SDK_DIR}/${SDK_SUBDIR}/sdk_flash.c

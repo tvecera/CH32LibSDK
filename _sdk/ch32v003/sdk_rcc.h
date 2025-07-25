@@ -485,15 +485,6 @@ INLINE Bool RCC_GetLowPwrRes(void) { return (RCC->RSTSCKR & B31) != 0; }
 // Clear all reset flags
 INLINE void RCC_ClrRes(void) { RCC->RSTSCKR |= B24; }
 
-// System initialize
-void SystemInit(void);
-
-// System terminate
-void SystemTerm(void);
-
-// exit application and reset to boot loader (execute software reset)
-void ResetToBootLoader(void);
-
 #ifdef __cplusplus
 }
 #endif

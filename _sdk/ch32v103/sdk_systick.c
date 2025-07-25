@@ -62,7 +62,7 @@ void SysTick_Init(void)
 {
 	SysTick_Disable();	// disable counter
 	SysTick_Set(0);		// clear counter
-	SysTick_SetCmp(SYSTICK_HCLK-1); // set next compare value
+	SysTick_SetCmp(HCLK_PER_MS/2-1); // set next compare value
 	SysTick_OldCnt = 0;	// update current counter
 	SysTick_Enable();	// enable counter
 #if SYSTICK_MS > 0 // 0=do not use SysTick interrupt

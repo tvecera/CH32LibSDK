@@ -5,7 +5,7 @@
 //
 // ****************************************************************************
 
-#include "../_include.h"
+#include "../../includes.h"	// globals
 
 // lock GPIO pin (pin configuration cannot be changed until next reset MCU or reset port; gpio = PA0...)
 void GPIO_Lock(int gpio)

@@ -101,7 +101,7 @@ extern u32 ResetReason;
 extern const u16 RCC_AHBClkDivTab[16];
 
 // ADC clock divider table
-extern const u8 RCC_ADCClkDivTab[32];
+//extern const u8 RCC_ADCClkDivTab[32];
 
 // Current frequencies
 #define CLK_HSI		0	// HSI oscillator frequency index
@@ -389,15 +389,6 @@ INLINE void RCC_ClrRes(void) { RCC->RSTSCKR |= B24; }
 // OPA reset flag ON/OFF
 INLINE void RCC_OPAResetOn(void) { RCC->RSTSCKR |= B25; cb(); }
 INLINE void RCC_OPAResetOff(void) { RCC->RSTSCKR &= ~B25; cb(); }
-
-// System initialize
-void SystemInit(void);
-
-// System terminate
-void SystemTerm(void);
-
-// exit application and reset to boot loader (execute software reset)
-void ResetToBootLoader(void);
 
 #ifdef __cplusplus
 }

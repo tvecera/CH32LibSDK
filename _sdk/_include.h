@@ -15,11 +15,11 @@
 
 #define INCLUDE_SDK_FILE(file) STRINGIFY(SDK_SUBDIR/file)
 
-//#include INCLUDE_SDK_FILE(sdk_adc.h)		// ADC analog-to-digital converter
 #include INCLUDE_SDK_FILE(sdk_addressmap.h)	// Register address offsets
 #include INCLUDE_SDK_FILE(sdk_cpu.h)		// CPU control
 #include INCLUDE_SDK_FILE(sdk_rcc.h)		// Reset and clock control
 
+#include INCLUDE_SDK_FILE(sdk_adc.h)		// ADC analog-to-digital converter
 #include INCLUDE_SDK_FILE(sdk_dma.h)		// DMA
 #include INCLUDE_SDK_FILE(sdk_flash.h)		// Flash memory
 #include INCLUDE_SDK_FILE(sdk_gpio_pins.h)	// GPIO pins indices

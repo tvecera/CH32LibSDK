@@ -133,6 +133,7 @@ INLINE void GPIOB_Out(int pin, int val) { GPIOx_Out(GPIOB, pin, val); }
 INLINE void GPIOC_Out(int pin, int val) { GPIOx_Out(GPIOC, pin, val); }
 INLINE void GPIOD_Out(int pin, int val) { GPIOx_Out(GPIOD, pin, val); }
 INLINE void GPIO_Out(int gpio, int val) { GPIOx_Out(GPIO_PORT(gpio), GPIO_PIN(gpio), val); }
+INLINE void GPIOx_OutFast(GPIO_t* port, int pin, int val) { GPIOx_Out(port, pin, val); }
 
 // flip GPIO output pin (port = GPIOA..., pin = 0.., gpio = PA0...)
 INLINE void GPIOx_Flip(GPIO_t* port, int pin) { pin = BIT(pin);

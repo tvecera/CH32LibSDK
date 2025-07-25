@@ -8,7 +8,7 @@
 #ifndef _GLOBAL_H
 #define _GLOBAL_H
 
-#define SDK_VER		010	// SDK library version in hundredths
+#define SDK_VER		010	// SDK library version in hundredths (010 = 0.10)
 
 // ----------------------------------------------------------------------------
 //                               Attributes
@@ -207,12 +207,40 @@ STATIC_ASSERT(sizeof(u64) == 8, "Incorrect typedef u64!");
 #include "_devices/babypad/_config.h"
 #endif
 
+#if USE_PIDIBOY
+#include "_devices/pidiboy/_config.h"
+#endif
+
 #include <string.h>		// memcpy
 #include <stdarg.h>		// va_list
 #include <math.h>		// HUGE_VAL
 
 // ----------------------------------------------------------------------------
-//                           Default SDK modules
+//                               Library modules
+// ----------------------------------------------------------------------------
+
+#ifndef USE_CRC
+#define USE_CRC		1	// 1=use CRC library
+#endif
+
+#ifndef USE_DECNUM
+#define USE_DECNUM	1	// 1=use decode number
+#endif
+
+#ifndef USE_FAT
+#define USE_FAT		1	// 1=use FAT filesystem
+#endif
+
+#ifndef USE_RAND
+#define USE_RAND	1	// 1=use random number generator
+#endif
+
+#ifndef USE_SD
+#define USE_SD		1	// 1=use SD card driver
+#endif
+
+// ----------------------------------------------------------------------------
+//                             SDK modules
 // ----------------------------------------------------------------------------
 
 #ifndef USE_ADC
@@ -249,30 +277,6 @@ STATIC_ASSERT(sizeof(u64) == 8, "Incorrect typedef u64!");
 
 #ifndef USE_USART
 #define USE_USART	1	// 1=use USART peripheral
-#endif
-
-// ----------------------------------------------------------------------------
-//                            Default library modules
-// ----------------------------------------------------------------------------
-
-#ifndef USE_CRC
-#define USE_CRC		1	// 1=use CRC library
-#endif
-
-#ifndef USE_DECNUM
-#define USE_DECNUM	1	// 1=use decode number
-#endif
-
-#ifndef USE_FAT
-#define USE_FAT		1	// 1=use FAT filesystem
-#endif
-
-#ifndef USE_RAND
-#define USE_RAND	1	// 1=use random number generator
-#endif
-
-#ifndef USE_SD
-#define USE_SD		1	// 1=use SD card driver
 #endif
 
 #endif // _GLOBAL_H

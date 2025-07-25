@@ -7,7 +7,7 @@
 
 #include "../../includes.h"	// globals
 
-#if USE_SD		// 1=use SD card driver
+#if USE_SD		// 1=use software SD card driver, 2=use hardware SD card driver (0=no driver)
 
 // SD card type
 u8 SD_Type = SD_NONE;
@@ -110,7 +110,9 @@ u8 SD_Buf[16];
 // After sending command it requires 8 clock cycles before response.
 
 // current SD speed - number of HCLK cycles of one half-pulse
+#if USE_SD == 1		// 1=use software SD card driver, 2=use hardware SD card driver (0=no driver)
 int SD_SpeedDelay = SD_SPEED_INIT;
+#endif
 
 // get SD card type name
 const char* SD_GetName()
@@ -126,6 +128,10 @@ const char* SD_GetName()
 //	- clock phase: leading edge sample, trailing edge setup, 8 data bits
 u8 SD_Byte(u8 val)
 {
+
+#if USE_SD == 1		// 1=use software SD card driver, 2=use hardware SD card driver (0=no driver)
+// Software driver:
+
 	u8 res = 0;
 	int i;
 	for (i = 8; i > 0; i--)
@@ -154,13 +160,28 @@ u8 SD_Byte(u8 val)
 	}
 
 	return res;
+
+#else
+// Hardware driver:
+
+	// send data
+	SPI1_SendWait(val);
+
+	// receive data
+	return (u8)SPI1_RecvWait();
+
+#endif
 }
 
 // unselect SD card
 void SD_Unsel(void)
 {
 	// set CS signal to HIGH (= unselect)
+#if USE_SD == 1		// 1=use software SD card driver, 2=use hardware SD card driver (0=no driver)
 	GPIO_Out1(SD_CS_GPIO);
+#else
+	SPI1_NSSHigh();
+#endif
 
 	// send dummy clock to free SPI bus
 	SD_Byte(0xff);
@@ -172,7 +193,11 @@ void SD_Unsel(void)
 void SD_Sel(void)
 {
 	// set CS signal to LOW (= select)
+#if USE_SD == 1		// 1=use software SD card driver, 2=use hardware SD card driver (0=no driver)
 	GPIO_Out0(SD_CS_GPIO);
+#else
+	SPI1_NSSLow();
+#endif
 
 	// send dummy clock to free SPI bus
 	SD_Byte(0xff);
@@ -233,7 +258,11 @@ Bool SD_Connect()
 	SD_Type = SD_NONE;
 
 	// set SPI to low speed
+#if USE_SD == 2		// 1=use software SD card driver, 2=use hardware SD card driver (0=no driver)
+	SPI1_Baud(SD_SPI_DIV_INIT);
+#else
 	SD_SpeedDelay = SD_SPEED_INIT;
+#endif
 
 	// unselect card (and send 3x FF)
 	SD_Unsel();
@@ -332,7 +361,11 @@ Bool SD_Connect()
 	SD_Unsel();
 
 	// set SPI to high speed
+#if USE_SD == 2		// 1=use software SD card driver, 2=use hardware SD card driver (0=no driver)
+	SPI1_Baud(SD_SPI_DIV_WRITE);
+#else
 	SD_SpeedDelay = SD_SPEED_WRITE;
+#endif
 
 	return True;
 }
@@ -341,7 +374,11 @@ Bool SD_Connect()
 void SD_Disconnect()
 {
 	// set SPI to low speed
+#if USE_SD == 2		// 1=use software SD card driver, 2=use hardware SD card driver (0=no driver)
+	SPI1_Baud(SD_SPI_DIV_INIT);
+#else
 	SD_SpeedDelay = SD_SPEED_INIT;
+#endif
 
 	// unselect card
 	SD_Unsel();
@@ -378,7 +415,11 @@ Bool SD_ReadBlock(u8* buffer, int num)
 void SD_Open()
 {
 	// set SPI to high speed
-	SD_SpeedDelay = SD_SPEED_WRITE;
+#if USE_SD == 2		// 1=use software SD card driver, 2=use hardware SD card driver (0=no driver)
+	SPI1_Baud(SD_SPI_DIV_INIT);
+#else
+	SD_SpeedDelay = SD_SPEED_INIT;
+#endif
 
 	// select SD card
 	SD_Sel();
@@ -413,7 +454,11 @@ Bool SD_ReadSect(u32 sector, u8* buffer)
 	SD_Open();
 
 	// set SPI to high speed
+#if USE_SD == 2		// 1=use software SD card driver, 2=use hardware SD card driver (0=no driver)
+	SPI1_Baud(SD_SPI_DIV_READ);
+#else
 	SD_SpeedDelay = SD_SPEED_READ;
+#endif
 
 	// convert sector number to offset
 	if (SD_Type != SD_SDHC) sector *= SECT_SIZE;
@@ -447,7 +492,11 @@ Bool SD_WriteSect(u32 sector, const u8* buffer)
 	SD_Open();
 
 	// set SPI to high speed
+#if USE_SD == 2		// 1=use software SD card driver, 2=use hardware SD card driver (0=no driver)
+	SPI1_Baud(SD_SPI_DIV_WRITE);
+#else
 	SD_SpeedDelay = SD_SPEED_WRITE;
+#endif
 
 	// convert sector number to offset
 	if (SD_Type != SD_SDHC) sector *= SECT_SIZE;
@@ -512,7 +561,11 @@ u32 SD_MediaSize()
 	SD_Open();
 
 	// set SPI to high speed
+#if USE_SD == 2		// 1=use software SD card driver, 2=use hardware SD card driver (0=no driver)
+	SPI1_Baud(SD_SPI_DIV_READ);
+#else
 	SD_SpeedDelay = SD_SPEED_READ;
+#endif
 
 	// send command to read CSD
 	u32 size = 0;
@@ -559,6 +612,12 @@ void SD_Init(void)
 	RCC_PxClkEnable(GPIO_PORTINX(SD_MOSI_GPIO));	// enable MOSI port
 #endif
 
+	// init MISO pin
+	GPIO_Mode(SD_MISO_GPIO, GPIO_MODE_IN_PU);
+
+#if USE_SD == 1		// 1=use software SD card driver, 2=use hardware SD card driver (0=no driver)
+// Software driver:
+
 	// init CS pin: inactive HIGH
 	GPIO_Out1(SD_CS_GPIO);
 	GPIO_Mode(SD_CS_GPIO, GPIO_MODE_OUT);
@@ -568,17 +627,72 @@ void SD_Init(void)
 	GPIO_Out0(SD_CLK_GPIO);
 	GPIO_Mode(SD_CLK_GPIO, GPIO_MODE_OUT);
 
-	// init MISO pin
-	GPIO_Mode(SD_MISO_GPIO, GPIO_MODE_IN_PU);
-
 	// init MOSI pin
 	GPIO_Out0(SD_MOSI_GPIO);
 	GPIO_Mode(SD_MOSI_GPIO, GPIO_MODE_OUT);
+
+#else
+// Hardware driver:
+
+	// SPI1 clock enable
+	RCC_SPI1ClkEnable();
+
+	// SPI1 reset
+	RCC_SPI1Reset();
+
+	// set SPI mapping
+	// 1: PC0:CS, PC5:SCK, PC7:MISO, PC6:MOSI
+	GPIO_Remap_SPI1(SD_SPI_MAP);
+
+	// sampling on first edge, clock polarity low (default setup)
+//	SPI1_ClockPhaseFirst();
+//	SPI1_ClockPolLow();
+
+	// set master mode
+	SPI1_Master();
+
+	// set SPI to low speed
+	SPI1_Baud(SD_SPI_DIV_INIT);
+
+	// MSB bit first (default setup)
+//	SPI1_MSB();
+
+	// set NSS pin High
+	SPI1_NSSHigh();
+
+	// NSS controlled by hardware (default setup)
+//	SPI1_NSSHw();
+
+	// full duplex (default setup)
+//	SPI1_Duplex();
+
+	// 8-bit (default setup)
+//	SPI1_Data8();
+
+	// 2 lines (default setup)
+//	SPI1_Bidi2();
+
+	// enable SS output
+	SPI1_SSEnable();
+
+	// SPI enable
+	SPI1_Enable();
+
+	// setup pins
+	GPIO_Mode(SD_CLK_GPIO, GPIO_MODE_AF);
+	GPIO_Mode(SD_MOSI_GPIO, GPIO_MODE_AF);
+	GPIO_Mode(SD_CS_GPIO, GPIO_MODE_AF);
+
+#endif
 }
 
 // Terminate SD card interface
 void SD_Term(void)
 {
+#if USE_SD == 2		// 1=use software SD card driver, 2=use hardware SD card driver (0=no driver)
+	// SPI1 reset
+	RCC_SPI1Reset();
+#endif
 	// disable ports
 	GPIO_PinReset(SD_CS_GPIO);
 	GPIO_PinReset(SD_CLK_GPIO);

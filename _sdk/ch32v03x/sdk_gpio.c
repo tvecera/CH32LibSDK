@@ -5,7 +5,7 @@
 //
 // ****************************************************************************
 
-#include "../_include.h"
+#include "../../includes.h"	// globals
 
 // output value to GPIO output pin (val = 0 or <>0; port = GPIOA..., pin = 0.., gpio = PA0...)
 //  In GPIO_MODE_IN_* modes 0 selects pull-down mode, 1 selects pull-up mode.
@@ -80,8 +80,6 @@ void GPIO_Mode(int gpio, int mode)
 			shift -= 8;
 		}
 	}
-
-
 
 	// setup mode
 	shift <<= 2;

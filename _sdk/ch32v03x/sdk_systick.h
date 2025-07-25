@@ -26,7 +26,7 @@ extern "C" {
 
 // increment of system time in [ms] on SysTick interrupt (0=do not use SysTick interrupt)
 #ifndef SYSTICK_MS
-#define SYSTICK_MS	5
+#define SYSTICK_MS	16
 #endif
 
 // number of HCLK clock cycles per SysTick interrupt
@@ -45,7 +45,7 @@ typedef struct {
 	io32	CMPH;			// 0x14: counting comparison register HIGH
 } SysTick_t;
 STATIC_ASSERT(sizeof(SysTick_t) == 0x18, "Incorrect SysTick_t!");
-#define SysTick		((SysTick_t*)SYSTICK_BASE)
+#define SysTick		((SysTick_t*)SYSTICK_BASE) // 0xE000F000
 
 // system time counter, counts time from system start in [ms]
 // - overflow after 49 days (use difference, not absolute value!)
@@ -75,6 +75,10 @@ INLINE void SysTick_ResetDisable(void) { SysTick->CTLR &= ~B3; }
 // Set counting direction up/dwn
 INLINE void SysTick_CountUp(void) { SysTick->CTLR &= ~B4; }
 INLINE void SysTick_CountDown(void) { SysTick->CTLR |= B4; }
+
+// Check/Clear flag of counter initial value update
+INLINE Bool SysTick_IsInit(void) { return (SysTick->CTLR & B5) != 0; }
+INLINE void SysTick_ClrInit(void) { SysTick->CTLR |= B5; }
 
 // Force/Unforce software interrupt trigger (must be unforced on interrupt)
 INLINE void SysTick_Force(void) { SysTick->CTLR |= B31; }

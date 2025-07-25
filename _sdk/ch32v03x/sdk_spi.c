@@ -5,7 +5,7 @@
 //
 // ****************************************************************************
 
-#include "../_include.h"
+#include "../../includes.h"	// globals
 
 #if USE_SPI		// 1=use SPI peripheral
 
@@ -19,7 +19,7 @@ void SPIx_SendWait(SPI_t* spi, u16 data)
 // Receive data with wait
 u16 SPIx_RecvWait(SPI_t* spi)
 {
-	while (SPIx_RxReady(spi)) {}
+	while (!SPIx_RxReady(spi)) {}
 	return SPIx_Read(spi);
 }
 

@@ -1,15 +1,111 @@
 
 #include "../include.h"
 
-#define PIN	PA0
+#define PIN	PC7 //PA0
 
 int main(void)
 {
 	GPIO_Mode(PIN, GPIO_MODE_OUT);
 
+/*
+// 006
+	GPIO_Mode(PD4, GPIO_MODE_OUT);
+	GPIO_Mode(PD5, GPIO_MODE_OUT);
+	GPIO_Mode(PD6, GPIO_MODE_OUT);
+	GPIO_Mode(PD7, GPIO_MODE_OUT);
+	GPIO_Mode(PA1, GPIO_MODE_OUT);
+	GPIO_Mode(PA2, GPIO_MODE_OUT);
+	GPIO_Mode(PD0, GPIO_MODE_OUT);
+	GPIO_Mode(PC0, GPIO_MODE_OUT);
+	GPIO_Mode(PC1, GPIO_MODE_OUT);
+	GPIO_Mode(PC2, GPIO_MODE_OUT);
+	GPIO_Mode(PC3, GPIO_MODE_OUT);
+	GPIO_Mode(PC5, GPIO_MODE_OUT);
+	GPIO_Mode(PC6, GPIO_MODE_OUT);
+	GPIO_Mode(PC7, GPIO_MODE_OUT);
+	GPIO_Mode(PD2, GPIO_MODE_OUT);
+	GPIO_Mode(PD3, GPIO_MODE_OUT);
+*/
+
+/*
+// 035
+	GPIO_Mode(PC16, GPIO_MODE_OUT);
+	GPIO_Mode(PC17, GPIO_MODE_OUT);
+	GPIO_Mode(PA12, GPIO_MODE_OUT);
+	GPIO_Mode(PA13, GPIO_MODE_OUT);
+	GPIO_Mode(PC3 , GPIO_MODE_OUT);
+	GPIO_Mode(PA0 , GPIO_MODE_OUT);
+	GPIO_Mode(PA1 , GPIO_MODE_OUT);
+	GPIO_Mode(PA2 , GPIO_MODE_OUT);
+	GPIO_Mode(PA3 , GPIO_MODE_OUT);
+	GPIO_Mode(PA6 , GPIO_MODE_OUT);
+	GPIO_Mode(PB0 , GPIO_MODE_OUT);
+	GPIO_Mode(PA4 , GPIO_MODE_OUT);
+	GPIO_Mode(PA5 , GPIO_MODE_OUT);
+	GPIO_Mode(PA7 , GPIO_MODE_OUT);
+	GPIO_Mode(PB3 , GPIO_MODE_OUT);
+	GPIO_Mode(PB4 , GPIO_MODE_OUT);
+	GPIO_Mode(PB1 , GPIO_MODE_OUT);
+	GPIO_Mode(PB6 , GPIO_MODE_OUT);
+	GPIO_Mode(PB7 , GPIO_MODE_OUT);
+	GPIO_Mode(PB8 , GPIO_MODE_OUT);
+	GPIO_Mode(PB9 , GPIO_MODE_OUT);
+	GPIO_Mode(PB10, GPIO_MODE_OUT);
+	GPIO_Mode(PB11, GPIO_MODE_OUT);
+	GPIO_Mode(PB12, GPIO_MODE_OUT);
+*/
+
 	while(True)
 	{
 		GPIO_Flip(PIN);
-		WaitMs(1000);
+
+/*
+// 006
+		GPIO_Flip(PD4);
+		GPIO_Flip(PD5);
+		GPIO_Flip(PD6);
+		GPIO_Flip(PD7);
+		GPIO_Flip(PA1);
+		GPIO_Flip(PA2);
+		GPIO_Flip(PD0);
+		GPIO_Flip(PC0);
+		GPIO_Flip(PC1);
+		GPIO_Flip(PC2);
+		GPIO_Flip(PC3);
+		GPIO_Flip(PC5);
+		GPIO_Flip(PC6);
+		GPIO_Flip(PC7);
+		GPIO_Flip(PD2);
+		GPIO_Flip(PD3);
+*/
+
+/*
+// 035
+		GPIO_Flip(PC16);
+		GPIO_Flip(PC17);
+		GPIO_Flip(PA12);
+		GPIO_Flip(PA13);
+		GPIO_Flip(PC3 );
+		GPIO_Flip(PA0 );
+		GPIO_Flip(PA1 );
+		GPIO_Flip(PA2 );
+		GPIO_Flip(PA3 );
+		GPIO_Flip(PA6 );
+		GPIO_Flip(PB0 );
+		GPIO_Flip(PA4 );
+		GPIO_Flip(PA5 );
+		GPIO_Flip(PA7 );
+		GPIO_Flip(PB3 );
+		GPIO_Flip(PB4 );
+		GPIO_Flip(PB1 );
+		GPIO_Flip(PB6 );
+		GPIO_Flip(PB7 );
+		GPIO_Flip(PB8 );
+		GPIO_Flip(PB9 );
+		GPIO_Flip(PB10);
+		GPIO_Flip(PB11);
+		GPIO_Flip(PB12);
+*/
+		WaitMs(500);
 	}
 }

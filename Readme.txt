@@ -1,6 +1,6 @@
 CH32LibSDK - SDK library for low-end CH32 RISC-V microcontrollers
 =================================================================
-Pre-alpha version 0.01, under development, a lot remains to be done
+Pre-alpha version 0.10, under development, a lot remains to be done
 
 Copyright (c) 2025 Miroslav Nemecek
 

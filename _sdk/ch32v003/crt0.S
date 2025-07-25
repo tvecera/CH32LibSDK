@@ -67,6 +67,24 @@ _vector_base:
 
 	.option	pop			// pop original linker setup
 
+// ---- Application info header (start at offset 41*4 = 164 = 0xA4, header size 0x18 bytes) - see sdk_runtime.*
+
+	.align	2
+
+.global AppInfoHeader
+AppInfoHeader:
+	.ascii	"INFO"		// 0x00: magic 1
+	.word	0x01234567	// 0x04: application length of data after "AppInfoHeader_StartCRC" label
+	.hword	0x89AB		// 0x08: application CRC of data after "AppInfoHeader_StartCRC" label ... CRC-16 CCITT (CRC16C, use Crc16CFast() with INIT=0x1D0F)
+	.ascii	"03"		// 0x0A: MCU serie identifier (CH32V00X)
+
+.global AppInfoHeader_StartCRC
+AppInfoHeader_StartCRC:		// 0x0C: start calculatin CRC ... CRC-16 CCITT (CRC16C, use Crc16CFast() with INIT=0x1D0F)
+
+	.word	_eusrstack	// 0x0C: end of user stack, to setup SP register
+	.word	handle_reset	// 0x10: start address, to jump to application
+	.ascii	"info"		// 0x14: magic 2
+
 // ---- Weak handlers
 
 	.align	2
@@ -165,3 +183,21 @@ handle_reset:
 	la	t0,main			// T0 <- pointer to main function
 	csrw	mepc,t0			// setup machine exception address
 	mret				// jump to main function
+
+// ==== Run application
+// Called from boot3 loader
+
+	.align	2
+
+// run application from Flash
+.type GoToApp,%function
+.global GoToApp
+GoToApp:
+	lui	a0,%hi(0x08000000 + 0x5000)	// vector table of application -> A0
+	addi	a0,a0,3				// set vector mode
+	csrw	mtvec,a0			// setup vector address register MTVEC, using vector mode
+
+	lw	a1,0xA4+0x0C-3(a0)		// A1 <- load start stack
+	lw	a0,0xA4+0x10-3(a0)		// A0 <- load start address
+	mv	sp,a1				// set stack pointer
+	jr	a0				// run application code

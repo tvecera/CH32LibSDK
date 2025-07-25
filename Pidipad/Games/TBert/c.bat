@@ -1,3 +1,3 @@
 @echo off
 rem Compilation...
-..\..\..\_c1.bat pidipad
+..\..\..\_c1.bat

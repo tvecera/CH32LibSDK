@@ -14,7 +14,7 @@
 #define STRINGIFYC(x) STRINGIFYC_HELPER(x)
 #define INCLUDEC_SDK_FILE(file) STRINGIFYC(SDK_SUBDIR/file)
 
-//#include INCLUDEC_SDK_FILE(sdk_adc.c)		// ADC
+#include INCLUDEC_SDK_FILE(sdk_adc.c)		// ADC
 #include INCLUDEC_SDK_FILE(sdk_cpu.c)		// CPU control
 #include INCLUDEC_SDK_FILE(sdk_dma.c)		// DMA
 #include INCLUDEC_SDK_FILE(sdk_flash.c)		// Flash memory

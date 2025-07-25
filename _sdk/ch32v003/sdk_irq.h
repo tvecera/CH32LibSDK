@@ -22,7 +22,7 @@ extern "C" {
 #define IRQ_SW		14		// Software interrupt (default weak handler SW_Handler)
 // External Interrupts
 #define IRQ_WWDG	16		// Window WatchDog interrupt (default weak handler WWDG_IRQHandler)
-#define IRQ_PVD		17		// PVD through EXTI line detection interrupt (default weak handler PVD_IRQHandler)
+#define IRQ_PVD		17		// PVD through EXTI line detection interrupt, Supply voltage detection interrupt (default weak handler PVD_IRQHandler)
 #define IRQ_FLASH	18		// Flash global interrupt (default weak handler FLASH_IRQHandler)
 #define IRQ_RCC		19		// RCC global interrupt (default weak handler RCC_IRQHandler)
 #define IRQ_EXTI7	20		// External line 7..0 interrupts (default weak handler EXTI7_0_IRQHandler)

@@ -55,7 +55,7 @@
 #define SD_MOSI_GPIO	PD6	// MOSI output to SD card
 #define SD_SPEED_INIT	(HCLK_PER_US*2)	// SD speed on init: wait delay "HCLK_PER_US*2" = 250 kbps
 #define SD_SPEED_READ	(HCLK_PER_US/8)	// SD speed on read: wait delay "HCLK_PER_US/8" = 4 Mbps
-#define SD_SPEED_WRITE	(HCLK_PER_US/2)	// SD speed on read: wait delay "HCLK_PER_US/2" = 1 Mbps
+#define SD_SPEED_WRITE	(HCLK_PER_US/2)	// SD speed on write: wait delay "HCLK_PER_US/2" = 1 Mbps
 
 // Frequency of HSE external oscillator
 #ifndef HSE_VALUE

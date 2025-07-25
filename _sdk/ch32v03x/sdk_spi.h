@@ -255,7 +255,7 @@ INLINE u16 SPI1_Read(void) { return SPIx_Read(SPI1); }
 
 // Receive data with wait
 u16 SPIx_RecvWait(SPI_t* spi);
-INLINE u16 SPI1_RecvWait(SPI_t* spi) { return SPIx_RecvWait(SPI1); }
+INLINE u16 SPI1_RecvWait(void) { return SPIx_RecvWait(SPI1); }
 
 // Set/Get CRC polynomial register (register CRCR)
 INLINE void SPIx_Crc(SPI_t* spi, u16 crc) { spi->CRCR = crc; }

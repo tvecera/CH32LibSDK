@@ -69,8 +69,8 @@ void SysTick_Init(void)
 	SysTick_Unforce();	// not forced
 	SysTick_Set(0);		// clear counter
 	SysTick_CountUp();	// set counting direction up
+	SysTick_SetCmp(HCLK_PER_MS/2-1); // set next compare value
 	SysTick_ClrCmp();	// clear compare interrupt request
-	SysTick_SetCmp(SYSTICK_HCLK-1); // set next compare value
 	SysTick_ResetDisable();	// not reseting to 0
 	SysTick_OldCnt = 0;	// update current counter
 	SysTick_Enable();	// enable counter

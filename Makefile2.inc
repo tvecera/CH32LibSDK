@@ -345,10 +345,14 @@ ALLOBJ = $(addprefix $(TEMP)/, $(addsuffix .o, $(ALLBASE)))
 
 clean:
 	@${CH32LIBSDK_TOOLS_DIR}/rm -rf $(TEMP)
+ifeq (${DEVCLASS},pidiboy)
+	@${CH32LIBSDK_TOOLS_DIR}/rm -f ./$(TARGET).hex ./$(TARGET).lst ./$(TARGET).map ./$(TARGET).sym ./$(TARGET).siz
+else
 ifeq (${DEVCLASS},pidipad)
 	@${CH32LIBSDK_TOOLS_DIR}/rm -f ./$(TARGET).hex ./$(TARGET).lst ./$(TARGET).map ./$(TARGET).sym ./$(TARGET).siz
 else
 	@${CH32LIBSDK_TOOLS_DIR}/rm -f ./$(TARGET).lst ./$(TARGET).map ./$(TARGET).sym ./$(TARGET).siz
+endif
 endif
 # ./$(TARGET).elf ./$(TARGET).bin
 
@@ -388,6 +392,12 @@ ifeq (${DEVCLASS},pidipad)
 ifneq (${NOBOOT},1)
 	@echo     crc		 $@
 	@${CH32LIBSDK_LOADER_DIR}/PidiPad/loadercrc/LoaderCrc $@ $(TARGET).elf
+endif
+endif
+ifeq (${DEVCLASS},pidiboy)
+ifneq (${NOBOOT},1)
+	@echo     crc		 $@
+	@${CH32LIBSDK_LOADER_DIR}/PidiBoy/loadercrc/LoaderCrc $@ $(TARGET).elf
 endif
 endif
 
