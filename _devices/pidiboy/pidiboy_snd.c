@@ -124,7 +124,7 @@ void SoundInit()
 {
 	// setup output pins
 	RCC_AFIClkEnable();
-	RCC_PBClkEnable();
+	RCC_PCClkEnable();
 	GPIO_Mode(PC3, GPIO_MODE_AF);
 
 	// Remap Timer 1
@@ -191,7 +191,7 @@ void PlayTone(u32 div)
 	// set timer reload value
 	TIM1_Load(div);
 
-	// set compare value, channel 1 and 2
+	// set compare value, channel 3
 	TIM1_Comp3(div>>1);
 
 	// enable compare output

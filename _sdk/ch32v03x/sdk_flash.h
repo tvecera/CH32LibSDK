@@ -47,7 +47,7 @@ typedef struct {
 					//	 bit 2: STANDYRST system reset in standby mode 1=not enabled (default), 0=enabled
 					//	 bit 3-4: RST_MODE reset pin ignoring 0=128us, 1=1ms, 2=12ms (default), 3=PD7 as GPIO (default on 007)
 					//	 bit 5: power-on startup 1=from BOOT (default), 0=from user
-	io16	Data0;			// 0x04: user data (0xffff default)
+	io16	Data0;			// 0x04: user data (0xffff default) ... LCD display backlight 0x31..0x39, other = use default
 	io16	Data1;			// 0x06: user data (0xffff default)
 	io16	WRPR0;			// 0x08: write protect, every bit means 2KB, sector 0-15 (16KB), 1=no protection (default), 0=protected
 	io16	WRPR1;			// 0x0A: write protect, every bit means 2KB, sector 16-31 (16KB), 1=no protection (default), 0=protected

@@ -33,3 +33,7 @@
 #if USE_PIDIBOY
 #include "_devices/pidiboy/_include.h"
 #endif
+
+#if USE_TWEETYBOY
+#include "_devices/tweetyboy/_include.h"
+#endif

@@ -4,7 +4,8 @@
 //                        PidiBoy - Display driver
 //
 // ****************************************************************************
-// OLED I2C SSD1306 display, resolution 128x64 pixels.
+// OLED I2C 0.96" SSD1306 display, resolution 128x64 pixels, controller SSD1306, power 3 to 5V.
+// https://pajenicko.cz/graficky-oled-displej-096-128x64-i2c-bily
 
 //#define DISP_I2C_ADDR	0x3C	// display I2C address
 //#define DISP_SDA_GPIO	PC1	// display gpio with SDA

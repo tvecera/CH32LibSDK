@@ -345,6 +345,9 @@ ALLOBJ = $(addprefix $(TEMP)/, $(addsuffix .o, $(ALLBASE)))
 
 clean:
 	@${CH32LIBSDK_TOOLS_DIR}/rm -rf $(TEMP)
+ifeq (${DEVCLASS},tweetyboy)
+	@${CH32LIBSDK_TOOLS_DIR}/rm -f ./$(TARGET).hex ./$(TARGET).lst ./$(TARGET).map ./$(TARGET).sym ./$(TARGET).siz
+else
 ifeq (${DEVCLASS},pidiboy)
 	@${CH32LIBSDK_TOOLS_DIR}/rm -f ./$(TARGET).hex ./$(TARGET).lst ./$(TARGET).map ./$(TARGET).sym ./$(TARGET).siz
 else
@@ -352,6 +355,7 @@ ifeq (${DEVCLASS},pidipad)
 	@${CH32LIBSDK_TOOLS_DIR}/rm -f ./$(TARGET).hex ./$(TARGET).lst ./$(TARGET).map ./$(TARGET).sym ./$(TARGET).siz
 else
 	@${CH32LIBSDK_TOOLS_DIR}/rm -f ./$(TARGET).lst ./$(TARGET).map ./$(TARGET).sym ./$(TARGET).siz
+endif
 endif
 endif
 # ./$(TARGET).elf ./$(TARGET).bin
@@ -398,6 +402,12 @@ ifeq (${DEVCLASS},pidiboy)
 ifneq (${NOBOOT},1)
 	@echo     crc		 $@
 	@${CH32LIBSDK_LOADER_DIR}/PidiBoy/loadercrc/LoaderCrc $@ $(TARGET).elf
+endif
+endif
+ifeq (${DEVCLASS},tweetyboy)
+ifneq (${NOBOOT},1)
+	@echo     crc		 $@
+	@${CH32LIBSDK_LOADER_DIR}/TweetyBoy/loadercrc/LoaderCrc $@ $(TARGET).elf
 endif
 endif
 

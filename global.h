@@ -66,6 +66,9 @@
 #define STATIC_ASSERT(c, msg) _Static_assert((c), msg)
 #endif
 
+// change endian of u16 (little endian LSB MSB = Intel, big endian MSB LSB = Motorola)
+#define ENDIAN16(k) ( (((k)>>8)&0xff) | (((k)&0xff)<<8) )
+
 // ----------------------------------------------------------------------------
 //                              Base data types
 // ----------------------------------------------------------------------------
@@ -209,6 +212,10 @@ STATIC_ASSERT(sizeof(u64) == 8, "Incorrect typedef u64!");
 
 #if USE_PIDIBOY
 #include "_devices/pidiboy/_config.h"
+#endif
+
+#if USE_TWEETYBOY
+#include "_devices/tweetyboy/_config.h"
 #endif
 
 #include <string.h>		// memcpy

@@ -19,6 +19,9 @@ MCU=CH32V006x8
 # Setup device class
 DEVCLASS=ch32base
 
+# Flag - do not include boot section
+NOBOOT=1
+
 # Input variable:
 #  MCU ... target MCU = CH32V002x4, CH32V003x4, CH32V004x6 ...
 

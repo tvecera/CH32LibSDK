@@ -36,7 +36,6 @@ extern "C" {
 #define KEY_NUM		7	// number of buttons
 
 // keyboard buffer
-// If you change the settings, also check the code for reading the buttons in PIDIBOY_vga_asm.S.
 #define KEYBUF_SIZE	8	// size of keyboard buffer
 extern volatile Bool KeyPressMap[KEY_NUM]; // keys are currently pressed (index = button code - 1)
 extern u8 KeyBuf[KEYBUF_SIZE];	// keyboard buffer
