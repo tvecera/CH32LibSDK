@@ -1,6 +1,6 @@
 CH32LibSDK - SDK library for low-end CH32 RISC-V microcontrollers
 =================================================================
-Pre-alpha version 0.10, under development, a lot remains to be done
+Pre-alpha version 0.10, under development.
 
 Copyright (c) 2025 Miroslav Nemecek
 
@@ -53,6 +53,48 @@ sample programs for the BabyPad. The Babypad folder contains source
 codes of sample applications for BabyPad.
 
 
+Pidiboy
+-------
+PidiBoy is a mini game console with 7 buttons, an inexpensive CH32V006F8P6
+processor (costing 20 cents), a microSD card, a built-in speaker, audio
+output, and a 128x64 pixel black-and-white OLED I2C display with an SSD1306
+controller. https://pajenicko.cz/graficky-oled-displej-096-128x64-i2c-bily
+The console is equipped with an ME2108A33PG step-up voltage converter
+with a 3.3V output and can therefore be operated from 1 or 2 AA or AAA
+batteries in the voltage range of 1.1V to 3.3V, or the console can be
+powered by an external 3.3V source via the programming connector. Programs
+can be run from an SD card using a boot loader, which loads the program into
+the processor's flash memory. Boot loader controls: up/down arrows - move the
+cursor by 1 item, left/right arrows - move the cursor by 1 page, A - start
+program or change folder, B - display voltage or move to parent folder, Y -
+run program located in flash memory. Pay attention to the pin layout on the
+display – there are usually two versions, with the pin order VCC-GND-SCL-SDA
+or GND-VDD-SCL-SDA. I used two pin headers on the circuit board for both
+display versions so that I could change the displays and insert them into the
+correct position.
+
+Programs compiled for PidiBoy contain a boot loader. Writing to flash memory
+using a programmer writes both the program and the boot loader. Pressing the Y
+button (or resetting with an SD card inserted) launches the boot loader,
+allowing you to select the program to be run from the SD card. The boot loader
+ensures that the program is loaded from the SD card into the flash memory.
+Another program can be loaded by pressing Y or by resetting with an SD card
+inserted. If no SD card is inserted after resetting, the boot loader will not
+start, but the program in the flash memory will start immediately. The program
+in the flash memory can also be started from the boot loader by pressing the Y
+button.
+
+BIN and ELF files are provided with a checksum during compilation using the
+LoaderCrc program. Checksum is used by the boot loader to check the application
+in flash memory. If you want to load the application into flash memory using
+WCH-LinkUtility, you must use a BIN file and not a HEX file, because the
+generated HEX file does not have a checksum.
+
+In the _devices\pidiboy\diagram\ folder, you will find diagram of the PidiBoy
+console. In the !Pidiboy folder, you will find a ready-made SD card image.
+The Pidiboy folder contains source codes of sample applications for PidiBoy.
+
+
 Pidipad
 -------
 Pidipad is mini game console with 8 buttons, CH32V006E8R6 processor,
@@ -86,42 +128,53 @@ card image. The Pidipad folder contains source codes of sample
 applications for PidiPad.
 
 
-Pidiboy
--------
-PidiBoy is a mini game console with 7 buttons, an inexpensive CH32V006F8P6
-processor (costing 20 cents), a microSD card, a built-in speaker, audio
-output, and a 128x64 pixel black-and-white OLED I2C display with an SSD1306
-controller. The console is equipped with an ME2108A33PG step-up voltage
-converter with a 3.3V output and can therefore be operated from 1 or 2 AA or
-AAA batteries in the voltage range of 1.1V to 3.3V, or the console can be
-powered by an external 3.3V source via the programming connector. Programs
-can be run from an SD card using a boot loader, which loads the program into
-the processor's flash memory. Boot loader controls: up/down arrows - move the
-cursor by 1 item, left/right arrows - move the cursor by 1 page, A - start
-program or change folder, B - display voltage or move to parent folder, Y -
-run program located in flash memory. Pay attention to the pin layout on the
-display – there are usually two versions, with the pin order VCC-GND-SCL-SDA
-or GND-VDD-SCL-SDA. I used two pin headers on the circuit board for both
-display versions so that I could change the displays and insert them into the
-correct position.
+TweetyBoy
+---------
+TweetyBoy is a mini game console with 8 buttons, a low-cost CH32X035G8R6
+processor (price: 50 cents), a microSD card, a built-in speaker, audio output,
+and 160x80 pixel LCD SPI color display with an ST7735S controller
+https://pajenicko.cz/komponenty/displeje/barevny-displej-ips-0.96-80x160-st7735s-spi.
+The console is equipped with an ME2108A33PG step-up voltage converter with
+a 3.3V output and can therefore be operated from 1 or 2 AA or AAA batteries in
+the voltage range of 1.1V to 3.3V, or the console can be powered by an external
+3.3V source via the programming connector. Programs can be run from an SD card
+using a boot loader, which loads the program into the processor's flash memory.
+Boot loader controls: up/down arrows - move the cursor by 1 item, left/right
+arrows - move the cursor by 1 page, A - start program or change folder, B -
+display voltage, adjust display brightness, or move to parent folder, Y - start
+the program located in the flash memory.
 
-Programs compiled for PidiBoy contain a boot loader. Writing to flash memory
-using a programmer writes both the program and the boot loader. Pressing the Y
-button (or resetting with an SD card inserted) launches the boot loader,
-allowing you to select the program to be run from the SD card. The boot loader
-ensures that the program is loaded from the SD card into the flash memory.
-Another program can be loaded by pressing Y or by resetting with an SD card
-inserted. If no SD card is inserted after resetting, the boot loader will not
-start, but the program in the flash memory will start immediately. The program
-in the flash memory can also be started from the boot loader by pressing the Y
-button.
+The brightness of the LCD display can be adjusted from the boot loader by
+pressing the B button. The display brightness can be adjusted in 9 steps, from
+1 to 9. Complete dimming of the display (level 0) is not possible to prevent
+the console from becoming uncontrollable. When powered by battery, it is
+recommended to keep the display brightness as low as possible to minimize
+battery consumption. The display has a power consumption of 0.5mA to 17mA from
+a 3.3V source, at brightness levels 1 to 9. Each 1-step decrease in display
+brightness represents a reduction in display power consumption by almost half.
+The default brightness value of 6 means a display consumption of 3mA. The
+processor consumption is about 6mA. However, this is the consumption from a
+3.3V source. The battery consumption is about 3 times higher due to the step-up
+converter voltage transformation.
 
-BIN and ELF files are provided with a checksum during compilation using the
-LoaderCrc program. Checksum is used by the boot loader to check the application
-in flash memory. If you want to load the application into flash memory using
-WCH-LinkUtility, you must use a BIN file and not a HEX file, because the
-generated HEX file does not have a checksum.
+Programs compiled for TweetyBoy contain a boot loader. When writing a program
+to flash memory using a programmer, both the program and the boot loader are
+written. Pressing the Y button (or resetting with an SD card inserted)
+launches the boot loader, which allows you to select the program to be run
+from the SD card. The boot loader ensures that the program is loaded from the
+SD card into flash memory. Another program can be loaded by pressing the Y
+button or by resetting with the SD card inserted. If no SD card is inserted
+during the reset, the boot loader will not start, but the program in flash
+memory will start immediately. The program in flash memory can also be started
+from the boot loader by pressing the Y button.
 
-In the _devices\pidiboy\diagram\ folder, you will find diagram of the PidiBoy
-console. In the !Pidiboy folder, you will find a ready-made SD card image.
-The Pidiboy folder contains source codes of sample applications for PidiBoy.
+BIN and ELF files are provided with a checksum during compilation using
+the LoaderCrc program. This is used by the boot loader to check the
+application in flash memory. If you want to load the application into
+flash memory using WCH-LinkUtility, you must use a BIN file and not a HEX
+file, because the generated HEX file does not have a checksum.
+
+In the _devices\tweetyboy\diagram\ folder, you will find diagram of the
+TweetyBoy console. In the !Tweetyboy folder, you will find a ready-made SD
+card image. The Tweetyboy folder contains source codes of sample
+applications for TweetyBoy.
