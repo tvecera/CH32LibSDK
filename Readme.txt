@@ -1,6 +1,6 @@
 CH32LibSDK - SDK library for low-end CH32 RISC-V microcontrollers
 =================================================================
-Pre-alpha version 0.10, under development.
+Pre-alpha version 0.20, under development.
 
 Copyright (c) 2025 Miroslav Nemecek
 
@@ -27,6 +27,27 @@ How to compile on Windows, using command line:
   For the SD card version of the console, simply upload the program to the
   SD card and load it into the processor using the boot loader.
 - Clear compilation using d.bat.
+
+
+BabyBoy
+-------
+BabyBoy is the simplest game mini-console with 6 buttons, an inexpensive
+CH32V002A4M6 processor (price 10 cents), a built-in speaker, and 128x64 pixel
+black-and-white OLED I2C display with an SSD1306 controller. The console is
+powered by a CR2032 battery, or it can be powered by an external 3.3V source
+via the programming connector. Thanks to simplifications and the easy soldering
+of the processor in the SOP16 package with a pin pitch of 1.27mm, the console
+is primarily intended for beginners as a kit for their first introduction to
+electronics.
+
+Pay attention to the pin layout on the display – there are usually two
+versions, with the pin order VCC-GND-SCL-SDA or GND-VDD-SCL-SDA. I used two pin
+headers on the circuit board for both display versions so that I could change
+the displays and insert them into the correct position.
+
+BabyBoy does not include an SD card. Programs must be uploaded to the processor
+using the WCH-LinkE programmer (available here, for example:
+https://pajenicko.cz/usb-programator-a-debug-adapter-wch-link).
 
 
 BabyPad

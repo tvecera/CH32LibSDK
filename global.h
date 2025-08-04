@@ -202,8 +202,8 @@ STATIC_ASSERT(sizeof(u64) == 8, "Incorrect typedef u64!");
 #include "_devices/ch32base/_config.h"
 #endif
 
-#if USE_PIDIPAD
-#include "_devices/pidipad/_config.h"
+#if USE_BABYBOY
+#include "_devices/babyboy/_config.h"
 #endif
 
 #if USE_BABYPAD
@@ -212,6 +212,10 @@ STATIC_ASSERT(sizeof(u64) == 8, "Incorrect typedef u64!");
 
 #if USE_PIDIBOY
 #include "_devices/pidiboy/_config.h"
+#endif
+
+#if USE_PIDIPAD
+#include "_devices/pidipad/_config.h"
 #endif
 
 #if USE_TWEETYBOY
@@ -235,7 +239,7 @@ STATIC_ASSERT(sizeof(u64) == 8, "Incorrect typedef u64!");
 #endif
 
 #ifndef USE_FAT
-#define USE_FAT		1	// 1=use FAT filesystem
+#define USE_FAT		0	// 1=use FAT filesystem
 #endif
 
 #ifndef USE_RAND
@@ -243,7 +247,7 @@ STATIC_ASSERT(sizeof(u64) == 8, "Incorrect typedef u64!");
 #endif
 
 #ifndef USE_SD
-#define USE_SD		1	// 1=use SD card driver
+#define USE_SD		0	// 1=use SD card driver
 #endif
 
 // ----------------------------------------------------------------------------

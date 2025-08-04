@@ -3,9 +3,9 @@
 #               Include Makefile 1st stage - prepare MCU type
 ##############################################################################
 
-#MCU=CH32V002x4
+MCU=CH32V002x4
 #MCU=CH32V003x4
-MCU=CH32V006x8
+#MCU=CH32V006x8
 #MCU=CH32X035x8
 #MCU=CH32V103x8
 #MCU=CH32L103x8

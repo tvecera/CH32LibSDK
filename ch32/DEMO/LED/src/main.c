@@ -1,7 +1,7 @@
 
 #include "../include.h"
 
-#define PIN	PC7 //PA0
+#define PIN	PD7 //PA0
 
 int main(void)
 {

@@ -22,8 +22,8 @@
 #include "_devices/ch32base/_include.h"
 #endif
 
-#if USE_PIDIPAD
-#include "_devices/pidipad/_include.h"
+#if USE_BABYBOY
+#include "_devices/babyboy/_include.h"
 #endif
 
 #if USE_BABYPAD
@@ -32,6 +32,10 @@
 
 #if USE_PIDIBOY
 #include "_devices/pidiboy/_include.h"
+#endif
+
+#if USE_PIDIPAD
+#include "_devices/pidipad/_include.h"
 #endif
 
 #if USE_TWEETYBOY
