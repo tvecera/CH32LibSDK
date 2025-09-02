@@ -43,8 +43,7 @@ void DrawOpen()
 		"LEFT .... Play for black ants\n"
 		"RIGHT ... Play for red ants\n"
 		"DOWN .... 2 players\n"
-		"UP ...... Demo\n"
-		"Y ....... Quit\n");
+		"UP ...... Demo\n");
 }
 
 int main(void)

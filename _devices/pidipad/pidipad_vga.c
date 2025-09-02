@@ -139,7 +139,7 @@ void DispInit()
 	TIM2_CC1Enable();		// enable compare output
 	TIM2_CC1IntClr();		// clear interrupt request
 	TIM2_CC1IntEnable();		// enable capture compare of channel 1
-	NVIC_IRQEnable(IRQ_TIM2);	// enable interrupt servive
+	NVIC_IRQEnable(IRQ_TIM2);	// enable interrupt service
 }
 
 // Terminate videomode

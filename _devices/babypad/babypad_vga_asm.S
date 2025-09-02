@@ -624,7 +624,7 @@ TIM2_IRQHandler2:
 //  RA = return address
 
 	// set repeat counter to "first repeat"
-6:	sb	a4,KEY_NUM(a3)		// setup repat counter
+6:	sb	a4,KEY_NUM(a3)		// setup repeat counter
 
 	// Button is pressed for the first time: send button to keyboard buffer
 7:	la	t1,KeyWriteOff		// T1 <- keyboard buffer write offset variable

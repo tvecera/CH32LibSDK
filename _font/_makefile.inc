@@ -7,6 +7,10 @@ CSRC += ${CH32LIBSDK_FONT_DIR}/font_ibmtiny_8x8.c
 CSRC += ${CH32LIBSDK_FONT_DIR}/font_ibm_8x8.c
 CSRC += ${CH32LIBSDK_FONT_DIR}/font_italic_8x8.c
 CSRC += ${CH32LIBSDK_FONT_DIR}/font_thin_8x8.c
+CSRC += ${CH32LIBSDK_FONT_DIR}/font_thin_8x8inv.c
 CSRC += ${CH32LIBSDK_FONT_DIR}/font_cond_6x8.c
 CSRC += ${CH32LIBSDK_FONT_DIR}/font_cond_6x6.c
+CSRC += ${CH32LIBSDK_FONT_DIR}/font_zx.c
+CSRC += ${CH32LIBSDK_FONT_DIR}/font_80.c
+CSRC += ${CH32LIBSDK_FONT_DIR}/font_81.c
 endif

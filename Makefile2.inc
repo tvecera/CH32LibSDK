@@ -112,7 +112,11 @@ MAKEFILE = ./Makefile
 INCLUDEFILE = ./include.h
 
 # Linker script
+ifeq (${GLOBALDATA},1)
+LDSCRIPT = ${CH32_ROOT_PATH}/memmap_global.ld
+else
 LDSCRIPT = ${CH32_ROOT_PATH}/memmap.ld
+endif
 
 ##############################################################################
 # Passing configuration parameters to the source code
@@ -275,6 +279,9 @@ CFLAGS += -ffunction-sections -fdata-sections
 
 # Use unsigned char (this is default for ARM cpu)
 CFLAGS += -funsigned-char
+
+# Report if function does not return value
+CFLAGS += -Wreturn-type
 
 # Generate debug informations
 #CFLAGS += -g3

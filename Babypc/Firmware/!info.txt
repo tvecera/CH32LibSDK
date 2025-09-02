@@ -1,0 +1,49 @@
+
+Zájemce chce prodávat BabyPC ve Švédsku: https://x.com/the_FCCE FCCE
+https://x.com/the_FCCE/status/1953870186416635939
+
+
+
+ZX80 - ok od L0408
+
+
+
+Název: BabyPC
+
+
+
+
+
+// In case of insufficient RAM, reduce value of EDITNUM in def.h.
+
+// Limitations:
+// - Variables can only have a 1-letter name A to Z.
+// - Program buffer is limited to 1KB size.
+// - Variable buffer is limited to 1KB size.
+// - Edit line is limited to 320 bytes.
+// - Program stack is limited to 20 entries.
+// - Calculator stack is limited to 20 levels.
+// - Program line number can be in range 1..65534.
+// - Numeric variable is integer in range -2147483647 .. +2147483647.
+// - Array cam have max. 256 entries, with index 0..255.
+
+// Program line
+// ============
+// Line number = 1..65534 (65535 is reserved = direct execute edit line)
+//  0 (1): line number HIGH (line 0 marks end of the program)
+//  1 (1): line number LOW
+//  2 (x): line text
+//		0..0x7F = characters
+//		0xC0..0xFF = tokens
+//		(0x76 = NEWLINE)
+//  (1): end of line 0x76 NEWLINE
+
+// lineH lineL text NEWLINE ... program line, line number 0 = end of program
+
+// Variables (name = 0..25 = letter A..Z)
+// ======================================
+// 000aaaaa valL (val2 val3) valH ... integer variable A..Z
+// 001aaaaa valL (val2 val3) valH maxL (max2 max3) maxH lineL lineH ... FOR control, val=value, max=limit TO, line=line with FOR, variable A..Z
+// 010aaaaa max valL (val2 val3) valH...  ... array, max=max index 0..255, variable A()..Z()
+// 011aaaaa text CH_QUOT ... text terminated with CH_QUOT, variable A$..Z$
+// 0xFF ... end of variables

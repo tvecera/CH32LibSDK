@@ -34,6 +34,7 @@ SECTIONS
 		*(.text.*)
 		*(.rodata)
 		*(.rodata*)
+		*(.rela*)
 		*(.gnu.linkonce.t.*)
 		. = ALIGN(4);
 	} >FLASH AT>FLASH 
@@ -110,7 +111,7 @@ SECTIONS
 	{
 		. = ALIGN(4);
 		PROVIDE(_data_vma = .);	/* virtual memory address of initialized data in RAM (destination address) */
-		} >RAM AT>FLASH  
+	} >RAM AT>FLASH  
 
 	/* start of initialized data in Flash (source address) */
 	.dlalign :
@@ -142,6 +143,15 @@ SECTIONS
 		PROVIDE( _edata = .);	/* end of initialized data in RAM */
 	} >RAM AT>FLASH
 
+	/* flash slots on end of flash memory */
+	.flashslot :
+	{
+		. = ALIGN(4);
+		PROVIDE(_sflashslot = .);
+		*(.flashslot)
+		PROVIDE(_eflashslot = .);
+	} >FLASH AT>FLASH
+
 	/* uninitialized data */
 	.bss :
 	{
@@ -154,7 +164,7 @@ SECTIONS
 		*(COMMON*)
 		. = ALIGN(4);
 		PROVIDE( _ebss = .);
-	} >RAM AT>FLASH
+	} >RAM
 
 	PROVIDE( _end = _ebss);
 	PROVIDE( end = . );

@@ -57,6 +57,14 @@ HANDLER void SysTick_Handler()
 	cnt += SYSTICK_HCLK - dif;
 	if (dif >= SYSTICK_HCLK - 100*HCLK_PER_US) cnt += SYSTICK_HCLK;
 	SysTick_SetCmp(cnt);
+
+#if SYSTICK_KEYSCAN	// call KeyScan() function from SysTick system timer
+	KeyScan();
+#endif
+
+#if SYSTICK_SOUNDSCAN	// 1=call SoundScan() function fron SysTick system timer
+	SoundScan();
+#endif
 }
 #endif // SYSTICK_MS > 0
 

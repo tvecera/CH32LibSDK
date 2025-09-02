@@ -41,6 +41,12 @@
 // place time critical function into RAM
 #define NOFLASH(fnc) NOINLINE __attribute__((section(".time_critical." #fnc))) fnc
 
+// forbidden to replace the "for" loop with the "memset" function
+#define NOMEMSET __attribute__((optimize("no-tree-loop-distribute-patterns")))
+
+// no return from function
+#define NORETURN __attribute__((noreturn))
+
 // fast function optimization
 #define FASTCODE __attribute__ ((optimize("-Ofast")))
 
@@ -220,6 +226,10 @@ STATIC_ASSERT(sizeof(u64) == 8, "Incorrect typedef u64!");
 
 #if USE_TWEETYBOY
 #include "_devices/tweetyboy/_config.h"
+#endif
+
+#if USE_BABYPC
+#include "_devices/babypc/_config.h"
 #endif
 
 #include <string.h>		// memcpy

@@ -41,3 +41,7 @@
 #if USE_TWEETYBOY
 #include "_devices/tweetyboy/_include.h"
 #endif
+
+#if USE_BABYPC
+#include "_devices/babypc/_include.h"
+#endif
