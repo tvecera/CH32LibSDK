@@ -16,3 +16,6 @@ endif
 DEFINE += -D USE_BABYPC=1
 
 MCU=CH32V002x4
+
+# reduce program size
+EXTRA_AFLAGS += -D REDUCE_CRT0_SIZE=1

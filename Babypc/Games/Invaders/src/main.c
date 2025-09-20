@@ -301,7 +301,7 @@ void DispScore()
 		n = x;
 	}
 	buf[5] = 0;
-	DrawTextCond6(buf, SCOREX+6*6, SCOREY, COL_WHITE);
+	DrawTextCond6Bg(buf, SCOREX+6*6, SCOREY, COL_WHITE, COL_BLACK);
 
 	// next live
 	if (Score >= NextLive)
@@ -326,7 +326,7 @@ void DispMaxScore()
 		n = x;
 	}
 	buf[5] = 0;
-	DrawTextCond6(buf, MAXSCOREX+4*6, SCOREY, COL_WHITE);
+	DrawTextCond6Bg(buf, MAXSCOREX+4*6, SCOREY, COL_WHITE, COL_BLACK);
 }
 
 // display level
@@ -344,7 +344,7 @@ void DispLevel()
 		n = x;
 	}
 	buf[2] = 0;
-	DrawTextCond6(buf, LEVELX+6*6, LEVELY, COL_WHITE);
+	DrawTextCond6Bg(buf, LEVELX+6*6, LEVELY, COL_WHITE, COL_BLACK);
 }
 
 // mothership move
@@ -892,7 +892,7 @@ void Game()
 		// new level
 		if (AlienNum == 0)
 		{
-			DrawTextCond6(" LEVEL UP ", (WIDTH-10*6)/2, (HEIGHT-6)/2, COL_WHITE);
+			DrawTextCond6Bg(" LEVEL UP ", (WIDTH-10*6)/2, (HEIGHT-6)/2, COL_WHITE, COL_WHITE);
 			WaitMs(1000);
 			KeyFlush();
 			NewGame(Level+1);
@@ -901,7 +901,7 @@ void Game()
 		// end game
 		if (Lives < 0)
 		{
-			DrawTextCond6(" GAME OVER ", (WIDTH-11*6)/2, (HEIGHT-6)/2, COL_WHITE);
+			DrawTextCond6Bg(" GAME OVER ", (WIDTH-11*6)/2, (HEIGHT-6)/2, COL_WHITE, COL_WHITE);
 			WaitMs(500);
 			StopSound();
 			KeyFlush();

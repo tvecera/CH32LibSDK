@@ -74,6 +74,9 @@ TARGET=CPU2
 # Destination directory
 TARGETDIR=Firmware
 
+# reduce program size
+EXTRA_AFLAGS += -D REDUCE_CRT0_SIZE=1
+
 ##############################################################################
 #                             Input files
 ##############################################################################
@@ -83,6 +86,7 @@ ASRC +=
 
 # C source files
 CSRC += src/main.c
+CSRC += src/program.c
 
 # C++ source files
 SRC +=

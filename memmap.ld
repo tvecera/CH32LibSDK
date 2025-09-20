@@ -143,11 +143,25 @@ SECTIONS
 		PROVIDE( _edata = .);	/* end of initialized data in RAM */
 	} >RAM AT>FLASH
 
+	/* end of initialized data in Flash */
+	.flashalign :
+	{
+		PROVIDE(_sflashslot = .);
+	} >FLASH AT>FLASH
+
+	/* flash mini slots on end of flash memory */
+	.flashminislot :
+	{
+		. = ALIGN(4);
+		PROVIDE(_sflashminislot = .);
+		*(.flashminislot)
+		PROVIDE(_eflashminislot = .);
+	} >FLASH AT>FLASH
+
 	/* flash slots on end of flash memory */
 	.flashslot :
 	{
 		. = ALIGN(4);
-		PROVIDE(_sflashslot = .);
 		*(.flashslot)
 		PROVIDE(_eflashslot = .);
 	} >FLASH AT>FLASH

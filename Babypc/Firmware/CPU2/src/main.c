@@ -40,10 +40,41 @@
 #define CPU_CMD_ROW41	0x17		// return columns in 2 bytes (in bits 0..4) and set ROW4 to 1
 #define CPU_CMD_ROW40	0x18		// return columns in 2 bytes (in bits 0..4) and set ROW4 to 0
 
+#define CPU_CMD_LOAD1	0x20		// load program from slot 1
+#define CPU_CMD_LOAD2	0x21		// load program from slot 2
+#define CPU_CMD_LOAD3	0x22		// load program from slot 3
+#define CPU_CMD_LOAD4	0x23		// load program from slot 4
+#define CPU_CMD_LOAD5	0x24		// load program from slot 5
+#define CPU_CMD_LOAD6	0x25		// load program from slot 6
+#define CPU_CMD_LOAD7	0x26		// load program from slot 7
+#define CPU_CMD_LOAD8	0x27		// load program from slot 8
+#define CPU_CMD_LOAD9	0x28		// load program from slot 9
+#define CPU_CMD_LOAD10	0x29		// load program from slot 10
+#define CPU_CMD_LOAD11	0x2A		// load program from slot 11
+#define CPU_CMD_LOAD12	0x2B		// load program from slot 12
+#define CPU_CMD_LOAD13	0x2C		// load program from slot 13
+
+#define CPU_CMD_SAVE1	0x30		// save program to slot 1
+#define CPU_CMD_SAVE2	0x31		// save program to slot 2
+#define CPU_CMD_SAVE3	0x32		// save program to slot 3
+#define CPU_CMD_SAVE4	0x33		// save program to slot 4
+#define CPU_CMD_SAVE5	0x34		// save program to slot 5
+#define CPU_CMD_SAVE6	0x35		// save program to slot 6
+#define CPU_CMD_SAVE7	0x36		// save program to slot 7
+#define CPU_CMD_SAVE8	0x37		// save program to slot 8
+#define CPU_CMD_SAVE9	0x38		// save program to slot 9
+#define CPU_CMD_SAVE10	0x39		// save program to slot 10
+#define CPU_CMD_SAVE11	0x3A		// save program to slot 11
+#define CPU_CMD_SAVE12	0x3B		// save program to slot 12
+#define CPU_CMD_SAVE13	0x3C		// save program to slot 13
+
 // state from CPU2 to CPU1
 #define CPU_STATE_SYNC	0x15		// sync - echo back after CPU_CMD_SYNC
 
 #include "../include.h"
+
+// receive slot
+sSlot Slot0;
 
 // check free send byte to other CPU
 Bool CPU_SendReady()
@@ -192,6 +223,99 @@ int main(void)
 					GPIO_Out1(PD7);		// disable ROW4
 				else
 					GPIO_Out0(PD7);		// enable ROW4
+				break;
+
+			// load from slot
+			case CPU_CMD_LOAD1:
+			case CPU_CMD_LOAD2:
+			case CPU_CMD_LOAD3:
+			case CPU_CMD_LOAD4:
+			case CPU_CMD_LOAD5:
+			case CPU_CMD_LOAD6:
+			case CPU_CMD_LOAD7:
+			case CPU_CMD_LOAD8:
+			case CPU_CMD_LOAD9:
+			case CPU_CMD_LOAD10:
+			case CPU_CMD_LOAD11:
+			case CPU_CMD_LOAD12:
+				{
+					int inx = ch - CPU_CMD_LOAD1;
+					const sSlot* s = &Slots[inx];
+					for (i = 0; i < SLOTNUM; i++)
+					{
+						while (!CPU_SendReady()) {}
+						CPU_Send(s->data[i]);
+						WaitUs(CPU_SEND_WAIT*2); // CPU1 can be interrupted by HSYNC
+					}
+				}
+				break;
+
+			case CPU_CMD_LOAD13:
+				{
+					const u8* s = Slot13;
+					for (i = 0; i < SLOT13NUM; i++)
+					{
+						while (!CPU_SendReady()) {}
+						CPU_Send(s[i]);
+						WaitUs(CPU_SEND_WAIT*2); // CPU1 can be interrupted by HSYNC
+					}
+
+					for (; i < SLOTNUM; i++)
+					{
+						while (!CPU_SendReady()) {}
+						CPU_Send(0xff);
+						WaitUs(CPU_SEND_WAIT*2); // CPU1 can be interrupted by HSYNC
+					}
+				}
+				break;
+
+			// save to slot
+			case CPU_CMD_SAVE1:
+			case CPU_CMD_SAVE2:
+			case CPU_CMD_SAVE3:
+			case CPU_CMD_SAVE4:
+			case CPU_CMD_SAVE5:
+			case CPU_CMD_SAVE6:
+			case CPU_CMD_SAVE7:
+			case CPU_CMD_SAVE8:
+			case CPU_CMD_SAVE9:
+			case CPU_CMD_SAVE10:
+			case CPU_CMD_SAVE11:
+			case CPU_CMD_SAVE12:
+			case CPU_CMD_SAVE13:
+				{
+					// receive data
+					sSlot* s0 = &Slot0;
+					for (i = 0; i < SLOTNUM; i++)
+					{
+						while (!CPU_RecvReady()) {}
+						s0->data[i] = CPU_Recv();
+					}
+
+					// prepare slot address and size
+					const u8* s;
+					int n;
+					if (ch == CPU_CMD_SAVE13)
+					{
+						s = Slot13;
+						n = 0x0200;
+					}
+					else
+					{
+						s = Slots[ch - CPU_CMD_SAVE1].data;
+						n = SLOTNUM;
+					}
+
+					// clear flash slot (address and size must be multiply of 256 B)
+					Flash_Erase((u32)s + FLASH_BASE, n, 1000);
+
+					// write program
+					Flash_Program((u32)s + FLASH_BASE, (const u32*)s0, n, 1000);
+
+					// send OK
+					while (!CPU_SendReady()) {}
+					CPU_Send(CPU_STATE_SYNC);
+				}
 				break;
 			}
 		}

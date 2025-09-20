@@ -874,14 +874,18 @@ TIM2_IRQHandler:
 	// >>>>>>>> SETUP
 	//  If you change Timer 2 channel 2 compare value, setup this
 	//  correction - select 0 to 7 to minimise display noise.
+#ifdef VMODE_SHIFT	// shift VMODE time correction
+	addi	a0,a0,VMODE_SHIFT	// time correction: select 0 to 7
+#else
+
 #if VMODE == 0
-	addi	a0,a0,0			// time correction: select 0 to 7
+	addi	a0,a0,7			// time correction: select 0 to 7
 #elif VMODE == 1
-	addi	a0,a0,0			// time correction: select 0 to 7
+	addi	a0,a0,7			// time correction: select 0 to 7
 #elif VMODE == 2
 	addi	a0,a0,6			// time correction: select 0 to 7
 #elif VMODE == 3
-	addi	a0,a0,6			// time correction: select 0 to 7
+	addi	a0,a0,7			// time correction: select 0 to 7
 #elif VMODE == 4
 	addi	a0,a0,6			// time correction: select 0 to 7
 #elif VMODE == 5
@@ -889,7 +893,9 @@ TIM2_IRQHandler:
 #elif VMODE == 6
 	addi	a0,a0,1			// time correction: select 0 to 7
 #elif VMODE == 7
-	addi	a0,a0,1			// time correction: select 0 to 7
+	addi	a0,a0,0			// time correction: select 0 to 7
+#endif
+
 #endif
 	// <<<<<<<<
 

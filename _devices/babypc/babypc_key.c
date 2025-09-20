@@ -112,6 +112,12 @@ const char KeyCharRemapShift[KEY_NUM+1] = {
 	' ',		// #define KEY_SPACE	40	// SPACE BREAK
 };
 
+// check if button KEY_* is currently pressed
+Bool KeyPressed(int key)
+{
+	return KeyReleaseCnt[key-1] > 0;
+}
+
 // get button from keyboard buffer KEY_* (returns NOKEY if no key)
 u8 KeyGet()
 {
@@ -321,7 +327,7 @@ void CPU_SyncInit()
 		}
 
 		// send next request
-		CPU_Send(CPU_CMD_SYNC);
+		if (CPU_SendReady()) CPU_Send(CPU_CMD_SYNC);
 
 		// check response
 		if (CPU_RecvReady())

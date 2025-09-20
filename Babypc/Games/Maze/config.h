@@ -74,6 +74,8 @@
 //	5 ... text mode 32x24 characters in ZX-80 format (NEWLINE=0x76 is new line) (driver size 828 B or 728 B in RAM)
 #define VMODE	3
 
+#define VMODE_SHIFT	6	// shift VMODE time correction (select 0 to 7) - comment this to use dafult
+
 // USART communication divider (baudrate = HCLK/div, HCLK=50000000, div=min. 16; 50 at 50MHz -> 1MBaud, 1 byte = 10us)
 //#define CPU_UART_DIV	HCLK_PER_US // USART CPU baudrate divider (baudrate = HCLK/div, HCLK=50000000, div=min. 16)
 //#define USE_DRAW	1	// 1=use graphics drawing functions

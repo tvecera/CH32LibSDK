@@ -21,7 +21,14 @@
 	.option	norvc		// disable compressed instructions in vector table (use 32-bit jumps)
 	.option	norelax		// disable linker relaxation (disable optimizing programs at link-time)
 
-	.align	10		// vector table base address needs to be 1KB aligned in the QingKe V2 microprocessor
+// vector table base address needs to be 1KB aligned in the QingKe V2 microprocessor
+//   Note: Do not use 1KB alignment if you need to save Flash memory,
+//   because GCC for RISC-V also aligns the end of the section to 1KB in this case.
+#if REDUCE_CRT0_SIZE
+	.align	2
+#else
+	.align	10
+#endif
 
 .global _start
 _start:
@@ -70,6 +77,8 @@ _vector_base:
 
 	.option	pop			// pop original linker setup
 
+#if !REDUCE_CRT0_SIZE
+
 // ---- Application info header (start at offset 39*4 = 156 = 0x9C, header size 0x18 bytes) - see sdk_runtime.*
 
 	.align	2
@@ -95,6 +104,8 @@ AppInfoHeader_StartCRC:		// 0x0C: start calculatin CRC ... CRC-16 CCITT (CRC16C,
 	.word	_eusrstack	// 0x0C: end of user stack, to setup SP register
 	.word	handle_reset	// 0x10: start address, to jump to application
 	.ascii	"info"		// 0x14: magic 2
+
+#endif // !REDUCE_CRT0_SIZE
 
 // ---- Weak handlers
 
@@ -200,6 +211,8 @@ handle_reset:
 
 	.align	2
 
+#if !REDUCE_CRT0_SIZE
+
 // run application from Flash
 .type GoToApp,%function
 .global GoToApp
@@ -212,3 +225,5 @@ GoToApp:
 	lw	a0,APPINFO_OFF+0x10-3(a0)	// A0 <- load start address
 	mv	sp,a1				// set stack pointer
 	jr	a0				// run application code
+
+#endif // !REDUCE_CRT0_SIZE

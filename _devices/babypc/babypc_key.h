@@ -96,7 +96,8 @@ extern volatile u8 CPUIntLocked; // CPU communication from interrupt is locked (
 extern u8 CPUIntLockedReq;	// request to lock CPU communication from interrupt
 
 // check if button KEY_* is currently pressed
-INLINE Bool KeyPressed(int key) { return KeyReleaseCnt[key-1] > 0; }
+Bool KeyPressed(int key);
+//INLINE Bool KeyPressed(int key) { return KeyReleaseCnt[key-1] > 0; }
 
 // get button from keyboard buffer KEY_* (returns NOKEY if no key)
 u8 KeyGet();

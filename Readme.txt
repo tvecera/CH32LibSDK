@@ -1,6 +1,6 @@
 CH32LibSDK - SDK library for low-end CH32 RISC-V microcontrollers
 =================================================================
-Pre-alpha version 0.20, under development.
+Pre-alpha version 0.30, under development.
 
 Copyright (c) 2025 Miroslav Nemecek
 
@@ -72,6 +72,52 @@ In the _devices\babypad\diagram\ folder, you will find diagram of the
 BabyPad console. In the !Babypad folder, you will find a ready-made
 sample programs for the BabyPad. The Babypad folder contains source
 codes of sample applications for BabyPad.
+
+
+BabyPC - WCH80
+--------------
+The BabyPC - WCH80 is an inexpensive mini-computer with two CH32V002
+processors, created based on the ZX80 computer. It is not an emulator;
+the computer does not emulate the ZX80 computer's ROM, nor does it emulate Z80
+machine instructions. It was created as a completely independent computer with
+the BASIC80 programming language and VGA monitor output, only replicating the
+ZX80's functionality as closely as possible. It uses a CH32V002A4M6 processor,
+which, thanks to its large 1.27 mm pin pitch, is suitable for easy soldering
+even for novice designers. Together with other THT components, the WCH80 is
+particularly suitable as a kit for novice designers. The built-in BASIC80
+programming language is used to familiarize users with computer programming and
+to try out how programmers programmed in the 1980s.
+
+The computer does not contain a storage medium for saving programs. Your own
+programs can be saved directly to the processor's flash memory. There are 14
+memory slots available, i.e. 14 places to store your own programs, numbered 0
+to 13. Slot 0 is located in the main CPU1 processor. When stored in slot 0,
+data variables are also stored along with the program (more precisely, only the
+first half of the memory with variables). Slot 0 is automatically loaded into
+the program memory when the computer is turned on. Memory slots 1 to 13 are
+located in the second processor, CPU2. All slots allow the entire memory with
+the program to be stored, except for the last slot 13, which is only half the
+size.
+
+After initial programming, the processors contain 28 sample programs and games
+written in BASIC80. Once the processors have been programmed, the programmer is
+no longer needed, but it can be useful if you want to back up the contents of
+the processors to a PC or if you want to change program versions. Using slot 0,
+programs can also be transferred between the processors' memory backups by
+copying between the CPU1 and CPU2 processors.
+
+In addition to the BASIC80 firmware, games and programs written in C can also
+be uploaded to the computer using a programmer. There are 25 sample games
+available. The games can be found in the CH32LibSDK library. However, it is
+important to remember that reprogramming the CPU1 processor will also overwrite
+the contents of slot 0. The contents of slots 1 to 13 in CPU2 will not change
+when games are loaded. For games in C code, the following keys are usually used
+for control: 8, F=right, 7, E=up, 5, S=left, 6, D=down, A, space=action, B,
+NEW LINE=alternative action, X, P=info, Y, 0=back.
+
+More details and supporting documents can be found on a separate page:
+https://www.breatharian.eu/hw/wch80/index_en.html or on GitHub:
+https://github.com/Panda381/WCH80.
 
 
 Pidiboy
