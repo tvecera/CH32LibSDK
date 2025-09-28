@@ -1,0 +1,3 @@
+#!/bin/bash
+# Compilation...
+../../../_c1.sh
