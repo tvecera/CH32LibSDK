@@ -1,3 +1,11 @@
+=================================================================
+FORK: Additional Features in This Fork
+=================================================================
+
+- Added support for **CH32V003-GameConsole** with the name **TinyBoy**,
+  using the **CH32V002J4M6** MCU (_devices/tinyboy/README.md)
+- Added shell scripts for macOS and Linux for easier programming and building
+
 CH32LibSDK - SDK library for low-end CH32 RISC-V microcontrollers
 =================================================================
 Pre-alpha version 0.30, under development.
@@ -40,7 +48,7 @@ of the processor in the SOP16 package with a pin pitch of 1.27mm, the console
 is primarily intended for beginners as a kit for their first introduction to
 electronics.
 
-Pay attention to the pin layout on the display – there are usually two
+Pay attention to the pin layout on the display ï¿½ there are usually two
 versions, with the pin order VCC-GND-SCL-SDA or GND-VDD-SCL-SDA. I used two pin
 headers on the circuit board for both display versions so that I could change
 the displays and insert them into the correct position.
@@ -135,7 +143,7 @@ the processor's flash memory. Boot loader controls: up/down arrows - move the
 cursor by 1 item, left/right arrows - move the cursor by 1 page, A - start
 program or change folder, B - display voltage or move to parent folder, Y -
 run program located in flash memory. Pay attention to the pin layout on the
-display – there are usually two versions, with the pin order VCC-GND-SCL-SDA
+display ï¿½ there are usually two versions, with the pin order VCC-GND-SCL-SDA
 or GND-VDD-SCL-SDA. I used two pin headers on the circuit board for both
 display versions so that I could change the displays and insert them into the
 correct position.

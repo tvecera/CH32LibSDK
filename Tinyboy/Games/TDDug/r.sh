@@ -1,0 +1,3 @@
+#!/bin/bash
+# Reset device...
+../../../_r1.sh

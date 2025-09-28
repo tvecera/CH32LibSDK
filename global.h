@@ -232,6 +232,10 @@ STATIC_ASSERT(sizeof(u64) == 8, "Incorrect typedef u64!");
 #include "_devices/babypc/_config.h"
 #endif
 
+#if USE_TINYBOY
+#include "_devices/tinyboy/_config.h"
+#endif
+
 #include <string.h>		// memcpy
 #include <stdarg.h>		// va_list
 #include <math.h>		// HUGE_VAL
