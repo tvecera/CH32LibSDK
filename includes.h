@@ -57,3 +57,7 @@
 #if USE_PIDIPC
 #include "_devices/pidipc/_include.h"
 #endif
+
+#if USE_RVPC
+#include "_devices/rvpc/_include.h"
+#endif

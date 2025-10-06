@@ -4,6 +4,7 @@ FORK: Additional Features in This Fork
 
 - Added support for **CH32V003-GameConsole** with the name **TinyBoy**,
   using the **CH32V002J4M6** MCU (_devices/tinyboy/README.md)
+- Added support for **Olimex RVPC** _devices/rvpc/README.md)
 - Added shell scripts for macOS and Linux for easier programming and building
 
 CH32LibSDK - SDK library for low-end CH32 RISC-V microcontrollers

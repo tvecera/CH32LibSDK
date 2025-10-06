@@ -1,4 +1,4 @@
-
+ifeq ($(CRT0),)
 ifeq ($(MCUSERIE),CH32V203)
 ASRC += ${CH32LIBSDK_SDK_DIR}/ch32v2/crt0_ch32v203.S
 else
@@ -24,7 +24,9 @@ endif
 endif
 endif
 endif
-
+else
+ASRC += ${CRT0}
+endif
 
 ifeq (${OS},Windows_NT)
 CSRC += ${CH32LIBSDK_SDK_DIR}/sdk.c

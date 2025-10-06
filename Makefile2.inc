@@ -112,10 +112,12 @@ MAKEFILE = ./Makefile
 INCLUDEFILE = ./include.h
 
 # Linker script
+ifeq (${LDSCRIPT},)
 ifeq (${GLOBALDATA},1)
 LDSCRIPT = ${CH32_ROOT_PATH}/memmap_global.ld
 else
 LDSCRIPT = ${CH32_ROOT_PATH}/memmap.ld
+endif
 endif
 
 ##############################################################################
