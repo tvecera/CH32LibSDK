@@ -9,7 +9,7 @@ FORK: Additional Features in This Fork
 
 CH32LibSDK - SDK library for low-end CH32 RISC-V microcontrollers
 =================================================================
-Pre-alpha version 0.31, under development.
+Pre-alpha version 0.33, under development.
 
 Copyright (c) 2025 Miroslav Nemecek
 
@@ -36,6 +36,139 @@ How to compile on Windows, using command line:
   For the SD card version of the console, simply upload the program to the
   SD card and load it into the processor using the boot loader.
 - Clear compilation using d.bat.
+
+
+AntCalc
+-------
+AntCalc is a wrist-worn programmable calculator with scientific functions. It
+features an inexpensive CH32V002A4M6 processor, a blue-yellow 0.96" I2C OLED
+display with an SSD1306 controller and a resolution of 128x64 pixels B&W
+(available here, for example:
+https://www.hadex.cz/m508c-displej-oled-096-128x64-znaku-iici2c-4piny-modrozluty/).
+It also has 12 buttons and is powered by a CR2032 battery. The calculator works
+with reverse Polish notation (RPN), which means that numbers are first entered
+into the calculator's stack using the Enter button, and then the desired
+operation is performed by pressing the operator. The calculator's stack has a
+size of 10 registers. The lowest 4 registers are shown on the display under the
+names X, Y, Z, and T. The calculator calculates in BCD code with an accuracy of
+21 valid digits, along with an exponent in the range of +-99. The display shows
+a maximum of 14 digits when displayed without an exponent or 11 digits with an
+exponent. Functions are available for calculating direct and inverse
+trigonometric functions, power function, decimal and natural logarithmic and
+exponential functions. The calculator has 10 memory registers, the contents of
+which are stored in flash memory even when the calculator is turned off. The
+calculator can be programmed using macros containing a record of keystrokes.
+Up to 10 macros, each up to 38 keys long, can be loaded into the calculator's
+memory. The calculator measures 30x55 mm. A jumper is used as a switch on the
+connector, which is also used to program the processor.
+
+AntCalc calculator functions
+
+The calculator is operated using 12 buttons. 10 buttons are digits, 1 button
+is a decimal point, and 1 button is 2nd for switching between modes. In total,
+you can switch between 7 states by repeatedly pressing the 2nd button. If an
+error occurs during operations (division by zero or square root of a negative
+number), the text "overflow" is displayed on the X register row. Pressing any
+key will end the error messages and reset the X register.
+
+0..9 ... enter a digit.
+
+. ... Enter a decimal point. If the calculator is in exponent editing mode,
+   you can use the decimal point button to return to mantissa editing.
+
+2nd ... Switch between additional calculator functions. The selected mode is
+   displayed on the top line of the display on the left.
+
++, -, *, :, Y^x (2nd 0..4) ... arithmetic operations between registers X and Y
+
+y<>x (2nd 5) ... swap registers X and Y
+
+Vx (2nd 6) ... square root
+
+Enter (2nd 7) ... move number X to register Y
+
+CE (2nd 8) ... Delete the last character during editing. The EE key switches to
+   exponent editing, the dot key switches to mantissa editing. The CE key
+   activates number editing mode if editing is not in progress.
+
+EE (2nd 9) ... Enter exponent. Use the EE key to start editing the number shown
+   on the display. Use the decimal point key to switch to mantissa editing.
+
++/- (2nd .) ... Change the sign of the mantissa or exponent of the number on
+   the display.
+
+sin (2x2nd 0) ... sine
+
+asin (2x2nd 1) ... arc sine
+
+log (2x2nd 2) ... decimal logarithm
+
+ln (2x2nd 3) ... natural logarithm
+
+cos (2x2nd 4) ... cosine
+
+acos (2x2nd 5) ... arccosine
+
+exp10 (2x2nd 6) ... decimal exponent
+
+exp (2x2nd 7) ... natural exponent
+
+tan (2x2nd 8) ... tangent
+
+atan (2x2nd 9) ... arctangent
+
+1/x (2x2nd .) ... reciprocal value
+
+RCL0..RCL9 (3x2nd 0..9) ... recall memory contents 0 to 9
+
+PI (3x2nd .) ... Pi number
+
+STO0..STO9 (4x2nd 0..9) ... Saving a number to memory 0 to 9. The content is
+   stored in flash memory even when the device is turned off.
+
+DEG (4x2nd .) ... Switching the angular measure of goniometric functions
+   between degrees (DEG) and radians (RAD). The selected setting is displayed
+   in the middle of the top line of the display and is stored in flash memory.
+
+RUN0..RUN9 (5x2nd 0..9) ... Play macro number 0 to 9.
+
+INT (5x2nd .) ... Cut off the decimal part of the number (rounding to whole
+   numbers towards zero).
+
+PRG0..PRG9 (6x2nd 0..9) ... Start recording a macro into program number 0 to 9.
+   The codes of the pressed keys are stored in memory. Up to 38 button codes
+   can be stored in one macro. Presses of the 2nd button are not stored in the
+   program - the resulting function code is stored as 1 code. During macro
+   recording, the text PROG0..PROG9 flashes in the upper right corner of the
+   display, indicating that recording is in progress. If the number of buttons
+   is exceeded, the indicator remains lit but stops flashing to indicate that
+   buttons are no longer being stored. Macro recording can be stopped by
+   pressing any of the PRG0 to PRG9 functions (it is not necessary to use the
+   same macro number).
+
+C (6x2nd .) ... Clears the calculator's registers. The contents of the memory
+   and programs are retained. Turning the calculator off and on has the same
+   effect.
+
+Notes on construction:
+
+The calculator uses a very inexpensive Chinese processor CH32V002A4M6. It is
+housed in an SOP16 package with large pin spacing, making the calculator's
+design suitable even for novice designers. The calculator has two eyelets on
+the bottom for attaching a strap. To simplify the design, a jumper plugged into
+the connector, which is also used to program the calculator's processor, was
+used as a switch. When switched on, the jumper is plugged into the two pins on
+the right, and when switched off, it is plugged into the two pins on the left.
+A two-color, blue-yellow OLED display with an SSD1306 controller and a
+resolution of 128x64 was used. The display is actually monochrome, with the top
+16 lines displayed in yellow and the next 48 lines in blue. Alternatively, a
+monochrome display can also be used. I leave the design of the top cover with
+button labels to other designers – in the prototype, I only used a paper label
+with cut-out holes for the buttons.
+
+>>> Source codes and all necessary documentation of the AntCalc calculator can
+be found in the CH32LibSDK library in the ch32\DEVICE\ folder.
+https://github.com/Panda381/CH32LibSDK/tree/main/ch32/DEVICE <<<
 
 
 BeatleBoyPad (BeatleBoy, BeatlePad)
@@ -99,6 +232,113 @@ on the cartridge is left as an option for reprogramming processors requiring
 not used, and it is possible to use this pin as a blind pin to facilitate
 cartridge insertion orientation (i.e., cut off pin number 4 on the cartridge
 and plug the corresponding pin on the console, e.g., with heat shrink tubing).
+
+
+BeatleCalc with emulation of Sinclair Scientific and Datamath calculators
+-------------------------------------------------------------------------
+BeatleCalc is a minimalist scientific calculator, supplemented with emulators
+of calculators Sinclair Scientific (1974, TMC0805 processor) and Texas
+Instruments TI-2500 Datamath (1972, TMS0803 processor). The calculator uses BCD
+code internally, so it does not suffer from the inaccuracies of binary
+representation of decimal numbers. It calculates internally with an accuracy
+of 13 digits. The exponent ranges from -99 to +99. It includes calculations
+of direct and inverse trigonometric functions, in radians and degrees, natural
+and decimal logarithmic and exponential functions, powers and roots. It prefers
+operation priority, and parentheses can also be used. Numbers can be stored in
+4 memory registers, which retain their value even when the power is turned off.
+
+Switching the calculator mode between emulation or BeatleCalc calculator:
+
+- Press and hold the number 1 to 3: 1 selects the default BeatleCalc
+  calculator, 2 selects Sinclair Scientific emulation, 3 selects Datamath
+  emulation.
+- Press the C button briefly. This will reset the calculator.
+- Release the number 1 to 3 key. While you hold the key, the selected mode text
+  will appear on the display: "CALCUL" is the default BeatleCalc calculator,
+  "SINCLAIr" is Sinclair Scientific emulation, and "DATAMATH" is Datamath
+  emulation.
+
+Controls for emulated calculators can be found in the relevant calculator
+manuals. Please note that the Sinclair calculator uses RPN reverse logic
+- you must first enter the number and then the desired operation (typically '+'
+is used to insert a number into the stack). Emulators use only some of the
+calculator buttons - the layout of the buttons used can be seen in the pictures
+of the calculator labels.
+
+BeatleCalc calculator functions:
+
+STO1..STO4 ... Stores the number on the display in memory registers 1 to 4.
+   The number is stored in the flash memory of the second CPU2 processor and
+   remains available even after the power is turned off.
+
+RCL1..RCL4 ... Displaying a number from memory registers 1 to 4.
+
+CE ... Clearing the last digit or turning off the error indicator. If an
+   unedited number is displayed, the calculator switches to edit mode.
+
+2nd, 3rd ... Selection of alternative functions. An indicator appears at the
+   first position on the display (2nd=upper line, 3rd=lower line).
+
+= ... Calculation of the expression. Repeated pressing repeats the last
+   operation with the last operand.
+
+EE ... Exponent input mode. If an unedited number is displayed, the calculator
+   enters exponent edit mode. Press the decimal point key to enter mantissa
+   edit mode.
+
+LOG, EXP10 ... Logarithmic and exponential functions with a decimal base.
+
+LN, EXP ... Logarithmic and exponential functions with a natural base.
+
+TAN, ATAN, SIN, ASIN, COS, ACOS ... Trigonometric functions calculated in
+   radians.
+
+TAND, ATAND, SIND, ASIND, COSD, ACOSD ... Trigonometric functions calculated
+   in degrees.
+
+Notes on construction:
+
+Two CH32V002A4M6 processors were used in the calculator. The reason for this
+choice (apart from the low price) is that they are easy to solder, which is
+also suitable for beginners. The CPU1 processor is the main processing unit.
+The CPU2 processor controls the display multiplexer and is used to store the
+configuration and memory registers. The photos show a prototype of the
+calculator – I focused primarily on the calculator software, not the design,
+so I recommend choosing your own calculator design. A printed circuit board can
+be used as the top cover of the calculator. For the prototype, I printed the
+label on paper, covered it with transparent adhesive tape on both sides, and
+cut out the holes for the buttons with a skin punch. I recommend covering the
+display with red Plexiglas, otherwise it may be difficult to read in bright
+light. The capacitors should be soldered horizontally so that they do not
+interfere with the top cover. I used a 1-digit LED display as the digit in the
+first position. You do not have to use it, because only the sign of the number
+and the indicators for the 2nd and 3rd buttons (segments A, D, and G) are
+displayed in this position. You can replace the digit display with a flat red
+LED connected between signals D1 and SG. The 2nd and 3rd indicators are not
+necessary. I did not solve the power supply issue in the prototype. It is also
+possible to use, for example, a 3.7V battery with a charging circuit. A CR2032
+battery may not be powerful enough, as the display may have a high power
+consumption.
+
+The calculator firmware consists of two parts. In the ch32\DEVICE\BeatleCalc
+folder, you will find the main executive firmware, which you will upload to the
+CPU1 processor (e.g., using the WCH-LinkE programmer:
+https://pajenicko.cz/usb-programator-a-debug-adapter-wch-link).
+The ch32\DEVICE\BeatleCalc_CPU2 folder contains the firmware for the second
+processor, CPU2. Until the firmware is loaded into both processors and
+communication between them is working, the display will remain dark. If you
+need to find a malfunction, use the ch32\DEMO\LED program, in which you will
+enter the appropriate pins and use the control LED to check whether the signals
+are OK.
+
+Note: Calculator emulation was verified using the emulator
+https://static.righto.com/calculator/sinclair_scientific_simulator.html by
+Ken Shirriff. No physical calculators were available to verify functionality,
+so it is possible that the calculators' functions may not correspond exactly
+to the original.
+
+>>> Source codes and all necessary documentation can be found in the CH32LibSDK
+  library in the ch32\DEVICE\ folder. <<<
 
 
 BabyBoy
