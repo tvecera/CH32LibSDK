@@ -9,7 +9,7 @@ FORK: Additional Features in This Fork
 
 CH32LibSDK - SDK library for low-end CH32 RISC-V microcontrollers
 =================================================================
-Pre-alpha version 0.33, under development.
+Pre-alpha version 0.37, under development.
 
 Copyright (c) 2025 Miroslav Nemecek
 
@@ -557,6 +557,119 @@ In the _devices\tweetyboy\diagram\ folder, you will find diagram of the
 TweetyBoy console. In the !Tweetyboy folder, you will find a ready-made SD
 card image. The Tweetyboy folder contains source codes of sample
 applications for TweetyBoy.
+
+
+XTree
+-----
+XTree is a Christmas tree-shaped pendant with a CH32V002J4M6 processor, 12
+flashing LEDs, and a speaker that plays "Jingle Bells." XTree is powered by a
+CR2032 battery. A label with a picture of a Christmas tree and, optionally, a
+star is glued to the front. Only the LEDs are on the front; all other
+components are soldered to the back of the circuit board. The components used
+should be easy to solder, even for novice designers. On the bottom edge is a
+connector for programming the processor, which also serves as a switch -
+inserting the jumper on the right side of the connector turns XTree on. The
+jumper also represents the trunk of the tree. When turned off, the jumper can
+be inserted on the left side of the connector. High-brightness LEDs should be
+used, otherwise they may have low brightness. Matte LEDs would be more
+suitable, but they have lower brightness. Alternatively, reduce the resistor
+values. On the other hand, low LED brightness ensures lower battery consumption
+- the consumption is around 8mA. The sound from the speaker is not very loud,
+but it should be enough so that the music is not too distracting. In the
+prototype, I used wires instead of the top layer of the printed circuit board
+- I recommend using a double-sided printed circuit board, or even one with a
+printed image.
+
+>>> The source codes and all necessary XTree documentation can be found in the
+CH32LibSDK library in the ch32\TOYS\XTree folder.
+https://github.com/Panda381/CH32LibSDK/tree/main/ch32/TOYS/XTree <<<
+
+
+MiniDice
+--------
+MiniDice is an electronic dice with 7 LEDs, a CH32V002J4M6 processor, and a
+CR2032 battery. The dice is activated by pressing it against the table - there
+is a microswitch on the bottom. A 4-pin pin header with a jumper serves as a
+power switch, and is also used to program the processor. However, it is not
+necessary to use the power switch. The dice automatically turns off 10 seconds
+after the last use and enters power-saving mode, when it consumes only 10uA
+from the battery. If you do not need to program the processor, you can remove
+the programming connector and connect the BAT and VCC pins. In power-saving
+mode, the battery should last 1 to 2 years. Alternatively, remove the battery
+if you are not going to use it for a long time.
+
+Only 7 LEDs are located on the top of the circuit board; all other components
+are soldered to the bottom of the circuit board. In the prototype, I used wires
+instead of one layer of printed circuit board. You will certainly use a
+double-sided printed circuit board. I used TS6604B-7.0 with a 3.5mm tactile
+length as the activation microswitch. Two layers of foam rubber are glued to
+the sides from below for cushioning, so that the dice stands upright on the
+table and can be easily pressed. I printed the top label on an inkjet printer,
+glued it on, and covered it with transparent adhesive tape. You will probably
+use printing on the printed circuit board. When soldering the battery holder,
+be careful not to short-circuit the middle LED - if necessary, bend the battery
+holder slightly in that spot. If the battery is too difficult to insert, bend
+the pressure springs of the battery holder.
+
+>>> The source codes and all necessary MiniDice documentation can be found in
+the CH32LibSDK library in the ch32\TOYS\MiniDice folder.
+https://github.com/Panda381/CH32LibSDK/tree/main/ch32/TOYS/MiniDice <<<
+
+
+Magic Beater
+------------
+Magic Beater is a simple sound synthesizer-sequencer controlled by photosensor,
+with processor CH32V002J4M6. It allows you to play rhythms and melodies that
+repeat in a loop. The entire loop is 4 bars long - corresponding to 4 flashes
+of the indicator LED. Magic Beater is controlled by 2 buttons. Button A is used
+to record the melody. The pitch is determined by the light falling on the
+photodiode. The pitch can be controlled by modulating the light. If the tone
+range is not suitable (too high or too low), use a different R2 value,
+depending on the type of photodiode used. Button B is used to record the
+rhythm. Pressing buttons A and B simultaneously resets the memory.
+
+Magic Beater is based on the RaveBOX v1.0 project, created by Vladimir Bartos
+https://github.com/Mat0ny/RaveBOX.
+
+>>> The source codes and all necessary Magic Beater documentation can be found
+in the CH32LibSDK library in the ch32\TOYS\MagicBeater folder.
+https://github.com/Panda381/CH32LibSDK/tree/main/ch32/TOYS/MagicBeater <<<
+
+
+Pianissimo
+----------
+Pianissimo is a small electronic piano with a range of 2 octaves, a
+CH32V002A4M6 processor, and CR2032 battery power. In addition to basic tones,
+it also includes semitones. Using the MODE button, you can record a song up to
+75 seconds long. During recording, the MODE button must be held down at all
+times. Recording starts when the first tone is pressed while holding down the
+MODE button. Pressing the MODE button again (without pressing any tone keys)
+will play back the recorded song. Playback can be interrupted by pressing any
+key, including the MODE button.
+
+The tones are generated with the correct mutual accuracy of the tones. The time
+base is generated by an internal HSI oscillator, which is why the absolute
+tuning may deviate by up to 5%. If you connect a 24 MHz crystal to pins 12 and
+13, together with 22pF capacitors, you will achieve accurate absolute tuning of
+the tones. It is not necessary to change the firmware, but after connecting the
+crystal, it is necessary to reset the processor by disconnecting the power
+supply. 
+
+The piano is powered by a CR2032 battery. It can also be powered by an external
+voltage in the range of 3 to 5V. The programming connector is also used as a
+power switch - the device is turned on by connecting a jumper between the BAT
+and VCC pins. However, it is not necessary to use the power switch. If you do
+not need to program the processor, you can desolder the connector and simply
+connect the BAT and VCC pins. If the piano is not used for more than 5 seconds,
+the processor goes into power-saving mode, consuming only 10 uA from the
+battery. In power-saving mode, the battery will last for about 1 year. If you
+need to reprogram the processor, it may not be possible while the processor is
+asleep - you must wake up the processor by pressing any key or disconnecting the
+power supply, and then start programming the processor within 5 seconds.
+
+>>> The source codes and all necessary Pianissimo documentation can be found in
+the CH32LibSDK library in the ch32\TOYS\Pianissimo folder.
+https://github.com/Panda381/CH32LibSDK/tree/main/ch32/TOYS/Pianissimo <<<
 
 
 - In the "_devices\<console>\diagram\" folders, you will find console schematic
