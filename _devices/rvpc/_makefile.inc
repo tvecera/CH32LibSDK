@@ -1,6 +1,10 @@
 
 # ASM source files
-ASRC += ${CH32LIBSDK_DEVICES_DIR}/rvpc/rvpc_vga_asm.S
+ifeq ($(USE_RCA),)
+  ASRC += ${CH32LIBSDK_DEVICES_DIR}/rvpc/rvpc_vga_asm.S
+else
+  DEFINE += -D USE_RCA=1
+endif
 
 # C source files
 ifeq (${OS},Windows_NT)

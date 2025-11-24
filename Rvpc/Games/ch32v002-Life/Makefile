@@ -3,8 +3,13 @@
 #               Include Makefile 1st stage - prepare MCU type
 ##############################################################################
 
+# Stop build if MCU = CH32V003x4
+ifeq ($(MCU),CH32V003x4)
+$(error Build is disabled for MCU=$(MCU))
+endif
+
 # Setup device class
-DEVCLASS=babypad
+DEVCLASS=rvpc
 
 # Path to root directory from the project directory (without trailing '/' delimiter)
 CH32_ROOT_PATH = ../../..

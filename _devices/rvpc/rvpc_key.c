@@ -8,17 +8,38 @@
 
 #if USE_KEY
 
-volatile u32 PS2_Data[2] = {0};
-volatile u8 PS2_BitCount = 0;
-volatile u8 PS2_PrevClk = 1;
-volatile u8 PS2_ExtendedBreakFlag = 0;
-
 // ONE BYTE for all key states!
 volatile u8 KeyState = 0;
 
 volatile u16 KeyBuf[KEYBUF_SIZE];
 volatile u8 KeyWriteOff = 0;
 volatile u8 KeyReadOff = 0;
+
+#if USE_RCA
+// ============================================================================
+//                   RCA Version - C Implementation with EXTI
+// ============================================================================
+
+// EXTI-driven PS/2 receiver: collects raw bytes then translates to the legacy KeyBuf interface.
+PS2KeyEvent PS2Buffer[PS2_BUF_SIZE];
+volatile u8 PS2ReadIdx = 0;
+volatile u8 PS2WriteIdx = 0;
+
+// State machine for PS/2 protocol
+volatile u32 PS2ShiftReg = 0;
+volatile u8 PS2BitCount = 0;
+volatile u8 PS2State = PS2_STATE_IDLE;
+
+#else
+// ============================================================================
+//                   VGA Version - Assembly Implementation
+// ============================================================================
+
+volatile u32 PS2_Data[2] = {0};
+volatile u8 PS2_BitCount = 0;
+volatile u8 PS2_PrevClk = 1;
+volatile u8 PS2_ExtendedBreakFlag = 0;
+#endif // USE_RCA
 
 static const u8 ScanCodes[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x09, '`', 0x00,
@@ -171,10 +192,18 @@ void KeyFlush() {
     KeyReadOff = 0;
     KeyState = 0;
 
+#if USE_RCA
+    PS2ReadIdx = 0;
+    PS2WriteIdx = 0;
+    PS2BitCount = 0;
+    PS2ShiftReg = 0;
+    PS2State = PS2_STATE_IDLE;
+#else
     PS2_Data[0] = 0;
     PS2_Data[1] = 0;
     PS2_BitCount = 0;
     PS2_PrevClk = 1;
+#endif
 
     WaitMs(100);
 }
@@ -190,6 +219,163 @@ void KeyWaitPressed() {
     }
 }
 
+#if USE_RCA
+// ============================================================================
+//                   RCA Version - EXTI Interrupt Handler
+// ============================================================================
+
+// Add key event to buffer (drops oldest when full to keep state up to date)
+NOINLINE void PS2PutKey(u8 scancode, u8 flags) {
+    // Update KeyState
+    u16 fullcode;
+    if (flags & PS2_KEY_EXTENDED) {
+        if (flags & PS2_KEY_BREAK) {
+            fullcode = 0xE100 | scancode;  // Extended break: E1xx
+        } else {
+            fullcode = 0xE000 | scancode;  // Extended make: E0xx
+        }
+    } else {
+        if (flags & PS2_KEY_BREAK) {
+            fullcode = 0xF000 | scancode;  // Normal break: F0xx
+        } else {
+            fullcode = scancode;           // Normal make: 00xx
+        }
+    }
+
+    u16 key_lookup = (flags & PS2_KEY_EXTENDED) ? (0xE000 | scancode) : scancode;
+    u8 key = ScanToKey(key_lookup);
+
+    // Update KeyState based on MAKE or BREAK
+    if (key != NOKEY) {
+        if (flags & PS2_KEY_BREAK) {
+            KeyState &= ~(1u << (key - 1));  // Clear bit on key release
+        } else {
+            KeyState |= (1u << (key - 1));   // Set bit on key press
+        }
+    }
+
+    // Store to PS2Buffer
+    u8 next_wr = (PS2WriteIdx + 1) & (PS2_BUF_SIZE - 1);
+    if (next_wr == PS2ReadIdx) {
+        PS2ReadIdx = (PS2ReadIdx + 1) & (PS2_BUF_SIZE - 1);
+    }
+    PS2Buffer[PS2WriteIdx].scancode = scancode;
+    PS2Buffer[PS2WriteIdx].flags = flags;
+    PS2WriteIdx = next_wr;
+
+    // Store to KeyBuf - stores ALL scancodes including break codes
+    u8 next = (KeyWriteOff + 1) & (KEYBUF_SIZE - 1);
+    if (next != KeyReadOff) {
+        KeyBuf[KeyWriteOff] = fullcode;
+        KeyWriteOff = next;
+    }
+}
+
+// EXTI interrupt handler (EXTI0-7)
+#if CH32V003
+HANDLER void EXTI7_0_IRQHandler(void);
+#else
+HANDLER void NOFLASH(EXTI7_0_IRQHandler)(void);
+#endif
+
+void EXTI7_0_IRQHandler(void) {
+    // Check if EXTI1 triggered (PD1 - PS/2 CLK)
+    u32 intfr = EXTI->INTFR;
+    if (!(intfr & 2)) return;
+    EXTI->INTFR = 2;
+
+    u32 reg = PS2ShiftReg;
+    u32 count = PS2BitCount;
+
+    // Read DATA pin and shift into register
+    reg = (reg >> 1) | ((GPIOA->INDR & (1 << 2)) ? 0x400 : 0);
+
+    if (++count < 11) {
+        PS2ShiftReg = reg;
+        PS2BitCount = count;
+        return;
+    }
+
+    // Reset counters
+    PS2BitCount = 0;
+    PS2ShiftReg = 0;
+
+    if (count > 11) {
+        PS2State = PS2_STATE_IDLE;
+        return;
+    }
+
+    // Validate frame: start=0, stop=1
+    if ((reg ^ 0x400) & 0x401) {
+        PS2State = PS2_STATE_IDLE;
+        return;
+    }
+
+    // Extract data byte (bits 1-8)
+    u8 data = (u8)(reg >> 1);
+    u8 state = PS2State;
+
+    // State 0 (IDLE): check for E0/F0 prefix
+    if (state == PS2_STATE_IDLE) {
+        if (data < 0xE0) {
+            PS2PutKey(data, PS2_KEY_MAKE);
+            return;
+        }
+        PS2State = (data == 0xE0) ? 1 : 2;
+        return;
+    }
+
+    // State 1 (E0): extended key
+    if (state == 1) {
+        if (data == 0xF0) {
+            PS2State = 3;
+            return;
+        }
+        PS2State = 0;
+        PS2PutKey(data, PS2_KEY_MAKE | PS2_KEY_EXTENDED);
+        return;
+    }
+
+    // State 2 (F0): break code
+    // State 3 (E0F0): extended break
+    PS2State = 0;
+    PS2PutKey(data, PS2_KEY_BREAK | ((state & 1) ? PS2_KEY_EXTENDED : 0));
+}
+
+void KeyInit() {
+    RCC_PAClkEnable();
+    RCC_PDClkEnable();
+    RCC_AFIClkEnable();
+
+    // PA2 - DATA (input with pull-up)
+    GPIO_Mode(PA2, GPIO_MODE_IN_PU);
+
+    // PD1 - CLK (input with pull-up)
+    GPIO_Mode(PD1, GPIO_MODE_IN_PU);
+
+    // Configure EXTI on PD1 (falling edge)
+    GPIO_EXTILine(PORTD_INX, 1);
+    EXTI_FallEnable(1);
+    EXTI_Enable(1);
+
+    NVIC_IRQEnable(IRQ_EXTI7);
+
+    // Clear state
+    KeyFlush();
+}
+
+void KeyTerm() {
+    NVIC_IRQDisable(IRQ_EXTI7);
+    KeyFlush();
+    GPIO_PinReset(PA2);
+    GPIO_PinReset(PD1);
+}
+
+#else
+// ============================================================================
+//                   VGA Version - Original Implementation
+// ============================================================================
+
 void KeyInit() {
     RCC_PAClkEnable();
     RCC_PDClkEnable();
@@ -202,8 +388,11 @@ void KeyInit() {
 }
 
 void KeyTerm() {
+    KeyFlush();
     GPIO_PinReset(PA2);
     GPIO_PinReset(PD1);
 }
+
+#endif // USE_RCA
 
 #endif // USE_KEY

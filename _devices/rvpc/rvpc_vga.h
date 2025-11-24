@@ -17,9 +17,11 @@ extern "C" {
 // Videomodes
 
 #ifdef CH32V003
-#if VMODE == 1
-    .error "CH32V003 supports only VMODE 0 or 8. VMODE 1 is not supported."
+STATIC_ASSERT(VMODE == 0 || VMODE == 8, "CH32V003 supports VMODE 0 or 8.");
 #endif
+
+#if USE_RCA
+STATIC_ASSERT(VMODE == 0 || VMODE == 1 || VMODE == 8, "RCA supports VMODE 0, 1 or 8.");
 #endif
 
 // Videomode 0: graphics mode 128x64 pixels, required memory 1024 B
@@ -40,7 +42,7 @@ extern "C" {
 #define TEXTWIDTH	(WIDTH/8)	// text width in characters (= 20)
 #define TEXTHEIGHT	(HEIGHT/8)	// text height in rows (= 15; 1 character = 8x8 pixels)
 
-// Videomode 8:text mode 23x18 characters of 8x8 pixels with custom fonts of 64/128 characters - 720x576 pixels (PAL),
+// Videomode 8:text mode 23x18 characters of 8x8 pixels with custom fonts of 64/128 characters
 // required memory 414 bytes, font 8x8 pixels 4096/8192 bytes in Flash
 #elif VMODE == 8
 #define WIDTH		23		// width in characters
@@ -61,6 +63,8 @@ extern volatile u32 DispTimTest;	// test - get TIM-CNT value at start of image
 // check VSYNC
 #if VMODE == 0
 INLINE Bool DispIsVSync() { return DispLine >= 256; }
+#elif VMODE == 1 && USE_RCA == 1
+INLINE Bool DispIsVSync() { return DispLine >= 312; }
 #elif VMODE == 8
 INLINE Bool DispIsVSync() { return DispLine >= 576; }
 #else

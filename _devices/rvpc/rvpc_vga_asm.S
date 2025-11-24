@@ -145,7 +145,7 @@
 // ============================================================================
 // Send 8 pixels from 4KB font buffer (2 pixels per byte)
 // Each byte contains 2 pixels in nibbles: high=pixel0, low=pixel1
-// Total time: 4 bytes × 8 cycles = 32 cycles
+// Total time: 4 bytes * 8 cycles = 32 cycles
 // ============================================================================
 .macro send_byte_bitbang_text_mode
     lbu t0, 0(a0)               // [2] Load byte with pixels 0-1
@@ -333,15 +333,15 @@
 // ============================================================================
 // VMODE 8: text mode 23x18 characters
 //          target "PAL-like" 720x576@~48.02 Hz
-//          required memory 414 B (23 chars × 18 lines)
+//          required memory 414 B (23 chars * 18 lines)
 //
 // Font format: 4KB (2 pixels per byte)
 // Loop unrolling: 5 iterations of 4 characters + 3 final characters
 //
 // TIMING OPTIMIZATION:
-// Per 4-char block: 4 chars × 37 cycles + loop overhead 4 = 152 cycles
-// 5 blocks: 5 × 152 = 760 cycles
-// Final 3 chars: 3 × 37 = 111 cycles
+// Per 4-char block: 4 chars * 37 cycles + loop overhead 4 = 152 cycles
+// 5 blocks: 5 * 152 = 760 cycles
+// Final 3 chars: 3 * 37 = 111 cycles
 // Total: ~871 cycles
 // ============================================================================
 
@@ -354,7 +354,7 @@
     lw a1,0(a1)          // [2] A1 <- get pointer to font
 
     // Shift font to current font line -> A1
-    // For 4KB font: each row is 128 chars × 4 bytes = 512 bytes per row
+    // For 4KB font: each row is 128 chars * 4 bytes = 512 bytes per row
     andi a0,t2,0x1C     // [1] A0 <- mask bits [4:2] (0x1C = 0b11100)
 #if FONT_CHAR_COUNT == 64
     slli a0,a0,6       // [1] A0 <- shift left by 6
@@ -373,7 +373,7 @@
     // Character 1 of 4
     lbu    a2,0(a4)      // [2] load character
     add    a4,a4,1       // [1] increment pointer
-    slli   a0,a2,2       // [1] index × 4
+    slli   a0,a2,2       // [1] index * 4
     add    a0,a0,a1      // [1] font address
     send_byte_bitbang_text_mode // [32] send char 1
 
@@ -401,7 +401,7 @@
     // Loop control
     add    a3,a3,-1      // [1] decrement counter
     bnez   a3,2b         // [3] loop if more blocks remain
-    // Total per iteration: 4×37 + 4 = 152 cycles
+    // Total per iteration: 4*37 + 4 = 152 cycles
 
     // ===== Final 3 characters (21, 22, 23) =====
     lbu    a2,0(a4)      // [2] char 21

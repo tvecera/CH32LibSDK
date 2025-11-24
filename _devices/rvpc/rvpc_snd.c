@@ -10,10 +10,10 @@
 #if USE_SOUND		// 1=use sound support
 
 // pointer to current melody
-volatile const sMelodyNote* SoundMelodyPtr;
+const sMelodyNote* volatile SoundMelodyPtr;
 
 // pointer to next melody
-volatile const sMelodyNote* SoundMelodyNext;
+const sMelodyNote* volatile SoundMelodyNext;
 
 // remaining length of current tone (0 = no melody, -1 = start next melody)
 volatile s16 SoundMelodyLen = 0;
@@ -205,6 +205,71 @@ void StopSound()
 
 	// disable compare output
 	TIM1_CC4Disable();
+}
+
+// Sound scan melody
+void SoundScan()
+{
+	// get churrent melody
+	int len = SoundMelodyLen;
+	if (len == 0) return; // no melody
+
+	// pointer to current melody
+	const sMelodyNote* ptr;
+
+	// start next melody
+	if (len < 0)
+	{
+		// get pointer to next melody
+		ptr = SoundMelodyNext;
+	}
+
+	// continue melody - decrease counter of current tone
+	else
+	{
+		len--;
+		SoundMelodyLen = (s16)len; // save new tone length
+
+		// continue current tone
+		if (len > 0) return;
+
+		// shift current melody pointer
+		ptr = SoundMelodyPtr;	// get pointer to current melody
+		ptr++;			// shift pointer to next tone
+	}
+
+	// save new pointer to current melody
+	SoundMelodyPtr = ptr;
+
+	// get length of next note
+	len = ptr->len;	// get length of the note
+	SoundMelodyLen = (s16)len;	// save length of new note
+
+	// end of melody
+	if (len == 0)
+	{
+		// disable compare output
+		TIM1_CC4Disable();
+	}
+
+	// start new note
+	else
+	{
+		// get note divider
+		u16 div = ptr->div;
+
+		// pause
+		if (div == 0)
+		{
+			// disable compare output
+			TIM1_CC4Disable();
+		}
+		else
+		{
+			// start playing tone
+			PlayTone(div);
+		}
+	}
 }
 
 // play melody

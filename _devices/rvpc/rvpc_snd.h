@@ -177,10 +177,10 @@ typedef struct {
 } sMelodyNote;
 
 // pointer to current melody
-extern volatile const sMelodyNote* SoundMelodyPtr;
+extern const sMelodyNote* volatile SoundMelodyPtr;
 
 // pointer to next melody
-extern volatile const sMelodyNote* SoundMelodyNext;
+extern const sMelodyNote* volatile SoundMelodyNext;
 
 // remaining length of current tone (0 = no melody, -1 = start next melody)
 extern volatile s16 SoundMelodyLen;
@@ -220,6 +220,11 @@ void PlayTone(u32 div);
 
 // Stop playing tone or melody
 void StopSound();
+
+#if USE_RCA
+// Sound scan melody
+void SoundScan();
+#endif
 
 // play music
 //  melody = pointer to array of notes sMelodyNote (terminated with NOTE_STOP)

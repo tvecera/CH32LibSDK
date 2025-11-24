@@ -21,10 +21,10 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  * Preprocessed Format (Optimized for Bitbanging):
- * - Total size: 4096 bytes (8 font rows × 128 characters × 4 bytes per character row).
+ * - Total size: 4096 bytes (8 font rows * 128 characters * 4 bytes per character row).
  * - The font is divided into 8 vertical "slices" (one for each row of the 8x8 character grid).
  * - For each slice (font row):
- *   - 512 bytes are allocated (128 characters × 4 bytes).
+ *   - 512 bytes are allocated (128 characters * 4 bytes).
  *   - For each character in the slice:
  *     - 4 consecutive bytes, each containing 2 pixels packed into nibbles.
  *     - Nibble format (2 pixels per byte):
@@ -38,11 +38,11 @@
  *   The code extracts 2 pixels per byte using simple shift and mask operations.
  * - During rendering:
  *   - The current font row is selected based on the scanline (scanline & 0x1C) << 7.
- *   - For each text character, compute offset: (char_index × 4) + font_row_base.
+ *   - For each text character, compute offset: (char_index * 4) + font_row_base.
  *   - Load 4 bytes and extract 8 pixels (2 pixels per byte) for direct GPIO output.
  * - Rendering macro (send_byte_bitbang_text_mode):
  *   - Processes each byte: extracts high nibble (srli 4), then low nibble (andi 0x0f).
- *   - Total: 32 cycles per character (8 pixels × 4 cycles per pixel).
+ *   - Total: 32 cycles per character (8 pixels * 4 cycles per pixel).
  * Tradeoff:
  * - The preprocessing increases the font size from 1024 bytes to 4096 bytes (4x larger).
  * - This is a 50% reduction compared to the 8KB fully-expanded format (1 pixel per byte).

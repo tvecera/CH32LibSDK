@@ -31,10 +31,37 @@ extern "C" {
 // keyboard buffer
 #define KEYBUF_SIZE	16
 
+#if USE_RCA
+// RCA version - C implementation with EXTI
+// One queued PS/2 event captured on falling clock edge
+typedef struct {
+    u8 scancode;
+    u8 flags;
+} PS2KeyEvent;
+
+#define PS2_BUF_SIZE 16
+#define PS2_KEY_MAKE     0x00
+#define PS2_KEY_BREAK    0x80
+#define PS2_KEY_EXTENDED 0x40
+
+#define PS2_STATE_IDLE 0
+#define PS2_STATE_E0   1
+#define PS2_STATE_F0   2
+#define PS2_STATE_E0F0 3
+
+extern PS2KeyEvent PS2Buffer[PS2_BUF_SIZE];
+extern volatile u8 PS2ReadIdx;
+extern volatile u8 PS2WriteIdx;
+extern volatile u32 PS2ShiftReg;
+extern volatile u8 PS2BitCount;
+extern volatile u8 PS2State;
+#else
+// VGA version - Assembly implementation
 extern volatile u32 PS2_Data[2];
 extern volatile u8 PS2_BitCount;
 extern volatile u8 PS2_PrevClk;
 extern volatile u8 PS2_ExtendedBreakFlag;
+#endif
 
 // Current state of all keys - ONE BYTE!
 // Bit 0 = KEY_RIGHT, Bit 1 = KEY_UP, etc.

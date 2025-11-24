@@ -10,18 +10,18 @@
 
  * Original Format (for reference):
  * - Standard 1-bit pixel graphics.
- * - Total size: 512 bytes (64 characters × 8 bytes per character).
+ * - Total size: 512 bytes (64 characters * 8 bytes per character).
  * - Each character: 8 bytes (one byte per horizontal row of 8 pixels).
  * - Bits in each byte represent pixels (e.g., bit 7 = leftmost pixel, bit 0 = rightmost).
- * - Image width: 512 pixels (64 characters × 8 pixels).
+ * - Image width: 512 pixels (64 characters * 8 pixels).
  * - Image height: 8 lines (rows per character).
  * - Image pitch: 64 bytes (512 pixels / 8 bits per byte).
  *
  * Preprocessed Format (Optimized for Bitbanging):
- * - Total size: 2048 bytes (8 font rows × 64 characters × 4 bytes per character row).
+ * - Total size: 2048 bytes (8 font rows * 64 characters * 4 bytes per character row).
  * - The font is divided into 8 vertical "slices" (one for each row of the 8x8 character grid).
  * - For each slice (font row):
- *   - 256 bytes are allocated (64 characters × 4 bytes).
+ *   - 256 bytes are allocated (64 characters * 4 bytes).
  *   - For each character in the slice:
  *     - 4 consecutive bytes, each containing 2 pixels packed into nibbles.
  *     - Nibble format (2 pixels per byte):
@@ -35,11 +35,11 @@
  *   The code extracts 2 pixels per byte using simple shift and mask operations.
  * - During rendering:
  *   - The current font row is selected based on the scanline (scanline & 0x1C) << 6.
- *   - For each text character, compute offset: (char_index & 0x3F) × 4 + font_row_base.
+ *   - For each text character, compute offset: (char_index & 0x3F) * 4 + font_row_base.
  *   - Load 4 bytes and extract 8 pixels (2 pixels per byte) for direct GPIO output.
  * - Rendering macro (send_byte_bitbang_text_mode):
  *   - Processes each byte: extracts high nibble (srli 4), then low nibble (andi 0x0f).
- *   - Total: 32 cycles per character (8 pixels × 4 cycles per pixel).
+ *   - Total: 32 cycles per character (8 pixels * 4 cycles per pixel).
  * Tradeoff:
  * - The preprocessing increases the font size from 512 bytes to 2048 bytes (4x larger).
  * - This is a 50% reduction compared to the 4KB fully-expanded format (1 pixel per byte).

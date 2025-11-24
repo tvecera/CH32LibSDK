@@ -23,19 +23,19 @@
 
 #include "../include.h"
 
-static u32 count = 0;
+static u32 last_frame = 0;
 static uint8_t s_row = 0xFF;
 static uint8_t s_col = 0xFF;
 static uint16_t s_line = 0xFFFF;
 
 /*********************************************************************
  * @fn    vga_is_frame_end
- * @brief Check if VGA frame is ended
+ * @brief Check if VGA/RCA frame is ended
  */
 inline uint8_t vga_is_frame_end() {
-    if (DispIsVSync()) count++;
-    if (count >= 576) {
-        count = 0;
+    u32 current_frame = DispFrame;
+    if (current_frame != last_frame) {
+        last_frame = current_frame;
         return 1;
     }
     return 0;
